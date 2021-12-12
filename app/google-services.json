@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "119193324782",
+    "project_id": "newsplanet-e0962",
+    "storage_bucket": "newsplanet-e0962.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:119193324782:android:0eac49dc012c7834b337ff",
+        "android_client_info": {
+          "package_name": "com.tuwaiq.newsplanet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "119193324782-06n81t38nhq8f6u9f7r150isrsd3158v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8DkXGfmQBDZEUdwGXVKJDweiLwtqLtKg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "119193324782-06n81t38nhq8f6u9f7r150isrsd3158v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

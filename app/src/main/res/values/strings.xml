@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">NewsPlanet</string>
+    <string name="logo_text">Logo Text</string>
+    <string name="you_don_t_have_an_account">You don\'t have an account?</string>
+</resources>

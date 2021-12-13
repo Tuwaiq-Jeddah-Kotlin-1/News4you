@@ -86,7 +86,7 @@ class SignUpFragment : Fragment() {
                                     Toast.LENGTH_LONG
                                 ).show()
 
-                                findNavController().navigate(R.id.action_signUpFragment_to_breakingNewsFragment)
+                                findNavController().navigate(R.id.action_signUpFragment_to_topHeadlineFragment)
                             } else {
                                 // if the registration is not successful then show error massage
                                 Toast.makeText(

@@ -1,6 +1,7 @@
 package com.tuwaiq.newsplanet.fragments
 
 
+import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.TextUtils
@@ -9,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
@@ -28,8 +30,11 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
     lateinit var signUpTv: TextView
     lateinit var forgetPassTV : TextView
 
-    lateinit var sharedPreferance : SharedPreferences
-    var isRemember = false
+    private lateinit var sharedPreferences: SharedPreferences
+
+    var isRemembered = false
+    private lateinit var rememberMe: CheckBox
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -38,6 +43,7 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val view = inflater.inflate(R.layout.sign_in_fragment, container, false)
 
 
@@ -46,6 +52,16 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
         signInButton = view.findViewById(R.id.signInBtn)
         signUpTv = view.findViewById(R.id.signupTV)
         forgetPassTV = view.findViewById(R.id.forgetPassTV)
+
+        rememberMe = view.findViewById(R.id.cbRemember)
+        sharedPreferences = this.requireActivity().getSharedPreferences("preference", Context.MODE_PRIVATE)
+        isRemembered = sharedPreferences.getBoolean("CHECKBOX", false)
+
+
+        if (isRemembered) {
+            findNavController().navigate(R.id.action_signInFragment_to_topHeadlineFragment)
+        }
+
         signInButton.setOnClickListener {
             val email = emailET.editableText.toString()
             val password = passwordET.editableText.toString()
@@ -71,16 +87,26 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
                     // create an instance and create a register with email and password
                     FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener { task ->
-                            // if the registration is sucessfully done
+                            // if the logIn is successfully done
                             if (task.isSuccessful) {
-                                //firebase register user
-                                val firebaseUser: FirebaseUser = task.result!!.user!!
+
+                                val emailPreference: String = email
+                                val passwordPreference: String = password
+                                val checked: Boolean = rememberMe.isChecked
+
+                                val editor: SharedPreferences.Editor = sharedPreferences.edit()
+                                editor.putString("EMAIL", emailPreference)
+                                editor.putString("PASSWORD", passwordPreference)
+                                editor.putBoolean("CHECKBOX", checked)
+                                editor.apply()
+
                                 Toast.makeText(
                                     context,
                                     "You loged in successfully",
                                     Toast.LENGTH_LONG
                                 ).show()
-                                findNavController().navigate(R.id.action_signInFragment_to_breakingNewsFragment)
+
+                                findNavController().navigate(R.id.action_signInFragment_to_topHeadlineFragment)
                             } else {
                                 // if the registreation is not succsesful then show error massage
                                 Toast.makeText(

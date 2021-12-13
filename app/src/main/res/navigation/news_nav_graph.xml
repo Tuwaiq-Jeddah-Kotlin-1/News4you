@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/news_nav_graph"
-    app:startDestination="@id/topHeadlineNewsFragment">
+    app:startDestination="@id/signInFragment">
 
     <fragment
         android:id="@+id/topHeadlineNewsFragment"
@@ -52,7 +52,7 @@
             android:id="@+id/action_signUpFragment_to_signInFragment"
             app:destination="@id/signInFragment" />
         <action
-            android:id="@+id/action_signUpFragment_to_breakingNewsFragment"
+            android:id="@+id/action_signUpFragment_to_topHeadlineFragment"
             app:destination="@id/topHeadlineNewsFragment" />
     </fragment>
     <fragment
@@ -63,7 +63,7 @@
             android:id="@+id/action_signInFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
         <action
-            android:id="@+id/action_signInFragment_to_breakingNewsFragment"
+            android:id="@+id/action_signInFragment_to_topHeadlineFragment"
             app:destination="@id/topHeadlineNewsFragment" />
         <action
             android:id="@+id/action_signInFragment_to_forgotPassFragment"
@@ -72,7 +72,11 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.tuwaiq.newsplanet.fragments.ProfileFragment"
-        android:label="ProfileFragment" />
+        android:label="ProfileFragment" >
+        <action
+            android:id="@+id/action_profileFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
     <fragment
         android:id="@+id/forgotPassFragment"
         android:name="com.tuwaiq.newsplanet.fragments.ForgotPassFragment"

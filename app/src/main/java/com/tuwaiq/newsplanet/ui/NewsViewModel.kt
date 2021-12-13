@@ -18,7 +18,7 @@ class NewsViewModel(val newsRepo: NewsRepo) : ViewModel() {
     val topHeadlinesPage = 1
 
     init {
-        getTopHeadlines("sa")
+        getTopHeadlines("us")
     }
 
     // this is a coroutines function I used with viewModelScope that will stay alive as long as this viewModel alive ..

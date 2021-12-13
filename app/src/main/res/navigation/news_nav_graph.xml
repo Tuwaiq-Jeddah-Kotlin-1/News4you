@@ -65,9 +65,20 @@
         <action
             android:id="@+id/action_signInFragment_to_breakingNewsFragment"
             app:destination="@id/topHeadlineNewsFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_forgotPassFragment"
+            app:destination="@id/forgotPassFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.tuwaiq.newsplanet.fragments.ProfileFragment"
         android:label="ProfileFragment" />
+    <fragment
+        android:id="@+id/forgotPassFragment"
+        android:name="com.tuwaiq.newsplanet.fragments.ForgotPassFragment"
+        android:label="ForgotPassFragment" >
+        <action
+            android:id="@+id/action_forgotPassFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
 </navigation>

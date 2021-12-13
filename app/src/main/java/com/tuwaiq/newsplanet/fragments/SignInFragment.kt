@@ -1,6 +1,7 @@
 package com.tuwaiq.newsplanet.fragments
 
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.TextUtils
 import androidx.fragment.app.Fragment
@@ -15,14 +16,20 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.tuwaiq.newsplanet.R
-class SignInFragment : Fragment() {
+import kotlinx.android.synthetic.main.sign_in_fragment.*
+
+
+class SignInFragment : Fragment(R.layout.sign_in_fragment) {
 
 
     lateinit var emailET: TextInputEditText
     lateinit var passwordET: TextInputEditText
     lateinit var signInButton: Button
     lateinit var signUpTv: TextView
+    lateinit var forgetPassTV : TextView
 
+    lateinit var sharedPreferance : SharedPreferences
+    var isRemember = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -32,10 +39,13 @@ class SignInFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.sign_in_fragment, container, false)
+
+
         emailET = view.findViewById(R.id.emailET)
         passwordET = view.findViewById(R.id.passwordET)
         signInButton = view.findViewById(R.id.signInBtn)
         signUpTv = view.findViewById(R.id.signupTV)
+        forgetPassTV = view.findViewById(R.id.forgetPassTV)
         signInButton.setOnClickListener {
             val email = emailET.editableText.toString()
             val password = passwordET.editableText.toString()
@@ -86,6 +96,11 @@ class SignInFragment : Fragment() {
         signUpTv.setOnClickListener {
             findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
         }
+
+        forgetPassTV.setOnClickListener {
+            findNavController().navigate(R.id.action_signInFragment_to_forgotPassFragment)
+        }
+
         return view
     }
 }

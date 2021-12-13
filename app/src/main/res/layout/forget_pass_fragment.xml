@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".fragments.SignInFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <Button
+            android:id="@+id/backToLoginBtn"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:backgroundTint="@color/black"
+            android:text="Back"
+            android:textSize="20sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/btnLogeIn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:shapeAppearanceOverlay="@style/Button1" />
+
+        <FrameLayout
+            android:id="@+id/frameLayoutInLogeIn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="30dp"
+            android:background="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/txtForgotPass"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_launcher_foreground" />
+        </FrameLayout>
+
+        <Button
+            android:id="@+id/btnLogeIn"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="49dp"
+            android:backgroundTint="@color/black"
+            android:text=" Reset "
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/LinearLayoutSignIn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.587"
+            app:layout_constraintStart_toEndOf="@+id/backToLoginBtn"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout1"
+            app:shapeAppearanceOverlay="@style/Button1" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineInSignIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.25" />
+
+        <LinearLayout
+            android:id="@+id/LinearLayoutSignIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="43dp"
+            android:layout_marginBottom="193dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/backToLoginBtn"
+            app:layout_constraintTop_toBottomOf="@+id/btnLogeIn" />
+
+        <TextView
+            android:id="@+id/txtForgotPass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="51dp"
+            android:text="Forgot Password"
+            android:textSize="40sp"
+            app:layout_constraintBottom_toTopOf="@+id/textInputLayout1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frameLayoutInLogeIn" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:hint="Email"
+            app:endIconMode="clear_text"
+            app:helperText="Required*"
+            app:helperTextEnabled="true"
+            app:helperTextTextColor="#D50000"
+            app:layout_constraintBottom_toTopOf="@+id/btnLogeIn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtForgotPass"
+            app:startIconDrawable="@drawable/ic_email">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</ScrollView>

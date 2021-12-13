@@ -20,7 +20,6 @@ class SignUpFragment : Fragment() {
     //private val userCollectionRef = Firebase.firestore.collection("users")
 
 
-
     lateinit var usernameET: TextInputEditText
     lateinit var emailET: TextInputEditText
     lateinit var passwordET: TextInputEditText

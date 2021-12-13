@@ -1,8 +1,7 @@
 package com.tuwaiq.newsplanet.fragments
 
-import androidx.lifecycle.ViewModelProvider
+
 import android.os.Bundle
-import android.text.Editable
 import android.text.TextUtils
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -37,16 +36,10 @@ class SignInFragment : Fragment() {
         passwordET = view.findViewById(R.id.passwordET)
         signInButton = view.findViewById(R.id.signInBtn)
         signUpTv = view.findViewById(R.id.signupTV)
-//        sharedPreference.save("Logged in", status = false)
         signInButton.setOnClickListener {
-            //  for data save in sharedPreference
             val email = emailET.editableText.toString()
             val password = passwordET.editableText.toString()
             Toast.makeText(context, "Data Stored", Toast.LENGTH_SHORT).show()
-            //to save an Int
-//            sharedPreference.save("interval",1)
-            //to save boolean
-//            sharedPreference.save("bool",true)
             when {
                 TextUtils.isEmpty(emailET.text.toString().trim { it <= ' ' }) -> {
                     Toast.makeText(
@@ -95,19 +88,4 @@ class SignInFragment : Fragment() {
         }
         return view
     }
-
-//    override fun onResume() {
-//        // to get the data from sharedPreference
-//        super.onResume()
-//        if (sharedPreference.getValueString("email") != null && sharedPreference.getValueString("password") != null) {
-//            emailET.text = Editable.Factory.getInstance()
-//                .newEditable(sharedPreference.getValueString("email")!!)
-//            passwordET.text = Editable.Factory.getInstance()
-//            Toast.makeText(context, "Data Retrieved", Toast.LENGTH_SHORT).show()
-//            findNavController().navigate(R.id.action_signInFragment_to_homeFragment)
-//        } else {
-//            emailET.text = Editable.Factory.getInstance().newEditable("")
-//            passwordET.text = Editable.Factory.getInstance().newEditable("")
-//        }
-//    }
 }

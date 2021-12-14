@@ -20,7 +20,7 @@
             android:backgroundTint="@color/black"
             android:text="Back"
             android:textSize="20sp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/btnLogeIn"
+            app:layout_constraintBaseline_toBaselineOf="@+id/resetePassBtn"
             app:layout_constraintStart_toStartOf="parent"
             app:shapeAppearanceOverlay="@style/Button1" />
 
@@ -43,7 +43,7 @@
         </FrameLayout>
 
         <Button
-            android:id="@+id/btnLogeIn"
+            android:id="@+id/resetePassBtn"
             android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="49dp"
@@ -73,7 +73,7 @@
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/backToLoginBtn"
-            app:layout_constraintTop_toBottomOf="@+id/btnLogeIn" />
+            app:layout_constraintTop_toBottomOf="@+id/resetePassBtn" />
 
         <TextView
             android:id="@+id/txtForgotPass"
@@ -97,14 +97,14 @@
             app:helperText="Required*"
             app:helperTextEnabled="true"
             app:helperTextTextColor="#D50000"
-            app:layout_constraintBottom_toTopOf="@+id/btnLogeIn"
+            app:layout_constraintBottom_toTopOf="@+id/resetePassBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtForgotPass"
             app:startIconDrawable="@drawable/ic_email">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textInputEditText"
+                android:id="@+id/forgotEmailET"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white" />

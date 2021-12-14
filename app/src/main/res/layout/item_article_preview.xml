@@ -18,8 +18,8 @@
 
             <ImageView
                 android:id="@+id/ivArticleImage"
-                android:layout_width="379dp"
-                android:layout_height="150dp"
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

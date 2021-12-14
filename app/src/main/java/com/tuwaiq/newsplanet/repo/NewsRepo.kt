@@ -11,4 +11,10 @@ class NewsRepo(val db: ArticleDatabase) {
     suspend fun getBreakingNews(countryCode: String, pageNumber: Int) =
         RetrofitInstance.api.getTopHeadlines(countryCode, pageNumber)
 
+    // this function is to search in all the news in the api .. and it calls for searchForNews from the api interface ..
+    suspend fun searchNews(searchQuery: String, pageNumber: Int) =
+        RetrofitInstance.api.searchForNews(searchQuery, pageNumber)
+
+
+
 }

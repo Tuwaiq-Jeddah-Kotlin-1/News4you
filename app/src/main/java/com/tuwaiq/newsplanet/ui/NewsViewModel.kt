@@ -13,9 +13,11 @@ class NewsViewModel(val newsRepo: NewsRepo) : ViewModel() {
 
     // LiveData object ..
     val topHeadlineNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    val searchNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
 
     // I declare the page number here in the viewModel cuz if it's in the fragment it will reset with any change ..
     val topHeadlinesPage = 1
+    val searchNewsPage = 1
 
     init {
         getTopHeadlines("us")
@@ -28,9 +30,24 @@ class NewsViewModel(val newsRepo: NewsRepo) : ViewModel() {
         topHeadlineNews.postValue(handleHeadlinesNewsResponse(response))
     }
 
+    fun searchNews(searchQuery : String) = viewModelScope.launch {
+        searchNews.postValue(Resource.Loading())
+        var response = newsRepo.searchNews(searchQuery,searchNewsPage)
+        searchNews.postValue(handlesearchNewsResponse(response))
+    }
+
 
     // in this function I check if the response is successful or not and send the message to the Resource ..
     private fun handleHeadlinesNewsResponse(response: Response<NewsResponse>): Resource<NewsResponse> {
+        if (response.isSuccessful) {
+            response.body()?.let { resultResponse ->
+                return Resource.Success(resultResponse)
+            }
+        }
+        return Resource.Error(response.message())
+    }
+
+    private fun handlesearchNewsResponse(response: Response<NewsResponse>): Resource<NewsResponse> {
         if (response.isSuccessful) {
             response.body()?.let { resultResponse ->
                 return Resource.Success(resultResponse)

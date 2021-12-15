@@ -6,7 +6,7 @@
         <entry key="app/src/main/res/drawable-v24/ic_breaking_news.xml" value="0.20462962962962963" />
         <entry key="app/src/main/res/layout/activity_news.xml" value="0.15353260869565216" />
         <entry key="app/src/main/res/layout/forget_pass_fragment.xml" value="0.24322916666666666" />
-        <entry key="app/src/main/res/layout/fragment_article.xml" value="0.15353260869565216" />
+        <entry key="app/src/main/res/layout/fragment_article.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_breaking_news.xml" value="0.15353260869565216" />
         <entry key="app/src/main/res/layout/fragment_saved_news.xml" value="0.15353260869565216" />
         <entry key="app/src/main/res/layout/fragment_search_news.xml" value="0.15353260869565216" />

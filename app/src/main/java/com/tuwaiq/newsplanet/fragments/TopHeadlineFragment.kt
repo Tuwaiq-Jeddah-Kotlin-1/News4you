@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tuwaiq.newsplanet.R
 import com.tuwaiq.newsplanet.adapters.NewsAdapter
@@ -25,7 +26,16 @@ class TopHeadlineFragment : Fragment(R.layout.fragment_top_headlines_news) {
         viewModel = (activity as NewsActivity).viewModel
         setupRecyclerView()
 
-
+        // here I put the article in a bundle to pass it between the fragments ..
+        newsAdapter.setOnItemClickListener { article ->
+            val bundle = Bundle().apply {
+                putSerializable("article" , article)
+            }
+            findNavController().navigate(
+                R.id.action_topHeadLineNewsFragment_to_articleFragment,
+                bundle
+            )
+        }
 
         viewModel.topHeadlineNews.observe(viewLifecycleOwner, Observer { response ->
             when(response) {

@@ -10,7 +10,7 @@
         android:name="com.tuwaiq.newsplanet.fragments.TopHeadlineFragment"
         android:label="BreakingNewsFragment">
         <action
-            android:id="@+id/action_breakingNewsFragment_to_articleFragment"
+            android:id="@+id/action_topHeadLineNewsFragment_to_articleFragment"
             app:destination="@id/articleFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"

@@ -102,7 +102,7 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
 
                                 Toast.makeText(
                                     context,
-                                    "You loged in successfully",
+                                    "You lodged in successfully",
                                     Toast.LENGTH_LONG
                                 ).show()
 

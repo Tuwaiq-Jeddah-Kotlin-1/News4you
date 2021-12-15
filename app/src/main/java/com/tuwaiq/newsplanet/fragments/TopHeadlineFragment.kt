@@ -25,6 +25,8 @@ class TopHeadlineFragment : Fragment(R.layout.fragment_top_headlines_news) {
         viewModel = (activity as NewsActivity).viewModel
         setupRecyclerView()
 
+
+
         viewModel.topHeadlineNews.observe(viewLifecycleOwner, Observer { response ->
             when(response) {
                 is Resource.Success -> {

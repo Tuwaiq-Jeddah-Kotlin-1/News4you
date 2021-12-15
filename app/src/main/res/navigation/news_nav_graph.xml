@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/news_nav_graph"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/signInFragment">
 
     <fragment
         android:id="@+id/topHeadlineNewsFragment"
@@ -44,7 +44,11 @@
     <fragment
         android:id="@+id/articleFragment"
         android:name="com.tuwaiq.newsplanet.fragments.ArticleFragment"
-        android:label="ArticleFragment" />
+        android:label="ArticleFragment" >
+        <argument
+            android:name="article"
+            app:argType="com.tuwaiq.newsplanet.models.Article" />
+    </fragment>
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.tuwaiq.newsplanet.fragments.SignUpFragment"

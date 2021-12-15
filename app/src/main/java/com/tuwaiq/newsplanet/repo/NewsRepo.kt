@@ -3,6 +3,7 @@ package com.tuwaiq.newsplanet.repo
 
 import com.tuwaiq.newsplanet.api.RetrofitInstance
 import com.tuwaiq.newsplanet.db.ArticleDatabase
+import com.tuwaiq.newsplanet.models.Article
 
 // inside it an object from the database to access the functions in that database ..
 class NewsRepo(val db: ArticleDatabase) {
@@ -16,6 +17,11 @@ class NewsRepo(val db: ArticleDatabase) {
         RetrofitInstance.api.searchForNews(searchQuery, pageNumber)
 
 
+    suspend fun upsert(article: Article) = db.getArticleDao().upsert(article)
 
+    // this is not suspend cuz it's return a LiveData ..
+    fun getSavedNews() = db.getArticleDao().getAllArticles()
+
+    suspend fun deleteArticle(article: Article) = db.getArticleDao().deleteArticle(article)
 
 }

@@ -3,6 +3,7 @@ package com.tuwaiq.newsplanet.ui
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tuwaiq.newsplanet.models.Article
 import com.tuwaiq.newsplanet.models.NewsResponse
 import com.tuwaiq.newsplanet.repo.NewsRepo
 import com.tuwaiq.newsplanet.util.Resource
@@ -55,4 +56,18 @@ class NewsViewModel(val newsRepo: NewsRepo) : ViewModel() {
         }
         return Resource.Error(response.message())
     }
+
+    // this function uses a suspend function so it needs to use coroutines ..
+     fun saveArticle(article: Article) = viewModelScope.launch {
+         newsRepo.upsert(article)
+    }
+
+    fun getSavedNews() = newsRepo.getSavedNews()
+
+    // this is also a function uses a suspend function so it needs to use coroutines ..
+    fun deleteArticle(article: Article) = viewModelScope.launch {
+        newsRepo.deleteArticle(article)
+    }
+
+
 }

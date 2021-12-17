@@ -13,6 +13,9 @@ import com.tuwaiq.newsplanet.db.ArticleDatabase
 import com.tuwaiq.newsplanet.repo.NewsRepo
 import kotlinx.android.synthetic.main.activity_news.*
 
+
+public lateinit var bottomNavView: BottomNavigationView
+
 class NewsActivity : AppCompatActivity() {
 
     lateinit var viewModel: NewsViewModel
@@ -26,7 +29,7 @@ class NewsActivity : AppCompatActivity() {
             .findFragmentById(R.id.newsNavHostFragment) as NavHostFragment
         navController = navHostFragment.navController
 
-        val bottomNavView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomNavView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         bottomNavView.setupWithNavController(navController)
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {

@@ -18,6 +18,11 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.tuwaiq.newsplanet.R
+import com.tuwaiq.newsplanet.ui.bottomNavView
+import kotlinx.android.synthetic.main.activity_news.*
+import kotlinx.android.synthetic.main.fragment_search_news.*
+import kotlinx.android.synthetic.main.fragment_search_news.paginationProgressBar
+import kotlinx.android.synthetic.main.fragment_top_headlines_news.*
 import kotlinx.android.synthetic.main.sign_in_fragment.*
 
 
@@ -28,7 +33,7 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
     lateinit var passwordET: TextInputEditText
     lateinit var signInButton: Button
     lateinit var signUpTv: TextView
-    lateinit var forgetPassTV : TextView
+    lateinit var forgetPassTV: TextView
 
     private lateinit var sharedPreferences: SharedPreferences
 
@@ -39,13 +44,13 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
         val view = inflater.inflate(R.layout.sign_in_fragment, container, false)
-
 
         emailET = view.findViewById(R.id.emailET)
         passwordET = view.findViewById(R.id.passwordET)
@@ -54,8 +59,11 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
         forgetPassTV = view.findViewById(R.id.forgetPassTV)
 
         rememberMe = view.findViewById(R.id.cbRemember)
-        sharedPreferences = this.requireActivity().getSharedPreferences("preference", Context.MODE_PRIVATE)
+        sharedPreferences =
+            this.requireActivity().getSharedPreferences("preference", Context.MODE_PRIVATE)
         isRemembered = sharedPreferences.getBoolean("CHECKBOX", false)
+
+        bottomNavView.visibility = View.VISIBLE
 
 
         if (isRemembered) {

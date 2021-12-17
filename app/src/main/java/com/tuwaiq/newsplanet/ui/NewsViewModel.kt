@@ -17,8 +17,14 @@ class NewsViewModel(val newsRepo: NewsRepo) : ViewModel() {
     val searchNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
 
     // I declare the page number here in the viewModel cuz if it's in the fragment it will reset with any change ..
-    val topHeadlinesPage = 1
-    val searchNewsPage = 1
+    var topHeadlinesPage = 1
+    var searchNewsPage = 1
+
+
+    // this is saved here to handle the response if the activity or fragment changed .. like rotate for example ..
+    var topHeadlinesResponse : NewsResponse? = null
+    var searchNewsResponse : NewsResponse? = null
+
 
     init {
         getTopHeadlines("us")
@@ -34,7 +40,7 @@ class NewsViewModel(val newsRepo: NewsRepo) : ViewModel() {
     fun searchNews(searchQuery : String) = viewModelScope.launch {
         searchNews.postValue(Resource.Loading())
         var response = newsRepo.searchNews(searchQuery,searchNewsPage)
-        searchNews.postValue(handlesearchNewsResponse(response))
+        searchNews.postValue(handleSearchNewsResponse(response))
     }
 
 
@@ -42,16 +48,40 @@ class NewsViewModel(val newsRepo: NewsRepo) : ViewModel() {
     private fun handleHeadlinesNewsResponse(response: Response<NewsResponse>): Resource<NewsResponse> {
         if (response.isSuccessful) {
             response.body()?.let { resultResponse ->
-                return Resource.Success(resultResponse)
+                // first ingress the page number ..
+                topHeadlinesPage++
+                // check and set the topHeadlinesResponse ..
+                if(topHeadlinesResponse == null){
+                    topHeadlinesResponse = resultResponse
+                }else{
+                    // if there is a response already .. I pass the articles from the newResponse to the oldResponse ..
+                    val oldArticles = topHeadlinesResponse?.articles
+                    val newArticles = resultResponse.articles
+                    // i changes List<Article> to MutableList<Article> so i can add to it here ..
+                    oldArticles?.addAll(newArticles)
+                }
+                return Resource.Success(topHeadlinesResponse ?: resultResponse)
             }
         }
         return Resource.Error(response.message())
     }
 
-    private fun handlesearchNewsResponse(response: Response<NewsResponse>): Resource<NewsResponse> {
+    private fun handleSearchNewsResponse(response: Response<NewsResponse>): Resource<NewsResponse> {
         if (response.isSuccessful) {
             response.body()?.let { resultResponse ->
-                return Resource.Success(resultResponse)
+                // first ingress the page number ..
+                searchNewsPage++
+                // check and set the searchNewsResponse ..
+                if(searchNewsResponse == null){
+                    searchNewsResponse = resultResponse
+                }else{
+                    // if there is a response already .. I pass the articles from the newResponse to the oldResponse ..
+                    val oldArticles = searchNewsResponse?.articles
+                    val newArticles = resultResponse.articles
+                    // i changes List<Article> to MutableList<Article> so i can add to it here ..
+                    oldArticles?.addAll(newArticles)
+                }
+                return Resource.Success(searchNewsResponse ?: resultResponse)
             }
         }
         return Resource.Error(response.message())

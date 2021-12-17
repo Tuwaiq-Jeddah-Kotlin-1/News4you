@@ -17,7 +17,7 @@ class NewsRepo(val db: ArticleDatabase) {
         RetrofitInstance.api.searchForNews(searchQuery, pageNumber)
 
 
-    suspend fun upsert(article: Article) = db.getArticleDao().upsert(article)
+    suspend fun upsert(article: Article) = db.getArticleDao().insertArticle(article)
 
     // this is not suspend cuz it's return a LiveData ..
     fun getSavedNews() = db.getArticleDao().getAllArticles()

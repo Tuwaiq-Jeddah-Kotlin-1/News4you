@@ -72,7 +72,7 @@
             android:id="@+id/frameLayoutInLogeIn"
             android:layout_width="match_parent"
             android:layout_height="180dp"
-            android:background="@color/black"
+            android:background="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -82,7 +82,7 @@
                 android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:contentDescription="@string/logo_text"
-                android:src="@drawable/ic_launcher_foreground" />
+                android:src="@drawable/newsplanetlogo" />
         </FrameLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -157,7 +157,8 @@
             app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout0"
-            app:startIconDrawable="@drawable/ic_email">
+            app:startIconDrawable="@drawable/ic_baseline_email_24">
+
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/emailET"

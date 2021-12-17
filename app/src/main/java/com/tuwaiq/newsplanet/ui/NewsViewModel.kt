@@ -68,6 +68,4 @@ class NewsViewModel(val newsRepo: NewsRepo) : ViewModel() {
     fun deleteArticle(article: Article) = viewModelScope.launch {
         newsRepo.deleteArticle(article)
     }
-
-
 }

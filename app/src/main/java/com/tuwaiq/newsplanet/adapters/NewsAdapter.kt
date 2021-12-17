@@ -51,10 +51,10 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
         holder.itemView.apply {
             // to load the image from the api to my imageView I'm using Glide library ..
             Glide.with(this).load(article.urlToImage).into(ivArticleImage)
-            tvSource.text = article.source.name
+            //tvSource.text = article.source.name
             tvTitle.text = article.title
             tvDescription.text = article.description
-            tvPublishedAt.text = article.publishedAt
+            //tvPublishedAt.text = article.publishedAt
             setOnClickListener {
                 // here I used let to check if onClickListener is not null I call the fun with this article ..
                 onItemClickListener?.let {

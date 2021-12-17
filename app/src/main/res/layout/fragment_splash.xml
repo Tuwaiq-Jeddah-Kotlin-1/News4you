@@ -7,16 +7,31 @@
     android:layout_height="match_parent"
     tools:context=".fragments.SplashFragment">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="0dp"
-        android:layout_height="280dp"
-        android:layout_marginStart="65dp"
-        android:layout_marginEnd="65dp"
-        android:layout_marginBottom="224dp"
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="190dp"
+        android:layout_marginTop="270dp"
+        android:layout_marginEnd="190dp"
+        android:layout_marginBottom="270dp"
+        android:elevation="30dp"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:src="@drawable/newsplanetlogo2" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="223dp"
+            android:layout_height="198dp"
+            tools:src="@drawable/newsplanetlogo2" />
+
+
+    </androidx.cardview.widget.CardView>
+
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

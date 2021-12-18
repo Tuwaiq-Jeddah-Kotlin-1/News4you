@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.bumptech.glide.Glide
 import com.tuwaiq.newsplanet.R
 import com.tuwaiq.newsplanet.models.Article
@@ -49,8 +50,12 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         val article = mDiffer.currentList[position]
         holder.itemView.apply {
+
             // to load the image from the api to my imageView I'm using Glide library ..
-            Glide.with(this).load(article.urlToImage).into(ivArticleImage)
+            //Glide.with(this).load(article.urlToImage).into(ivArticleImage)
+
+            // trying coil ..
+            ivArticleImage.load(article.urlToImage)
             //tvSource.text = article.source.name
             tvTitle.text = article.title
             tvDescription.text = article.description

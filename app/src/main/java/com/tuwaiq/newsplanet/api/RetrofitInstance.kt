@@ -21,7 +21,7 @@ class RetrofitInstance {
                 .build()
             Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                // this will determine how the response will converte to from json response to kotlin object ..
+                // this will determine how the response will converted to from json response to kotlin object ..
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()

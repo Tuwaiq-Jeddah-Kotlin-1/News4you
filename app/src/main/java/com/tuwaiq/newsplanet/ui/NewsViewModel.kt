@@ -1,16 +1,23 @@
 package com.tuwaiq.newsplanet.ui
 
+import android.app.Application
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities.*
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tuwaiq.newsplanet.NewsApplication
 import com.tuwaiq.newsplanet.models.Article
 import com.tuwaiq.newsplanet.models.NewsResponse
 import com.tuwaiq.newsplanet.repo.NewsRepo
 import com.tuwaiq.newsplanet.util.Resource
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import java.io.IOException
 
-class NewsViewModel(val newsRepo: NewsRepo) : ViewModel() {
+// used AndroidViewModel to use the Application context in internet connection .. and able to use getApplication() ..
+class NewsViewModel(app : Application ,val newsRepo: NewsRepo) : AndroidViewModel(app) {
 
     // LiveData object ..
     val topHeadlineNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
@@ -32,15 +39,11 @@ class NewsViewModel(val newsRepo: NewsRepo) : ViewModel() {
 
     // this is a coroutines function I used with viewModelScope that will stay alive as long as this viewModel alive ..
     fun getTopHeadlines(countryCode: String) = viewModelScope.launch {
-        topHeadlineNews.postValue(Resource.Loading())
-        val response = newsRepo.getBreakingNews(countryCode, topHeadlinesPage)
-        topHeadlineNews.postValue(handleHeadlinesNewsResponse(response))
+        safeTopHeadlinesNewsCall(countryCode)
     }
 
     fun searchNews(searchQuery : String) = viewModelScope.launch {
-        searchNews.postValue(Resource.Loading())
-        var response = newsRepo.searchNews(searchQuery,searchNewsPage)
-        searchNews.postValue(handleSearchNewsResponse(response))
+        safeSearchNewsCall(searchQuery)
     }
 
 
@@ -97,5 +100,55 @@ class NewsViewModel(val newsRepo: NewsRepo) : ViewModel() {
     // this is also a function uses a suspend function so it needs to use coroutines ..
     fun deleteArticle(article: Article) = viewModelScope.launch {
         newsRepo.deleteArticle(article)
+    }
+
+    private suspend fun safeTopHeadlinesNewsCall(countryCode: String){
+        topHeadlineNews.postValue(Resource.Loading())
+        try {
+            if (hasInternetConnection()){
+                val response = newsRepo.getToHeadlinesNews(countryCode, topHeadlinesPage)
+                topHeadlineNews.postValue(handleHeadlinesNewsResponse(response))
+            }else {
+                topHeadlineNews.postValue(Resource.Error("No internet connection"))
+            }
+        }catch (t : Throwable){
+            when(t) {
+                // topHeadlines function could also cause an exception this why I need when here ..
+                is IOException -> topHeadlineNews.postValue(Resource.Error("Network Failure"))
+                else -> topHeadlineNews.postValue(Resource.Error("Another Error not IOException"))
+            }
+        }
+    }
+
+    private suspend fun safeSearchNewsCall(searchQuery: String){
+        topHeadlineNews.postValue(Resource.Loading())
+        try {
+            if (hasInternetConnection()){
+                val response = newsRepo.searchNews(searchQuery, searchNewsPage)
+                searchNews.postValue(handleSearchNewsResponse(response))
+            }else {
+                searchNews.postValue(Resource.Error("No internet connection"))
+            }
+        }catch (t : Throwable){
+            when(t) {
+                // topHeadlines function could also cause an exception this why I need when here ..
+                is IOException -> searchNews.postValue(Resource.Error("Network Failure"))
+                else -> searchNews.postValue(Resource.Error("Another Error not IOException"))
+            }
+        }
+    }
+
+    // this function is to check the internet connectivity .. cuz there are some things I don't want to run if there is no connection ..
+    fun hasInternetConnection() : Boolean {
+        val connectivityManager = getApplication<NewsApplication>().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        // here is to select wish function to use to check for connectivity cuz it's changed during apis updates ..
+            val activeNetwork = connectivityManager.activeNetwork ?: return false
+            val capabilities = connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
+            return when{
+                capabilities.hasTransport(TRANSPORT_WIFI) -> true
+                capabilities.hasTransport(TRANSPORT_CELLULAR) -> true
+                capabilities.hasTransport(TRANSPORT_ETHERNET) -> true
+                else -> false
+            }
     }
 }

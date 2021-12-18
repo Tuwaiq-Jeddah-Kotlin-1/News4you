@@ -9,7 +9,7 @@ import com.tuwaiq.newsplanet.models.Article
 class NewsRepo(val db: ArticleDatabase) {
 
     // this function is to get the top headlines from NewsApi .. and it's suspend cuz network functions are suspend ..
-    suspend fun getBreakingNews(countryCode: String, pageNumber: Int) =
+    suspend fun getToHeadlinesNews(countryCode: String, pageNumber: Int) =
         RetrofitInstance.api.getTopHeadlines(countryCode, pageNumber)
 
     // this function is to search in all the news in the api .. and it calls for searchForNews from the api interface ..

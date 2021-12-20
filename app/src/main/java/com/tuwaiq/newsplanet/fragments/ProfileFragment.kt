@@ -43,12 +43,15 @@ class ProfileFragment : Fragment(R.layout.profile_fragment) {
 
         val userUID = FirebaseAuth.getInstance().currentUser?.uid
         val docRef = db.collection("users").document("$userUID")
+
         docRef.get().addOnSuccessListener { documentSnapshot ->
             val user = documentSnapshot.toObject<User>()
             usernameTV.text = user!!.username
             emailTV.text = user.email
             phoneNumberTV.text = user.phoneNummber
         }
+
+
 
 
         signOutButton.setOnClickListener {

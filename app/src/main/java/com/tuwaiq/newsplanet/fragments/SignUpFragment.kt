@@ -17,6 +17,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.tuwaiq.newsplanet.R
 import com.tuwaiq.newsplanet.models.User
+import com.tuwaiq.newsplanet.ui.NewsActivity
+import com.tuwaiq.newsplanet.ui.NewsViewModel
 import kotlinx.android.synthetic.main.sign_up_fragment.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -37,6 +39,10 @@ class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
 
     lateinit var signUpButton: Button
 
+    lateinit var viewModel: NewsViewModel
+
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,6 +57,9 @@ class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
         phoneNumberET = view.findViewById(R.id.phoneNumberET)
         signUpButton = view.findViewById(R.id.signUpBtn)
         signInTV = view.findViewById(R.id.signInTV)
+
+        // to access the activity's ViewModel
+        viewModel = (activity as NewsActivity).viewModel
 
         signUpButton.setOnClickListener {
             when {
@@ -97,8 +106,6 @@ class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
         return view
     }
 
-
-
     fun saveUser(user: User) = CoroutineScope(Dispatchers.IO).launch {
         val userUid = FirebaseAuth.getInstance().currentUser!!.uid
         try {
@@ -112,6 +119,8 @@ class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
             }
         }
     }
+
+
 
 //    private fun addUser(user : User){
 //        userCollectionRef.add(user).addOnCompleteListener { task ->

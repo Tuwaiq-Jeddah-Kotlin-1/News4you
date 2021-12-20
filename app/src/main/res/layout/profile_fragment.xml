@@ -13,7 +13,7 @@
             android:id="@+id/frameLayoutInLogeIn"
             android:layout_width="0dp"
             android:layout_height="180dp"
-            android:background="@color/black"
+            android:background="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -22,11 +22,11 @@
                 android:layout_width="150dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_launcher_foreground" />
+                android:src="@drawable/ic_profile" />
         </FrameLayout>
 
         <TextView
-            android:id="@+id/txt_userName"
+            android:id="@+id/usernameTV"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginStart="16dp"
@@ -42,7 +42,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/txt_email"
+            android:id="@+id/emailTV"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginStart="16dp"
@@ -54,13 +54,13 @@
             android:gravity="center"
             android:text=" Email "
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@+id/txt_birthDay"
+            app:layout_constraintBottom_toBottomOf="@+id/phoneNumberTV"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/txt_userName" />
+            app:layout_constraintTop_toTopOf="@+id/usernameTV" />
 
         <TextView
-            android:id="@+id/txt_birthDay"
+            android:id="@+id/phoneNumberTV"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginStart="16dp"

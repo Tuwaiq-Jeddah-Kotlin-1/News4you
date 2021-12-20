@@ -13,11 +13,20 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.tuwaiq.newsplanet.R
+import com.tuwaiq.newsplanet.models.User
+import kotlinx.android.synthetic.main.sign_up_fragment.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
-class SignUpFragment : Fragment() {
+class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
 
-    //private val userCollectionRef = Firebase.firestore.collection("users")
+    private val userCollectionRef = Firebase.firestore.collection("users")
 
 
     lateinit var usernameET: TextInputEditText
@@ -46,27 +55,16 @@ class SignUpFragment : Fragment() {
         signUpButton.setOnClickListener {
             when {
                 TextUtils.isEmpty(emailET.text.toString().trim { it <= ' ' }) -> {
-                    Toast.makeText(
-                        context,
-                        "Please Enter Email",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    emailTextInputSignup.helperText = "*"
                 }
-
                 TextUtils.isEmpty(passwordET.text.toString().trim { it <= ' ' }) -> {
-                    Toast.makeText(
-                        context,
-                        "Please Enter Password",
-                        Toast.LENGTH_LONG
-                    ).show()
-
+                    passwordTextInputSignUp.helperText = "*"
                 }
                 else -> {
-                    val userID: String = FirebaseAuth.getInstance().currentUser?.uid.toString()
                     val userName: String = usernameET.text.toString().trim { it <= ' ' }
                     val email: String = emailET.text.toString().trim { it <= ' ' }
                     val password: String = passwordET.text.toString().trim { it <= ' ' }
-                    val birthday: String = phoneNumberET.text.toString().trim { it <= ' ' }
+                    val phoneNumber: String = phoneNumberET.text.toString().trim { it <= ' ' }
 
 
                     // create an instance and create a register with email and password
@@ -77,15 +75,8 @@ class SignUpFragment : Fragment() {
                             if (task.isSuccessful) {
                                 //firebase register user
                                 val firebaseUser: FirebaseUser = task.result!!.user!!
-                                //val user = User(userID, userName, email, birthday)
-                                //saveUser(user)
-
-                                Toast.makeText(
-                                    context,
-                                    "You were registered successfully",
-                                    Toast.LENGTH_LONG
-                                ).show()
-
+                                val user = User(userName, email, phoneNumber)
+                                saveUser(user)
                                 findNavController().navigate(R.id.action_signUpFragment_to_topHeadlineFragment)
                             } else {
                                 // if the registration is not successful then show error massage
@@ -100,10 +91,6 @@ class SignUpFragment : Fragment() {
             }
         }
 
-        phoneNumberET.setOnClickListener {
-
-        }
-
         signInTV.setOnClickListener {
             findNavController().navigate(R.id.action_signUpFragment_to_signInFragment)
         }
@@ -112,17 +99,29 @@ class SignUpFragment : Fragment() {
 
 
 
-//    fun saveUser(user: User) = CoroutineScope(Dispatchers.IO).launch {
-//        val userUid = FirebaseAuth.getInstance().currentUser!!.uid
-//        try {
-//            userCollectionRef.document("$userUid").set(user).await()
-//            withContext(Dispatchers.Main) {
+    fun saveUser(user: User) = CoroutineScope(Dispatchers.IO).launch {
+        val userUid = FirebaseAuth.getInstance().currentUser!!.uid
+        try {
+            userCollectionRef.document("$userUid").set(user).await()
+            withContext(Dispatchers.Main) {
+                Toast.makeText(context, "Successfully saved data", Toast.LENGTH_LONG).show()
+            }
+        } catch (e: Exception) {
+            withContext(Dispatchers.Main) {
+                Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+//    private fun addUser(user : User){
+//        userCollectionRef.add(user).addOnCompleteListener { task ->
+//            if(task.isSuccessful){
 //                Toast.makeText(context, "Successfully saved data", Toast.LENGTH_LONG).show()
+//            } else{
+//                Toast.makeText(context, "error", Toast.LENGTH_LONG).show()
 //            }
-//        } catch (e: Exception) {
-//            withContext(Dispatchers.Main) {
-//                Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
-//            }
+//        }.addOnFailureListener {
+//            println(it.message)
 //        }
 //    }
 }

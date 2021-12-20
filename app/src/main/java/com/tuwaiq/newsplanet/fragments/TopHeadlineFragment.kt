@@ -68,7 +68,7 @@ class TopHeadlineFragment : Fragment(R.layout.fragment_top_headlines_news) {
                 is Resource.Error -> {
                     hideProgressBar()
                     response.message?.let { message ->
-                        Toast.makeText(activity , "An error occured: $message" , Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity , "An error occurred: $message" , Toast.LENGTH_SHORT).show()
                     }
                 }
                 is Resource.Loading -> {

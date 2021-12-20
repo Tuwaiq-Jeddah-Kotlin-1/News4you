@@ -47,7 +47,7 @@ class NewsViewModel(app : Application ,val newsRepo: NewsRepo) : AndroidViewMode
 
 
     init {
-        getTopHeadlines("us")
+        getTopHeadlines("sa")
     }
 
     // this is a coroutines function I used with viewModelScope that will stay alive as long as this viewModel alive ..
@@ -164,6 +164,8 @@ class NewsViewModel(app : Application ,val newsRepo: NewsRepo) : AndroidViewMode
                 else -> false
             }
     }
+
+
 
 
 }

@@ -11,7 +11,7 @@ interface NewsAPI {
     @GET("v2/top-headlines")
     suspend fun getTopHeadlines(
         @Query("country")
-        counteryCode : String = "es",
+        counteryCode : String = "us",
         @Query("page")
         pageNumber : Int = 1,
         @Query("apiKey")

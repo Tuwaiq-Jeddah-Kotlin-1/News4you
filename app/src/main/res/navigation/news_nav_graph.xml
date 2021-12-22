@@ -69,7 +69,9 @@
             app:destination="@id/signUpFragment" />
         <action
             android:id="@+id/action_signInFragment_to_topHeadlineFragment"
-            app:destination="@id/topHeadlineNewsFragment" />
+            app:destination="@id/topHeadlineNewsFragment"
+            app:popUpTo="@id/news_nav_graph"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_signInFragment_to_forgotPassFragment"
             app:destination="@id/forgotPassFragment" />
@@ -97,6 +99,8 @@
         tools:layout="@layout/fragment_splash" >
         <action
             android:id="@+id/action_splashFragment_to_signInFragment"
-            app:destination="@id/signInFragment" />
+            app:destination="@id/signInFragment"
+            app:popUpTo="@id/news_nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

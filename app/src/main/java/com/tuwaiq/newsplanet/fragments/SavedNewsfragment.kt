@@ -41,7 +41,7 @@ class SavedNewsfragment : Fragment(R.layout.fragment_saved_news) {
         // For swipe ..
         val itemTouchHelper = object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.UP or ItemTouchHelper.DOWN,
-        ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
         ){
             override fun onMove(
                 recyclerView: RecyclerView,

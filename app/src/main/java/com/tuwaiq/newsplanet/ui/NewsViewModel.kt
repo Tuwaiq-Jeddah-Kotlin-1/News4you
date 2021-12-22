@@ -45,6 +45,9 @@ class NewsViewModel(app : Application ,val newsRepo: NewsRepo) : AndroidViewMode
     var topHeadlinesResponse : NewsResponse? = null
     var searchNewsResponse : NewsResponse? = null
 
+    var newSearchQuery:String? = null
+    var oldSearchQuery:String? = null
+
 
     init {
         getTopHeadlines("sa")
@@ -82,15 +85,18 @@ class NewsViewModel(app : Application ,val newsRepo: NewsRepo) : AndroidViewMode
         return Resource.Error(response.message())
     }
 
-    private fun handleSearchNewsResponse(response: Response<NewsResponse>): Resource<NewsResponse> {
-        if (response.isSuccessful) {
+
+    private fun handleSearchNewsResponse(response: Response<NewsResponse>) : Resource<NewsResponse> {
+        if(response.isSuccessful) {
             response.body()?.let { resultResponse ->
-                // first ingress the page number ..
-                searchNewsPage++
                 // check and set the searchNewsResponse ..
-                if(searchNewsResponse == null){
+                if(searchNewsResponse == null || newSearchQuery != oldSearchQuery) {
+                    searchNewsPage = 1
+                    oldSearchQuery = newSearchQuery
                     searchNewsResponse = resultResponse
-                }else{
+                } else {
+                    // first ingress the page number ..
+                    searchNewsPage++
                     // if there is a response already .. I pass the articles from the newResponse to the oldResponse ..
                     val oldArticles = searchNewsResponse?.articles
                     val newArticles = resultResponse.articles
@@ -133,23 +139,24 @@ class NewsViewModel(app : Application ,val newsRepo: NewsRepo) : AndroidViewMode
         }
     }
 
-    private suspend fun safeSearchNewsCall(searchQuery: String){
-        topHeadlineNews.postValue(Resource.Loading())
+    private suspend fun safeSearchNewsCall(searchQuery: String) {
+        newSearchQuery = searchQuery
+        searchNews.postValue(Resource.Loading())
         try {
-            if (hasInternetConnection()){
+            if(hasInternetConnection()) {
                 val response = newsRepo.searchNews(searchQuery, searchNewsPage)
                 searchNews.postValue(handleSearchNewsResponse(response))
-            }else {
+            } else {
                 searchNews.postValue(Resource.Error("No internet connection"))
             }
-        }catch (t : Throwable){
+        } catch(t: Throwable) {
             when(t) {
-                // topHeadlines function could also cause an exception this why I need when here ..
                 is IOException -> searchNews.postValue(Resource.Error("Network Failure"))
-                else -> searchNews.postValue(Resource.Error("Another Error not IOException"))
+                else -> searchNews.postValue(Resource.Error("Conversion Error"))
             }
         }
     }
+
 
     // this function is to check the internet connectivity .. cuz there are some things I don't want to run if there is no connection ..
     fun hasInternetConnection() : Boolean {

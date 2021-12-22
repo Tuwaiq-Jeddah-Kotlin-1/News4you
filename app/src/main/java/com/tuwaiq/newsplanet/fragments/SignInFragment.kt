@@ -28,7 +28,6 @@ import kotlinx.android.synthetic.main.sign_in_fragment.*
 
 class SignInFragment : Fragment(R.layout.sign_in_fragment) {
 
-
     lateinit var emailET: TextInputEditText
     lateinit var passwordET: TextInputEditText
     lateinit var signInButton: Button
@@ -100,6 +99,7 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
 
                                 val emailPreference: String = email
                                 val passwordPreference: String = password
+
                                 val checked: Boolean = rememberMe.isChecked
 
                                 val editor: SharedPreferences.Editor = sharedPreferences.edit()

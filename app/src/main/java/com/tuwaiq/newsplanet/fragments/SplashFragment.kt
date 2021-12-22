@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.window.SplashScreen
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateSizeAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -18,6 +19,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -58,6 +60,13 @@ class SplashFragment : Fragment() {
                 durationMillis = 1000
             )
         )
+
+        val sizeState by animateSizeAsState(
+            targetValue = if (startAnim) Size(150.0f, 150.0f) else Size(0.0f, 0.0f),
+            animationSpec = tween(durationMillis = 2000)
+        )
+
+
         LaunchedEffect(key1 = true ){
             startAnim = true
             delay(3000L)
@@ -65,7 +74,10 @@ class SplashFragment : Fragment() {
         }
         Box(modifier = Modifier.fillMaxSize() , contentAlignment = Alignment.Center) {
             //Card(modifier = Modifier.size(width = 250.dp , height = 200.dp).offset(y=offSetState), elevation = 10.dp) {
-                Image(modifier = Modifier.size(150.dp).offset(y=offSetState),painter = painterResource(id = R.drawable.newsplanetlogo2), contentDescription = "App Logo")
+                Image(modifier = Modifier
+                    .size(sizeState.width.dp , sizeState.height.dp)
+                    //.size(150.dp)
+                    .offset(y = offSetState),painter = painterResource(id = R.drawable.newsplanetlogo2), contentDescription = "App Logo")
             //}
         }
     }

@@ -126,7 +126,7 @@
             app:counterMaxLength="10"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/passwordTextInputSignUp"
+            app:layout_constraintTop_toBottomOf="@+id/passwordTextInputSignIn"
             >
 
             <com.google.android.material.textfield.TextInputEditText
@@ -145,7 +145,7 @@
             app:layout_constraintGuide_percent="0.25" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/emailTextInputSignup"
+            android:id="@+id/emailTextInputSignIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
@@ -171,7 +171,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/passwordTextInputSignUp"
+            android:id="@+id/passwordTextInputSignIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
@@ -185,7 +185,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/emailTextInputSignup"
+            app:layout_constraintTop_toBottomOf="@+id/emailTextInputSignIn"
             app:passwordToggleEnabled="true"
             app:startIconDrawable="@drawable/ic_password">
 

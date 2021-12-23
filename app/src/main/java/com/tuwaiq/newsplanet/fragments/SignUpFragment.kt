@@ -64,10 +64,10 @@ class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
         signUpButton.setOnClickListener {
             when {
                 TextUtils.isEmpty(emailET.text.toString().trim { it <= ' ' }) -> {
-                    emailTextInputSignup.helperText = "*"
+                    emailTextInputSignIn.helperText = "* Required"
                 }
                 TextUtils.isEmpty(passwordET.text.toString().trim { it <= ' ' }) -> {
-                    passwordTextInputSignUp.helperText = "*"
+                    passwordTextInputSignIn.helperText = "* Required"
                 }
                 else -> {
                     val userName: String = usernameET.text.toString().trim { it <= ' ' }

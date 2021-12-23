@@ -101,7 +101,7 @@
         </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/passwordTextInputSignUp"
+            android:id="@+id/passwordTextInputSignIn"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
@@ -114,7 +114,7 @@
             app:helperTextTextColor="#D50000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/emailTextInputSignup"
+            app:layout_constraintTop_toBottomOf="@+id/emailTextInputSignIn"
             app:startIconDrawable="@drawable/ic_password">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -133,11 +133,11 @@
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/passwordTextInputSignUp"
-            app:layout_constraintTop_toBottomOf="@+id/passwordTextInputSignUp" />
+            app:layout_constraintStart_toStartOf="@+id/passwordTextInputSignIn"
+            app:layout_constraintTop_toBottomOf="@+id/passwordTextInputSignIn" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/emailTextInputSignup"
+            android:id="@+id/emailTextInputSignIn"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
@@ -174,7 +174,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/passwordTextInputSignUp" />
+            app:layout_constraintTop_toBottomOf="@+id/passwordTextInputSignIn" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

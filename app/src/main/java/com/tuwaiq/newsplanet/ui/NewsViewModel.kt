@@ -4,24 +4,17 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities.*
-import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.tuwaiq.newsplanet.NewsApplication
 import com.tuwaiq.newsplanet.models.Article
 import com.tuwaiq.newsplanet.models.NewsResponse
-import com.tuwaiq.newsplanet.models.User
 import com.tuwaiq.newsplanet.repo.NewsRepo
 import com.tuwaiq.newsplanet.util.Resource
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
 import retrofit2.Response
 import java.io.IOException
 
@@ -171,8 +164,4 @@ class NewsViewModel(app : Application ,val newsRepo: NewsRepo) : AndroidViewMode
                 else -> false
             }
     }
-
-
-
-
 }

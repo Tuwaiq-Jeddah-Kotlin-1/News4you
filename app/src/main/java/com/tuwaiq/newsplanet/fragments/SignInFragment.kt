@@ -15,6 +15,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.tuwaiq.newsplanet.R
@@ -24,6 +25,8 @@ import kotlinx.android.synthetic.main.fragment_search_news.*
 import kotlinx.android.synthetic.main.fragment_search_news.paginationProgressBar
 import kotlinx.android.synthetic.main.fragment_top_headlines_news.*
 import kotlinx.android.synthetic.main.sign_in_fragment.*
+import kotlinx.android.synthetic.main.sign_in_fragment.emailTextInputSignIn
+import kotlinx.android.synthetic.main.sign_up_fragment.*
 
 
 class SignInFragment : Fragment(R.layout.sign_in_fragment) {
@@ -33,6 +36,8 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
     lateinit var signInButton: Button
     lateinit var signUpTv: TextView
     lateinit var forgetPassTV: TextView
+    lateinit var emailTextInputLayout : TextInputLayout
+    lateinit var passwordTextInputLayout : TextInputLayout
 
     private lateinit var sharedPreferences: SharedPreferences
 
@@ -56,6 +61,8 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
         signInButton = view.findViewById(R.id.signInBtn)
         signUpTv = view.findViewById(R.id.signupTV)
         forgetPassTV = view.findViewById(R.id.forgetPassTV)
+        emailTextInputLayout = view.findViewById(R.id.emailTextInputSignIn)
+        passwordTextInputLayout = view.findViewById(R.id.passwordTextInputSignIn)
 
         rememberMe = view.findViewById(R.id.cbRemember)
         sharedPreferences =
@@ -75,18 +82,10 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
             Toast.makeText(context, "Data Stored", Toast.LENGTH_SHORT).show()
             when {
                 TextUtils.isEmpty(emailET.text.toString().trim { it <= ' ' }) -> {
-                    Toast.makeText(
-                        context,
-                        "Please Enter Email",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    emailTextInputLayout.helperText = "* Required"
                 }
                 TextUtils.isEmpty(passwordET.text.toString().trim { it <= ' ' }) -> {
-                    Toast.makeText(
-                        context,
-                        "Please Enter Password",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    passwordTextInputLayout.helperText = "* Required"
                 }
                 else -> {
                     val email: String = emailET.text.toString().trim { it <= ' ' }

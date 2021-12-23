@@ -54,7 +54,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.587"
             app:layout_constraintStart_toEndOf="@+id/backToLoginBtn"
-            app:layout_constraintTop_toBottomOf="@+id/emailTextInputSignup"
+            app:layout_constraintTop_toBottomOf="@+id/emailTextInputSignIn"
             app:shapeAppearanceOverlay="@style/Button1" />
 
         <androidx.constraintlayout.widget.Guideline
@@ -82,13 +82,13 @@
             android:layout_marginBottom="51dp"
             android:text="Forgot Password"
             android:textSize="40sp"
-            app:layout_constraintBottom_toTopOf="@+id/emailTextInputSignup"
+            app:layout_constraintBottom_toTopOf="@+id/emailTextInputSignIn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/frameLayoutInLogeIn" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/emailTextInputSignup"
+            android:id="@+id/emailTextInputSignIn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="50dp"

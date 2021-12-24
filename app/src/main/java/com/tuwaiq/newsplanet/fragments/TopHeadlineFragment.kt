@@ -54,7 +54,7 @@ class TopHeadlineFragment : Fragment(R.layout.fragment_top_headlines_news) {
             )
         }
 
-        viewModel.topHeadlineNews.observe(viewLifecycleOwner, Observer { response ->
+        viewModel.topHeadlineNewsWithCategory.observe(viewLifecycleOwner, Observer { response ->
             when(response) {
                 is Resource.Success -> {
                     hideProgressBar()
@@ -64,7 +64,7 @@ class TopHeadlineFragment : Fragment(R.layout.fragment_top_headlines_news) {
                         newsAdapter.mDiffer.submitList(newsResponse.articles.toList())
                         // totalResults is How many results in the response .. +2 cuz last page is always empty and 1 for the rounding ..
                         val totalPages = newsResponse.totalResults / QUERY_PAGE_SIZE + 2
-                        isLastPage = viewModel.topHeadlinesPage == totalPages
+                        isLastPage = viewModel.topHeadlinesPageWithCategoryPage == totalPages
                         if(isLastPage){
                             rvTopHeadlines.setPadding(0,0,0,0)
                         }
@@ -128,7 +128,7 @@ class TopHeadlineFragment : Fragment(R.layout.fragment_top_headlines_news) {
             val shouldPaging = isNotLoadingAndNotLastPage && isAtLastItem && isNotAtTheBeginning && isTotalMoreThanVisible && isScrolling
 
             if(shouldPaging){
-                viewModel.getTopHeadlines("us")
+                viewModel.getTopHeadlinesWithCategory("us" , "business")
                 isScrolling = false
             }
         }

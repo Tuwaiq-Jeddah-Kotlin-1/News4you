@@ -94,7 +94,6 @@ class ProfileFragment() : Fragment( R.layout.profile_fragment) {
             FirebaseAuth.getInstance().signOut()
             findNavController().navigate(R.id.action_profileFragment_to_signInFragment)
         }
-
     }
 
     // this block of code acts like liveData .. This will work perfectly with our events RV

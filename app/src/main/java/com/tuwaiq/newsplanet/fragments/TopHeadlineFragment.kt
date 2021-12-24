@@ -1,17 +1,24 @@
 package com.tuwaiq.newsplanet.fragments
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.AbsListView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.BlendModeColorFilterCompat
+import androidx.core.graphics.BlendModeCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.tuwaiq.newsplanet.R
 import com.tuwaiq.newsplanet.adapters.NewsAdapter
+import com.tuwaiq.newsplanet.adapters.TabsPagerAdapter
 import com.tuwaiq.newsplanet.ui.NewsActivity
 import com.tuwaiq.newsplanet.ui.NewsViewModel
 import com.tuwaiq.newsplanet.ui.bottomNavView
@@ -27,16 +34,85 @@ class TopHeadlineFragment : Fragment(R.layout.fragment_top_headlines_news) {
     lateinit var viewModel: NewsViewModel
     lateinit var newsAdapter: NewsAdapter
 
-
-
-    val TAG = "TopHeadlinesFragment"
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).viewModel
         bottomNavView.visibility = View.VISIBLE
 
+        // Tabs Customization
+        tab_layout.setSelectedTabIndicatorColor(Color.WHITE)
+        tab_layout.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorPrimary))
+        tab_layout.tabTextColors = ContextCompat.getColorStateList(requireContext(), R.color.white)
+
+        // Set different Text Color for Tabs for when are selected or not
+        //tab_layout.setTabTextColors(R.color.normalTabTextColor, R.color.selectedTabTextColor)
+
+        // Number Of Tabs
+        val numberOfTabs = 7
+
+        // Set Tabs in the center
+        //tab_layout.tabGravity = TabLayout.GRAVITY_CENTER
+
+        // Show all Tabs in screen
+        tab_layout.tabMode = TabLayout.MODE_SCROLLABLE
+
+        // Scroll to see all Tabs
+        //tab_layout.tabMode = TabLayout.MODE_SCROLLABLE
+
+        // Set Tab icons next to the text, instead above the text
+        tab_layout.isInlineLabel = true
+
+        // Set the ViewPager Adapter
+        val adapter = TabsPagerAdapter(getParentFragmentManager() , lifecycle, numberOfTabs)
+        tabs_viewpager.adapter = adapter
+
+        // Enable Swipe
+        tabs_viewpager.isUserInputEnabled = true
+
+        // Link the TabLayout and the ViewPager2 together and Set Text & Icons
+        TabLayoutMediator(tab_layout, tabs_viewpager) { tab, position ->
+            when (position) {
+                0 -> {
+                    tab.text = "Music"
+                    tab.setIcon(R.drawable.ic_science)
+                }
+                1 -> {
+                    tab.text = "Movies"
+                    tab.setIcon(R.drawable.ic_sport)
+
+                }
+                2 -> {
+                    tab.text = "Books"
+                    tab.setIcon(R.drawable.ic_science)
+                }
+                3 -> {
+                    tab.text = "Books"
+                    tab.setIcon(R.drawable.ic_sport)
+                }
+                4 -> {
+                    tab.text = "Books"
+                    tab.setIcon(R.drawable.ic_science)
+                }
+                5 -> {
+                    tab.text = "Books"
+                    tab.setIcon(R.drawable.ic_science)
+                }
+                6 -> {
+                    tab.text = "Books"
+                    tab.setIcon(R.drawable.ic_science)
+                }
+            }
+            // Change color of the icons
+            tab.icon?.colorFilter =
+                BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
+                    Color.WHITE,
+                    BlendModeCompat.SRC_ATOP
+                )
+        }.attach()
+
         setupRecyclerView()
+
+
 
         // here I put the article in a bundle to pass it between the fragments ..
         newsAdapter.setOnItemClickListener { article ->

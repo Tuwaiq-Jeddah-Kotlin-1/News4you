@@ -28,6 +28,8 @@ class NewsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news)
 
+        getSupportActionBar()?.elevation = 0F
+
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.newsNavHostFragment) as NavHostFragment
         navController = navHostFragment.navController

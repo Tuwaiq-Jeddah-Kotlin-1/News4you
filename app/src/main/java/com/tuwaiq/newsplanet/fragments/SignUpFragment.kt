@@ -19,6 +19,7 @@ import com.tuwaiq.newsplanet.R
 import com.tuwaiq.newsplanet.models.User
 import com.tuwaiq.newsplanet.ui.NewsActivity
 import com.tuwaiq.newsplanet.ui.NewsViewModel
+import com.tuwaiq.newsplanet.ui.bottomNavView
 import kotlinx.android.synthetic.main.sign_up_fragment.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -49,8 +50,6 @@ class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
     ): View? {
         val view = inflater.inflate(R.layout.sign_up_fragment, container, false)
 
-
-
         usernameET = view.findViewById(R.id.usernameET)
         emailET = view.findViewById(R.id.emailET)
         passwordET = view.findViewById(R.id.passwordET)
@@ -58,8 +57,11 @@ class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
         signUpButton = view.findViewById(R.id.signUpBtn)
         signInTV = view.findViewById(R.id.signInTV)
 
+        bottomNavView.visibility = View.INVISIBLE
+
         // to access the activity's ViewModel
         viewModel = (activity as NewsActivity).viewModel
+
 
         signUpButton.setOnClickListener {
             when {
@@ -85,7 +87,7 @@ class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
                                 //firebase register user
                                 val firebaseUser: FirebaseUser = task.result!!.user!!
                                 val user = User(userName, email, phoneNumber)
-                                saveUser(user)
+                                viewModel.saveUser(user)
                                 findNavController().navigate(R.id.action_signUpFragment_to_topHeadlineFragment)
                             } else {
                                 // if the registration is not successful then show error massage
@@ -105,32 +107,4 @@ class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
         }
         return view
     }
-
-    fun saveUser(user: User) = CoroutineScope(Dispatchers.IO).launch {
-        val userUid = FirebaseAuth.getInstance().currentUser!!.uid
-        try {
-            userCollectionRef.document("$userUid").set(user).await()
-            withContext(Dispatchers.Main) {
-                Toast.makeText(context, "Successfully saved data", Toast.LENGTH_LONG).show()
-            }
-        } catch (e: Exception) {
-            withContext(Dispatchers.Main) {
-                Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
-            }
-        }
-    }
-
-
-
-//    private fun addUser(user : User){
-//        userCollectionRef.add(user).addOnCompleteListener { task ->
-//            if(task.isSuccessful){
-//                Toast.makeText(context, "Successfully saved data", Toast.LENGTH_LONG).show()
-//            } else{
-//                Toast.makeText(context, "error", Toast.LENGTH_LONG).show()
-//            }
-//        }.addOnFailureListener {
-//            println(it.message)
-//        }
-//    }
 }

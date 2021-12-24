@@ -32,45 +32,12 @@ class NewsActivity : AppCompatActivity() {
             .findFragmentById(R.id.newsNavHostFragment) as NavHostFragment
         navController = navHostFragment.navController
 
-        bottomNavView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomNavView = findViewById(R.id.bottomNavigationView)
         bottomNavView.setupWithNavController(navController)
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            when (destination.id) {
-                R.id.signInFragment -> {
-                    bottomNavView.visibility = View.GONE
-                }
-                R.id.signUpFragment -> {
-                    bottomNavView.visibility = View.GONE
-                }
-                else -> {
-                    bottomNavView.visibility = View.VISIBLE
-                }
-            }
-        }
+        bottomNavView.visibility = View.INVISIBLE
 
         val newsRepository = NewsRepo(ArticleDatabase(this))
         val viewModelProviderFactory = NewsViewModelProviderFactory(application , newsRepository)
         viewModel = ViewModelProvider(this, viewModelProviderFactory).get(NewsViewModel::class.java)
-        bottomNavigationView.setupWithNavController(navController)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_menu , menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.share_menu) {
-            val shareIntent = Intent().apply {
-                this.action = Intent.ACTION_SEND
-                this.putExtra(Intent.EXTRA_TEXT, "News Planet is the best app to track top news ..")
-                this.type = "text/plain"
-            }
-            startActivity(shareIntent)
-        }else{
-            return super.onOptionsItemSelected(item)
-
-        }
-        return true
     }
 }

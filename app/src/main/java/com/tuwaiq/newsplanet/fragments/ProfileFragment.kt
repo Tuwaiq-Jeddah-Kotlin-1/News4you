@@ -4,9 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -29,7 +32,7 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.lang.Exception
 
-class ProfileFragment : Fragment(R.layout.profile_fragment) {
+class ProfileFragment() : Fragment( R.layout.profile_fragment) {
 
     lateinit var updateBBtn : Button
     lateinit var signOutButton : Button
@@ -41,8 +44,26 @@ class ProfileFragment : Fragment(R.layout.profile_fragment) {
     val userCollectionRef = Firebase.firestore.collection("users")
     val db = FirebaseFirestore.getInstance()
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+
+
+
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // to access the activity's ViewModel ..
+        viewModel = (activity as NewsActivity).viewModel
+
+
 
         signOutButton = view.findViewById(R.id.btn_logout)
 
@@ -56,6 +77,7 @@ class ProfileFragment : Fragment(R.layout.profile_fragment) {
             emailTV.text = user.email
             phoneNumberTV.text = user.phoneNumber
         }
+
 
 
         btn_update.setOnClickListener {
@@ -72,8 +94,7 @@ class ProfileFragment : Fragment(R.layout.profile_fragment) {
             FirebaseAuth.getInstance().signOut()
             findNavController().navigate(R.id.action_profileFragment_to_signInFragment)
         }
-        // to access the activity's ViewModel ..
-        viewModel = (activity as NewsActivity).viewModel
+
     }
 
     // this block of code acts like liveData .. This will work perfectly with our events RV

@@ -35,6 +35,7 @@ class TopHeadlineFragment : Fragment(R.layout.fragment_top_headlines_news) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).viewModel
         bottomNavView.visibility = View.VISIBLE
+
         setupRecyclerView()
 
         // here I put the article in a bundle to pass it between the fragments ..
@@ -124,9 +125,6 @@ class TopHeadlineFragment : Fragment(R.layout.fragment_top_headlines_news) {
             if(shouldPaging){
                 viewModel.getTopHeadlines("us")
                 isScrolling = false
-//            }else{
-//                // this function is to resete the padding for the progress bar to take it's own space and not overlapping my recycler ..
-//                //rvTopHeadlines.setPadding(0,0,0,0)
             }
         }
 

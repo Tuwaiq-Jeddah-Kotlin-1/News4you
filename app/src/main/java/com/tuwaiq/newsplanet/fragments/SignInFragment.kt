@@ -64,12 +64,14 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
         emailTextInputLayout = view.findViewById(R.id.emailTextInputSignIn)
         passwordTextInputLayout = view.findViewById(R.id.passwordTextInputSignIn)
 
+
+
         rememberMe = view.findViewById(R.id.cbRemember)
         sharedPreferences =
             this.requireActivity().getSharedPreferences("preference", Context.MODE_PRIVATE)
         isRemembered = sharedPreferences.getBoolean("CHECKBOX", false)
 
-        bottomNavView.visibility = View.VISIBLE
+        bottomNavView.visibility = View.INVISIBLE
 
 
         if (isRemembered) {

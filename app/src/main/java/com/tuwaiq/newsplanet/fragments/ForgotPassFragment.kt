@@ -11,6 +11,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.tuwaiq.newsplanet.R
 import com.tuwaiq.newsplanet.ui.NewsActivity
 import com.tuwaiq.newsplanet.ui.NewsViewModel
+import com.tuwaiq.newsplanet.ui.bottomNavView
 
 class ForgotPassFragment : Fragment(R.layout.forget_pass_fragment) {
     lateinit var viewModel: NewsViewModel
@@ -24,6 +25,9 @@ class ForgotPassFragment : Fragment(R.layout.forget_pass_fragment) {
         backBtn = view.findViewById(R.id.backToLoginBtn)
         reseteBtn = view.findViewById(R.id.resetePassBtn)
         forgotPassET = view.findViewById(R.id.forgotEmailET)
+
+
+        bottomNavView.visibility = View.INVISIBLE
 
         backBtn.setOnClickListener{
             findNavController().navigate(R.id.action_forgotPassFragment_to_signInFragment)

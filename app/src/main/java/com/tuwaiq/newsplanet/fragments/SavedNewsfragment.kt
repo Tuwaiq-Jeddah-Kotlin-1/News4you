@@ -25,6 +25,7 @@ class SavedNewsfragment : Fragment(R.layout.fragment_saved_news) {
 
         // to access the activity's ViewModel
         viewModel = (activity as NewsActivity).viewModel
+
         setupRecyclerView()
 
         // here I put the article in a bundle to pass it between the fragments ..

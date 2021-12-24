@@ -10,12 +10,13 @@
         <entry key="..\:/Users/Darker/AndroidStudioprojects/NewsPlanet/app/src/main/res/layout/fragment_splash.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Darker/AndroidStudioprojects/NewsPlanet/app/src/main/res/layout/fragment_top_headlines_news.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Darker/AndroidStudioprojects/NewsPlanet/app/src/main/res/layout/item_article_preview.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Darker/AndroidStudioprojects/NewsPlanet/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.36666666666666664" />
         <entry key="app/src/main/res/drawable-v24/ic_breaking_news.xml" value="0.20462962962962963" />
         <entry key="app/src/main/res/drawable/ic_profile.xml" value="0.20871794871794871" />
         <entry key="app/src/main/res/layout/activity_news.xml" value="0.15353260869565216" />
         <entry key="app/src/main/res/layout/bottom_sheet_update.xml" value="0.25" />
         <entry key="app/src/main/res/layout/forget_pass_fragment.xml" value="0.24322916666666666" />
-        <entry key="app/src/main/res/layout/fragment_article.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/fragment_article.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_breaking_news.xml" value="0.15353260869565216" />
         <entry key="app/src/main/res/layout/fragment_saved_news.xml" value="0.15353260869565216" />
         <entry key="app/src/main/res/layout/fragment_search_news.xml" value="0.15353260869565216" />

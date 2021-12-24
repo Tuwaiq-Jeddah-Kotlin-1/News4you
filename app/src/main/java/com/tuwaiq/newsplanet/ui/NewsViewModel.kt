@@ -4,22 +4,29 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities.*
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.tuwaiq.newsplanet.NewsApplication
 import com.tuwaiq.newsplanet.models.Article
 import com.tuwaiq.newsplanet.models.NewsResponse
+import com.tuwaiq.newsplanet.models.User
 import com.tuwaiq.newsplanet.repo.NewsRepo
 import com.tuwaiq.newsplanet.util.Resource
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import retrofit2.Response
 import java.io.IOException
 
 // used AndroidViewModel to use the Application context in internet connection .. and able to use getApplication() ..
-class NewsViewModel(app : Application ,val newsRepo: NewsRepo) : AndroidViewModel(app) {
+class NewsViewModel(val app : Application ,val newsRepo: NewsRepo) : AndroidViewModel(app) {
 
     // LiveData object ..
     val topHeadlineNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
@@ -43,7 +50,7 @@ class NewsViewModel(app : Application ,val newsRepo: NewsRepo) : AndroidViewMode
 
 
     init {
-        getTopHeadlines("sa")
+        getTopHeadlines("us")
     }
 
     // this is a coroutines function I used with viewModelScope that will stay alive as long as this viewModel alive ..
@@ -164,4 +171,19 @@ class NewsViewModel(app : Application ,val newsRepo: NewsRepo) : AndroidViewMode
                 else -> false
             }
     }
+
+    fun saveUser(user: User) = CoroutineScope(Dispatchers.IO).launch {
+        val userUid = FirebaseAuth.getInstance().currentUser!!.uid
+        try {
+            userCollectionRef.document("$userUid").set(user).await()
+            withContext(Dispatchers.Main) {
+                Toast.makeText(app.applicationContext, "Successfully saved data", Toast.LENGTH_LONG).show()
+            }
+        } catch (e: Exception) {
+            withContext(Dispatchers.Main) {
+                Toast.makeText(app.applicationContext, e.message, Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
 }

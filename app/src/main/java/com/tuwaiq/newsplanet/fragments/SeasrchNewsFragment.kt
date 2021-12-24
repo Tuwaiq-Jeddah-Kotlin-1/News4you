@@ -37,6 +37,7 @@ class SeasrchNewsFragment : Fragment(R.layout.fragment_search_news) {
 
         // to access the activity's ViewModel
         viewModel = (activity as NewsActivity).viewModel
+
         setupRecyclerView()
 
         // here I put the article in a bundle to pass it between the fragments ..
@@ -108,7 +109,7 @@ class SeasrchNewsFragment : Fragment(R.layout.fragment_search_news) {
     var isLastPage = false
     var isScrolling = false
 
-    val scrollListener = object : RecyclerView.OnScrollListener() {
+    private val scrollListener = object : RecyclerView.OnScrollListener() {
 
         // this function called when scrolling .. and calculate if the user reach the bottom of the recycler or not using the layoutManager ..
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {

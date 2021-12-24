@@ -2,21 +2,30 @@ package com.tuwaiq.newsplanet.ui
 
 import android.app.Application
 import android.content.Context
+import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities.*
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.BlendModeColorFilterCompat
+import androidx.core.graphics.BlendModeCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.tuwaiq.newsplanet.NewsApplication
+import com.tuwaiq.newsplanet.R
+import com.tuwaiq.newsplanet.adapters.TabsPagerAdapter
 import com.tuwaiq.newsplanet.models.Article
 import com.tuwaiq.newsplanet.models.NewsResponse
 import com.tuwaiq.newsplanet.models.User
 import com.tuwaiq.newsplanet.repo.NewsRepo
 import com.tuwaiq.newsplanet.util.Resource
+import kotlinx.android.synthetic.main.fragment_top_headlines_news.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -185,5 +194,4 @@ class NewsViewModel(val app : Application ,val newsRepo: NewsRepo) : AndroidView
             }
         }
     }
-
 }

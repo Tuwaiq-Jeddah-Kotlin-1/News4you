@@ -16,6 +16,7 @@
         app:tabGravity="center"
         app:tabIndicatorAnimationMode="elastic"
         app:tabMode="scrollable"
+        app:tabIconTint="@color/colorPrimaryDark"
         app:tabSelectedTextColor="@color/wallpaper"
         app:tabIndicatorGravity="stretch"/>
 

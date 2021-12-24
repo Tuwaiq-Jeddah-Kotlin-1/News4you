@@ -23,7 +23,7 @@ interface NewsAPI {
         @Query("country")
         countryCode : String = "us",
         @Query("category")
-        category : String = "business",
+        category : String = "general",
         @Query("page")
         pageNumber : Int = 1,
         @Query("apiKey")

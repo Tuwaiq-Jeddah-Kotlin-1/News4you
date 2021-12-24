@@ -35,7 +35,7 @@ import retrofit2.Response
 import java.io.IOException
 
 // used AndroidViewModel to use the Application context in internet connection .. and able to use getApplication() ..
-class NewsViewModel(val app : Application ,val newsRepo: NewsRepo) : AndroidViewModel(app) {
+class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewModel(app) {
 
     // LiveData object ..
     val topHeadlineNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
@@ -53,17 +53,21 @@ class NewsViewModel(val app : Application ,val newsRepo: NewsRepo) : AndroidView
 
 
     // this is saved here to handle the response if the activity or fragment changed .. like rotate for example ..
-    var topHeadlinesResponse : NewsResponse? = null
-    var topHeadlinesWithCategoryResponse : NewsResponse? = null
-    var searchNewsResponse : NewsResponse? = null
+    var topHeadlinesResponse: NewsResponse? = null
+    var topHeadlinesWithCategoryResponse: NewsResponse? = null
+    var searchNewsResponse: NewsResponse? = null
 
-    var newSearchQuery:String? = null
-    var oldSearchQuery:String? = null
+    var newSearchQuery: String? = null
+    var oldSearchQuery: String? = null
+
+
+    var newsCategory: String = "general"
+
 
 
     init {
         getTopHeadlines("us")
-        getTopHeadlinesWithCategory("us","business")
+        getTopHeadlinesWithCategory("us", newsCategory)
     }
 
     // this is a coroutines function I used with viewModelScope that will stay alive as long as this viewModel alive ..
@@ -72,11 +76,11 @@ class NewsViewModel(val app : Application ,val newsRepo: NewsRepo) : AndroidView
     }
 
     // this is a coroutines function I used with viewModelScope that will stay alive as long as this viewModel alive ..
-    fun getTopHeadlinesWithCategory(countryCode : String ,category: String) = viewModelScope.launch {
-        safeTopHeadlinesNewsWithCategoryCall(countryCode ,category)
+    fun getTopHeadlinesWithCategory(countryCode: String, category: String) = viewModelScope.launch {
+        safeTopHeadlinesNewsWithCategoryCall(countryCode, category)
     }
 
-    fun searchNews(searchQuery : String) = viewModelScope.launch {
+    fun searchNews(searchQuery: String) = viewModelScope.launch {
         safeSearchNewsCall(searchQuery)
     }
 
@@ -88,9 +92,9 @@ class NewsViewModel(val app : Application ,val newsRepo: NewsRepo) : AndroidView
                 // first ingress the page number ..
                 topHeadlinesPage++
                 // check and set the topHeadlinesResponse ..
-                if(topHeadlinesResponse == null){
+                if (topHeadlinesResponse == null) {
                     topHeadlinesResponse = resultResponse
-                }else{
+                } else {
                     // if there is a response already .. I pass the articles from the newResponse to the oldResponse ..
                     val oldArticles = topHeadlinesResponse?.articles
                     val newArticles = resultResponse.articles
@@ -110,9 +114,9 @@ class NewsViewModel(val app : Application ,val newsRepo: NewsRepo) : AndroidView
                 // first ingress the page number ..
                 topHeadlinesPageWithCategoryPage++
                 // check and set the topHeadlinesResponse ..
-                if(topHeadlinesWithCategoryResponse == null){
+                if (topHeadlinesWithCategoryResponse == null) {
                     topHeadlinesWithCategoryResponse = resultResponse
-                }else{
+                } else {
                     // if there is a response already .. I pass the articles from the newResponse to the oldResponse ..
                     val oldArticles = topHeadlinesWithCategoryResponse?.articles
                     val newArticles = resultResponse.articles
@@ -126,11 +130,11 @@ class NewsViewModel(val app : Application ,val newsRepo: NewsRepo) : AndroidView
     }
 
 
-    private fun handleSearchNewsResponse(response: Response<NewsResponse>) : Resource<NewsResponse> {
-        if(response.isSuccessful) {
+    private fun handleSearchNewsResponse(response: Response<NewsResponse>): Resource<NewsResponse> {
+        if (response.isSuccessful) {
             response.body()?.let { resultResponse ->
                 // check and set the searchNewsResponse ..
-                if(searchNewsResponse == null || newSearchQuery != oldSearchQuery) {
+                if (searchNewsResponse == null || newSearchQuery != oldSearchQuery) {
                     searchNewsPage = 1
                     oldSearchQuery = newSearchQuery
                     searchNewsResponse = resultResponse
@@ -150,8 +154,8 @@ class NewsViewModel(val app : Application ,val newsRepo: NewsRepo) : AndroidView
     }
 
     // this function uses a suspend function so it needs to use coroutines ..
-     fun saveArticle(article: Article) = viewModelScope.launch {
-         newsRepo.upsert(article)
+    fun saveArticle(article: Article) = viewModelScope.launch {
+        newsRepo.upsert(article)
     }
 
     fun getSavedNews() = newsRepo.getSavedNews()
@@ -161,17 +165,17 @@ class NewsViewModel(val app : Application ,val newsRepo: NewsRepo) : AndroidView
         newsRepo.deleteArticle(article)
     }
 
-    private suspend fun safeTopHeadlinesNewsCall(countryCode: String){
+    private suspend fun safeTopHeadlinesNewsCall(countryCode: String) {
         topHeadlineNews.postValue(Resource.Loading())
         try {
-            if (hasInternetConnection()){
+            if (hasInternetConnection()) {
                 val response = newsRepo.getToHeadlinesNews(countryCode, topHeadlinesPage)
                 topHeadlineNews.postValue(handleHeadlinesNewsResponse(response))
-            }else {
+            } else {
                 topHeadlineNews.postValue(Resource.Error("No internet connection"))
             }
-        }catch (t : Throwable){
-            when(t) {
+        } catch (t: Throwable) {
+            when (t) {
                 // topHeadlines function could also cause an exception this why I need when here ..
                 is IOException -> topHeadlineNews.postValue(Resource.Error("Network Failure"))
                 else -> topHeadlineNews.postValue(Resource.Error("Another Error not IOException"))
@@ -179,17 +183,28 @@ class NewsViewModel(val app : Application ,val newsRepo: NewsRepo) : AndroidView
         }
     }
 
-    private suspend fun safeTopHeadlinesNewsWithCategoryCall( countryCode: String , category : String){
+    private suspend fun safeTopHeadlinesNewsWithCategoryCall(
+        countryCode: String,
+        category: String
+    ) {
         topHeadlineNewsWithCategory.postValue(Resource.Loading())
         try {
-            if (hasInternetConnection()){
-                val response = newsRepo.getToHeadlinesNewsWithCategory( countryCode , category, topHeadlinesPageWithCategoryPage)
-                topHeadlineNewsWithCategory.postValue(handleHeadlinesNewsWithCategoryResponse(response))
-            }else {
+            if (hasInternetConnection()) {
+                val response = newsRepo.getToHeadlinesNewsWithCategory(
+                    countryCode,
+                    category,
+                    topHeadlinesPageWithCategoryPage
+                )
+                topHeadlineNewsWithCategory.postValue(
+                    handleHeadlinesNewsWithCategoryResponse(
+                        response
+                    )
+                )
+            } else {
                 topHeadlineNewsWithCategory.postValue(Resource.Error("No internet connection"))
             }
-        }catch (t : Throwable){
-            when(t) {
+        } catch (t: Throwable) {
+            when (t) {
                 // topHeadlines function could also cause an exception this why I need when here ..
                 is IOException -> topHeadlineNewsWithCategory.postValue(Resource.Error("Network Failure"))
                 else -> topHeadlineNewsWithCategory.postValue(Resource.Error("Another Error not IOException"))
@@ -201,14 +216,14 @@ class NewsViewModel(val app : Application ,val newsRepo: NewsRepo) : AndroidView
         newSearchQuery = searchQuery
         searchNews.postValue(Resource.Loading())
         try {
-            if(hasInternetConnection()) {
+            if (hasInternetConnection()) {
                 val response = newsRepo.searchNews(searchQuery, searchNewsPage)
                 searchNews.postValue(handleSearchNewsResponse(response))
             } else {
                 searchNews.postValue(Resource.Error("No internet connection"))
             }
-        } catch(t: Throwable) {
-            when(t) {
+        } catch (t: Throwable) {
+            when (t) {
                 is IOException -> searchNews.postValue(Resource.Error("Network Failure"))
                 else -> searchNews.postValue(Resource.Error("Conversion Error"))
             }
@@ -217,17 +232,18 @@ class NewsViewModel(val app : Application ,val newsRepo: NewsRepo) : AndroidView
 
 
     // this function is to check the internet connectivity .. cuz there are some things I don't want to run if there is no connection ..
-    fun hasInternetConnection() : Boolean {
-        val connectivityManager = getApplication<NewsApplication>().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    fun hasInternetConnection(): Boolean {
+        val connectivityManager =
+            getApplication<NewsApplication>().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         // here is to select wish function to use to check for connectivity cuz it's changed during apis updates ..
-            val activeNetwork = connectivityManager.activeNetwork ?: return false
-            val capabilities = connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
-            return when{
-                capabilities.hasTransport(TRANSPORT_WIFI) -> true
-                capabilities.hasTransport(TRANSPORT_CELLULAR) -> true
-                capabilities.hasTransport(TRANSPORT_ETHERNET) -> true
-                else -> false
-            }
+        val activeNetwork = connectivityManager.activeNetwork ?: return false
+        val capabilities = connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
+        return when {
+            capabilities.hasTransport(TRANSPORT_WIFI) -> true
+            capabilities.hasTransport(TRANSPORT_CELLULAR) -> true
+            capabilities.hasTransport(TRANSPORT_ETHERNET) -> true
+            else -> false
+        }
     }
 
     fun saveUser(user: User) = CoroutineScope(Dispatchers.IO).launch {
@@ -235,7 +251,8 @@ class NewsViewModel(val app : Application ,val newsRepo: NewsRepo) : AndroidView
         try {
             userCollectionRef.document("$userUid").set(user).await()
             withContext(Dispatchers.Main) {
-                Toast.makeText(app.applicationContext, "Successfully saved data", Toast.LENGTH_LONG).show()
+                Toast.makeText(app.applicationContext, "Successfully saved data", Toast.LENGTH_LONG)
+                    .show()
             }
         } catch (e: Exception) {
             withContext(Dispatchers.Main) {

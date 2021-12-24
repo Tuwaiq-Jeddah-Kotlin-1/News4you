@@ -128,7 +128,7 @@ class TopHeadlineFragment : Fragment(R.layout.fragment_top_headlines_news) {
             val shouldPaging = isNotLoadingAndNotLastPage && isAtLastItem && isNotAtTheBeginning && isTotalMoreThanVisible && isScrolling
 
             if(shouldPaging){
-                viewModel.getTopHeadlinesWithCategory("us" , "business")
+                viewModel.getTopHeadlinesWithCategory("us" , viewModel.newsCategory)
                 isScrolling = false
             }
         }
@@ -144,7 +144,7 @@ class TopHeadlineFragment : Fragment(R.layout.fragment_top_headlines_news) {
     }
 
 
-    private fun setupRecyclerView() {
+    public fun setupRecyclerView() {
         newsAdapter = NewsAdapter()
         rvTopHeadlines.apply {
             adapter = newsAdapter

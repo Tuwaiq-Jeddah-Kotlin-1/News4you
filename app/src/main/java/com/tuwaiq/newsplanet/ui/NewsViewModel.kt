@@ -60,9 +60,12 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
     var newSearchQuery: String? = null
     var oldSearchQuery: String? = null
 
+    var newCategoryHeadlines: String? = null
+    var oldCategoryHeadlines: String? = null
+
+
 
     var newsCategory: String = "general"
-
 
 
     init {
@@ -111,12 +114,13 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
     private fun handleHeadlinesNewsWithCategoryResponse(response: Response<NewsResponse>): Resource<NewsResponse> {
         if (response.isSuccessful) {
             response.body()?.let { resultResponse ->
-                // first ingress the page number ..
-                topHeadlinesPageWithCategoryPage++
-                // check and set the topHeadlinesResponse ..
-                if (topHeadlinesWithCategoryResponse == null) {
+                if (topHeadlinesWithCategoryResponse == null || newCategoryHeadlines != oldCategoryHeadlines) {
+                    topHeadlinesPageWithCategoryPage = 1
+                    oldCategoryHeadlines = newCategoryHeadlines
                     topHeadlinesWithCategoryResponse = resultResponse
                 } else {
+                    // first ingress the page number ..
+                    topHeadlinesPageWithCategoryPage++
                     // if there is a response already .. I pass the articles from the newResponse to the oldResponse ..
                     val oldArticles = topHeadlinesWithCategoryResponse?.articles
                     val newArticles = resultResponse.articles
@@ -183,23 +187,12 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
         }
     }
 
-    private suspend fun safeTopHeadlinesNewsWithCategoryCall(
-        countryCode: String,
-        category: String
-    ) {
+    private suspend fun safeTopHeadlinesNewsWithCategoryCall(countryCode: String, category: String) {
         topHeadlineNewsWithCategory.postValue(Resource.Loading())
         try {
             if (hasInternetConnection()) {
-                val response = newsRepo.getToHeadlinesNewsWithCategory(
-                    countryCode,
-                    category,
-                    topHeadlinesPageWithCategoryPage
-                )
-                topHeadlineNewsWithCategory.postValue(
-                    handleHeadlinesNewsWithCategoryResponse(
-                        response
-                    )
-                )
+                val response = newsRepo.getToHeadlinesNewsWithCategory(countryCode, category, topHeadlinesPageWithCategoryPage)
+                topHeadlineNewsWithCategory.postValue(handleHeadlinesNewsWithCategoryResponse(response))
             } else {
                 topHeadlineNewsWithCategory.postValue(Resource.Error("No internet connection"))
             }

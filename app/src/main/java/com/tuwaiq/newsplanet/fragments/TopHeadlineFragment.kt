@@ -1,9 +1,12 @@
 package com.tuwaiq.newsplanet.fragments
 
+import android.content.ContentValues
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AbsListView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -33,6 +36,16 @@ class TopHeadlineFragment : Fragment(R.layout.fragment_top_headlines_news) {
 
     lateinit var viewModel: NewsViewModel
     lateinit var newsAdapter: NewsAdapter
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -178,11 +191,13 @@ class TopHeadlineFragment : Fragment(R.layout.fragment_top_headlines_news) {
         tab_layout.isInlineLabel = true
 
         // Set the ViewPager Adapter
-        val adapter = TabsPagerAdapter(getParentFragmentManager() , lifecycle, numberOfTabs)
+        val adapter = TabsPagerAdapter(requireFragmentManager(), lifecycle, numberOfTabs , viewModel)
         tabs_viewpager.adapter = adapter
 
         // Enable Swipe
         tabs_viewpager.isUserInputEnabled = true
+
+
 
         // Link the TabLayout and the ViewPager2 together and Set Text & Icons
         TabLayoutMediator(tab_layout, tabs_viewpager) { tab, position ->
@@ -194,7 +209,6 @@ class TopHeadlineFragment : Fragment(R.layout.fragment_top_headlines_news) {
                 1 -> {
                     tab.text = "Technology"
                     tab.setIcon(R.drawable.tech)
-
                 }
                 2 -> {
                     tab.text = "Sport"

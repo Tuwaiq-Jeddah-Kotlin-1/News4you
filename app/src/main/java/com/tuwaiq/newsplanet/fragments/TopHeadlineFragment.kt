@@ -1,27 +1,17 @@
 package com.tuwaiq.newsplanet.fragments
 
-import android.content.ContentValues
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.AbsListView
 import android.widget.Toast
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.BlendModeColorFilterCompat
-import androidx.core.graphics.BlendModeCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
 import com.tuwaiq.newsplanet.R
 import com.tuwaiq.newsplanet.adapters.NewsAdapter
-import com.tuwaiq.newsplanet.adapters.TabsPagerAdapter
 import com.tuwaiq.newsplanet.ui.NewsActivity
 import com.tuwaiq.newsplanet.ui.NewsViewModel
 import com.tuwaiq.newsplanet.ui.bottomNavView
@@ -37,24 +27,16 @@ class TopHeadlineFragment : Fragment(R.layout.fragment_top_headlines_news) {
     lateinit var viewModel: NewsViewModel
     lateinit var newsAdapter: NewsAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
 
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
 
+    val TAG = "TopHeadlinesFragment"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).viewModel
         bottomNavView.visibility = View.VISIBLE
-        //setupTabs()
+
         setupRecyclerView()
-
-
 
         // here I put the article in a bundle to pass it between the fragments ..
         newsAdapter.setOnItemClickListener { article ->
@@ -67,7 +49,7 @@ class TopHeadlineFragment : Fragment(R.layout.fragment_top_headlines_news) {
             )
         }
 
-        viewModel.topHeadlineNewsWithCategory.observe(viewLifecycleOwner, Observer { response ->
+        viewModel.topHeadlineNews.observe(viewLifecycleOwner, Observer { response ->
             when(response) {
                 is Resource.Success -> {
                     hideProgressBar()
@@ -77,7 +59,7 @@ class TopHeadlineFragment : Fragment(R.layout.fragment_top_headlines_news) {
                         newsAdapter.mDiffer.submitList(newsResponse.articles.toList())
                         // totalResults is How many results in the response .. +2 cuz last page is always empty and 1 for the rounding ..
                         val totalPages = newsResponse.totalResults / QUERY_PAGE_SIZE + 2
-                        isLastPage = viewModel.topHeadlinesPageWithCategoryPage == totalPages
+                        isLastPage = viewModel.topHeadlinesPage == totalPages
                         if(isLastPage){
                             rvTopHeadlines.setPadding(0,0,0,0)
                         }
@@ -141,7 +123,7 @@ class TopHeadlineFragment : Fragment(R.layout.fragment_top_headlines_news) {
             val shouldPaging = isNotLoadingAndNotLastPage && isAtLastItem && isNotAtTheBeginning && isTotalMoreThanVisible && isScrolling
 
             if(shouldPaging){
-                viewModel.getTopHeadlinesWithCategory("us" , viewModel.newsCategory)
+                viewModel.getTopHeadlines("us")
                 isScrolling = false
             }
         }
@@ -157,7 +139,7 @@ class TopHeadlineFragment : Fragment(R.layout.fragment_top_headlines_news) {
     }
 
 
-    public fun setupRecyclerView() {
+    private fun setupRecyclerView() {
         newsAdapter = NewsAdapter()
         rvTopHeadlines.apply {
             adapter = newsAdapter
@@ -165,6 +147,4 @@ class TopHeadlineFragment : Fragment(R.layout.fragment_top_headlines_news) {
             addOnScrollListener(this@TopHeadlineFragment.scrollListener)
         }
     }
-
-
 }

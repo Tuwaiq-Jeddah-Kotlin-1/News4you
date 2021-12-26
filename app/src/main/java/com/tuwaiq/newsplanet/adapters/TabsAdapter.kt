@@ -11,6 +11,8 @@ import com.tuwaiq.newsplanet.fragments.CategoryFragments.BooksFragment
 import com.tuwaiq.newsplanet.fragments.CategoryFragments.MoviesFragment
 import com.tuwaiq.newsplanet.fragments.CategoryFragments.MusicFragment
 import com.tuwaiq.newsplanet.fragments.SavedNewsfragment
+import com.tuwaiq.newsplanet.fragments.SportFragment
+import com.tuwaiq.newsplanet.fragments.TechnologyFragment
 import com.tuwaiq.newsplanet.fragments.TopHeadlineFragment
 import com.tuwaiq.newsplanet.ui.NewsViewModel
 
@@ -28,14 +30,14 @@ class TabsPagerAdapter(fm: FragmentManager, lifecycle: Lifecycle, private var nu
             1 -> {
                 // # technology
                 // # Movies Fragment
-                val savedNewsfragment = SavedNewsfragment()
-                return savedNewsfragment
+                val technologyFragment = TechnologyFragment()
+                return technologyFragment
             }
             2 -> {
                 // # sports
                 // # Books Fragment
-                val booksFragment = BooksFragment()
-                return booksFragment
+                val sportFragment = SportFragment()
+                return sportFragment
             }
             3 -> {
 //                //science

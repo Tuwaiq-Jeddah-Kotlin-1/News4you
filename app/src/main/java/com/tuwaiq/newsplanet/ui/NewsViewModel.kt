@@ -65,7 +65,7 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
 
 
 
-    var newsCategory: String = "general"
+     var newsCategory: String = "general"
 
 
     init {
@@ -114,13 +114,12 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
     private fun handleHeadlinesNewsWithCategoryResponse(response: Response<NewsResponse>): Resource<NewsResponse> {
         if (response.isSuccessful) {
             response.body()?.let { resultResponse ->
-                if (topHeadlinesWithCategoryResponse == null || newCategoryHeadlines != oldCategoryHeadlines) {
-                    topHeadlinesPageWithCategoryPage = 1
-                    oldCategoryHeadlines = newCategoryHeadlines
+                // first increase the page number ..
+                topHeadlinesPageWithCategoryPage++
+                // check and set the topHeadlinesResponse ..
+                if (topHeadlinesWithCategoryResponse == null) {
                     topHeadlinesWithCategoryResponse = resultResponse
                 } else {
-                    // first ingress the page number ..
-                    topHeadlinesPageWithCategoryPage++
                     // if there is a response already .. I pass the articles from the newResponse to the oldResponse ..
                     val oldArticles = topHeadlinesWithCategoryResponse?.articles
                     val newArticles = resultResponse.articles
@@ -137,13 +136,13 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
     private fun handleSearchNewsResponse(response: Response<NewsResponse>): Resource<NewsResponse> {
         if (response.isSuccessful) {
             response.body()?.let { resultResponse ->
-                // check and set the searchNewsResponse ..
+                // check and set the searchNewsResponse .. first search or new search ..
                 if (searchNewsResponse == null || newSearchQuery != oldSearchQuery) {
                     searchNewsPage = 1
                     oldSearchQuery = newSearchQuery
                     searchNewsResponse = resultResponse
                 } else {
-                    // first ingress the page number ..
+                    // first increase the page number ..
                     searchNewsPage++
                     // if there is a response already .. I pass the articles from the newResponse to the oldResponse ..
                     val oldArticles = searchNewsResponse?.articles

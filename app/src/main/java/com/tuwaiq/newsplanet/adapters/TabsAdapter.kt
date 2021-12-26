@@ -1,5 +1,6 @@
 package com.tuwaiq.newsplanet.adapters
 
+import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,54 +14,51 @@ import com.tuwaiq.newsplanet.fragments.SavedNewsfragment
 import com.tuwaiq.newsplanet.fragments.TopHeadlineFragment
 import com.tuwaiq.newsplanet.ui.NewsViewModel
 
-class TabsPagerAdapter(fm: FragmentManager, lifecycle: Lifecycle, private var numberOfTabs: Int ,val newsViewModel: NewsViewModel ) : FragmentStateAdapter(fm, lifecycle) {
+class TabsPagerAdapter(fm: FragmentManager, lifecycle: Lifecycle, private var numberOfTabs: Int ) : FragmentStateAdapter(fm, lifecycle) {
 
 
     override fun createFragment(position: Int): Fragment {
         when (position) {
             0 -> {
                 // general
+// # Music Fragment
                 val topHeadlineFragment = TopHeadlineFragment()
-                newsViewModel.newsCategory = "general"
-                Log.e("category",newsViewModel.newsCategory)
                 return topHeadlineFragment
             }
             1 -> {
                 // # technology
-                newsViewModel.newsCategory = "technology"
-                Log.e("category",newsViewModel.newsCategory)
-                Log.e("TAG", "moviesFragment" )
-                return TopHeadlineFragment()
+                // # Movies Fragment
+                val savedNewsfragment = SavedNewsfragment()
+                return savedNewsfragment
             }
             2 -> {
                 // # sports
-                newsViewModel.newsCategory = "sports"
-                Log.e("category",newsViewModel.newsCategory)
-                Log.e("TAG", "booksFragment:" )
-                return TopHeadlineFragment()
+                // # Books Fragment
+                val booksFragment = BooksFragment()
+                return booksFragment
             }
             3 -> {
-                //science
-                newsViewModel.newsCategory = "science"
-                Log.e("category",newsViewModel.newsCategory)
+//                //science
+//                newsViewModel.newsCategory = "science"
+//                Log.e("category",newsViewModel.newsCategory)
                 return TopHeadlineFragment()
             }
             4 -> {
                 // business
-                newsViewModel.newsCategory = "business"
-                Log.e("category",newsViewModel.newsCategory)
+//                newsViewModel.newsCategory = "business"
+//                Log.e("category",newsViewModel.newsCategory)
                 return TopHeadlineFragment()
             }
             5 -> {
                 // health
-                newsViewModel.newsCategory = "health"
-                Log.e("category",newsViewModel.newsCategory)
+//                newsViewModel.newsCategory = "health"
+//                Log.e("category",newsViewModel.newsCategory)
                 return TopHeadlineFragment()
             }
             6 -> {
                 // entertainment
-                newsViewModel.newsCategory = "entertainment"
-                Log.e("category",newsViewModel.newsCategory)
+//                newsViewModel.newsCategory = "entertainment"
+//                Log.e("category",newsViewModel.newsCategory)
                 return TopHeadlineFragment()
             }
             else -> return TopHeadlineFragment()

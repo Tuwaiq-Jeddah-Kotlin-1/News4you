@@ -51,7 +51,7 @@ class TopHeadlineFragment : Fragment(R.layout.fragment_top_headlines_news) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).viewModel
         bottomNavView.visibility = View.VISIBLE
-        setupTabs()
+        //setupTabs()
         setupRecyclerView()
 
 
@@ -166,77 +166,5 @@ class TopHeadlineFragment : Fragment(R.layout.fragment_top_headlines_news) {
         }
     }
 
-    fun setupTabs(){
-        // Tabs Customization
-        tab_layout.setSelectedTabIndicatorColor(Color.parseColor("#f9f9f9"))
-        tab_layout.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorPrimary))
-        tab_layout.tabTextColors = ContextCompat.getColorStateList(requireContext(), R.color.colorPrimaryDark)
 
-        // Set different Text Color for Tabs for when are selected or not
-        //tab_layout.setTabTextColors(R.color.normalTabTextColor, R.color.selectedTabTextColor)
-
-        // Number Of Tabs
-        val numberOfTabs = 7
-
-        // Set Tabs in the center
-        //tab_layout.tabGravity = TabLayout.GRAVITY_CENTER
-
-        // Show all Tabs in screen
-        tab_layout.tabMode = TabLayout.MODE_SCROLLABLE
-
-        // Scroll to see all Tabs
-        //tab_layout.tabMode = TabLayout.MODE_SCROLLABLE
-
-        // Set Tab icons next to the text, instead above the text
-        tab_layout.isInlineLabel = true
-
-        // Set the ViewPager Adapter
-        val adapter = TabsPagerAdapter(requireFragmentManager(), lifecycle, numberOfTabs , viewModel)
-        tabs_viewpager.adapter = adapter
-
-        // Enable Swipe
-        tabs_viewpager.isUserInputEnabled = true
-
-
-
-        // Link the TabLayout and the ViewPager2 together and Set Text & Icons
-        TabLayoutMediator(tab_layout, tabs_viewpager) { tab, position ->
-            when (position) {
-                0 -> {
-                    tab.text = "General"
-                    tab.setIcon(R.drawable.newspaper)
-                }
-                1 -> {
-                    tab.text = "Technology"
-                    tab.setIcon(R.drawable.tech)
-                }
-                2 -> {
-                    tab.text = "Sport"
-                    tab.setIcon(R.drawable.sport)
-                }
-                3 -> {
-                    tab.text = "Science"
-                    tab.setIcon(R.drawable.ic_science)
-                }
-                4 -> {
-                    tab.text = "Business"
-                    tab.setIcon(R.drawable.buisness)
-                }
-                5 -> {
-                    tab.text = "Health"
-                    tab.setIcon(R.drawable.health)
-                }
-                6 -> {
-                    tab.text = "Entertainment"
-                    tab.setIcon(R.drawable.entertainment)
-                }
-            }
-            // Change color of the icons
-            tab.icon?.colorFilter =
-                BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
-                    Color.parseColor("#22485C"),
-                    BlendModeCompat.SRC_ATOP
-                )
-        }.attach()
-    }
 }

@@ -22,7 +22,7 @@ class MoviesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.fragment_books, container, false)
+        val rootView = inflater.inflate(R.layout.fragment_movies, container, false)
 
         return rootView
     }

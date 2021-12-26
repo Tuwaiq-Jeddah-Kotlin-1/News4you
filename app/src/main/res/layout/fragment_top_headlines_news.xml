@@ -5,44 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#66c2ff"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tabs_viewpager"
-        app:tabGravity="center"
-        app:tabIndicatorAnimationMode="elastic"
-        app:tabMode="scrollable"
-        app:tabIconTint="@color/colorPrimaryDark"
-        app:tabSelectedTextColor="@color/wallpaper"
-        app:tabIndicatorGravity="stretch"/>
 
-
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/tabs_viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        app:layout_constraintBottom_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTopHeadlines"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="1dp"
+        android:layout_width="411dp"
+        android:layout_height="682dp"
         android:clipToPadding="false"
         android:paddingBottom="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tab_layout" />
+        tools:layout_editor_absoluteY="48dp" />
 
     <ProgressBar
         android:id="@+id/paginationProgressBar"
@@ -51,8 +23,7 @@
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        tools:layout_editor_absoluteX="182dp"
+        tools:layout_editor_absoluteY="683dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

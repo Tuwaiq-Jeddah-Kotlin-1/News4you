@@ -75,7 +75,7 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
 
 
         if (isRemembered) {
-            findNavController().navigate(R.id.action_signInFragment_to_topHeadlineFragment)
+            findNavController().navigate(R.id.action_signInFragment_to_mainFragment)
         }
 
         signInButton.setOnClickListener {
@@ -115,7 +115,7 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
                                     Toast.LENGTH_LONG
                                 ).show()
 
-                                findNavController().navigate(R.id.action_signInFragment_to_topHeadlineFragment)
+                                findNavController().navigate(R.id.action_signInFragment_to_mainFragment)
                             } else {
                                 // if the registreation is not succsesful then show error massage
                                 Toast.makeText(

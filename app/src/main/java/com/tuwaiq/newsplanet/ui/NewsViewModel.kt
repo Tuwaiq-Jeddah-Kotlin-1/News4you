@@ -40,6 +40,8 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
     // LiveData object ..
     val topHeadlineNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     val topHeadlineNewsWithCategory: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    val topHeadlineNewsWithCategoryTechnology: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    val topHeadlineNewsWithCategorySports: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     val searchNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
 
 

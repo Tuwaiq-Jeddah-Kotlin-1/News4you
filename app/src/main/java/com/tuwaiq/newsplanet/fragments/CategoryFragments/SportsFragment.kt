@@ -1,11 +1,9 @@
 package com.tuwaiq.newsplanet.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AbsListView
 import android.widget.Toast
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -15,68 +13,67 @@ import com.tuwaiq.newsplanet.R
 import com.tuwaiq.newsplanet.adapters.NewsAdapter
 import com.tuwaiq.newsplanet.ui.NewsActivity
 import com.tuwaiq.newsplanet.ui.NewsViewModel
-import com.tuwaiq.newsplanet.util.Constants
+import com.tuwaiq.newsplanet.ui.bottomNavView
 import com.tuwaiq.newsplanet.util.Constants.Companion.QUERY_PAGE_SIZE
-import com.tuwaiq.newsplanet.util.Constants.Companion.SEARCH_QUERY_TIME_DELAY
 import com.tuwaiq.newsplanet.util.Resource
+import kotlinx.android.synthetic.main.activity_news.*
 import kotlinx.android.synthetic.main.fragment_search_news.*
-import kotlinx.android.synthetic.main.fragment_search_news.paginationProgressBar
-import kotlinx.android.synthetic.main.fragment_sport.*
+import kotlinx.android.synthetic.main.fragment_sports.*
 import kotlinx.android.synthetic.main.fragment_technology.*
 import kotlinx.android.synthetic.main.fragment_top_headlines_news.*
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.android.synthetic.main.fragment_top_headlines_news.paginationProgressBar
 
-class SportFragment : Fragment(R.layout.fragment_sport) {
+class SportsFragment : Fragment(R.layout.fragment_sports) {
+
     lateinit var viewModel: NewsViewModel
     lateinit var newsAdapter: NewsAdapter
 
+
+
+
+
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // to access the activity's ViewModel
         viewModel = (activity as NewsActivity).viewModel
+        viewModel.getTopHeadlinesWithCategory("us", "sports")
+        bottomNavView.visibility = View.VISIBLE
 
         setupRecyclerView()
 
         // here I put the article in a bundle to pass it between the fragments ..
         newsAdapter.setOnItemClickListener { article ->
             val bundle = Bundle().apply {
-                putSerializable("article", article)
+                putSerializable("article" , article)
             }
             findNavController().navigate(
-                R.id.action_seasrchNewsFragment_to_articleFragment,
+                R.id.action_topHeadLineNewsFragment_to_articleFragment,
                 bundle
             )
         }
 
-
-        viewModel.searchNews("sport")
-
-
-
-
-
-        viewModel.searchNews.observe(viewLifecycleOwner, Observer { response ->
-            when (response) {
+        viewModel.topHeadlineNewsWithCategory.observe(viewLifecycleOwner, Observer { response ->
+            when(response) {
                 is Resource.Success -> {
                     hideProgressBar()
                     response.data?.let { newsResponse ->
+                        /* Here I changed the articles from MutableList to a List cuz Deffer doesn't work with Mutable list perfectly ..
+                        this solved the problem for me .. */
                         newsAdapter.mDiffer.submitList(newsResponse.articles.toList())
                         // totalResults is How many results in the response .. +2 cuz last page is always empty and 1 for the rounding ..
                         val totalPages = newsResponse.totalResults / QUERY_PAGE_SIZE + 2
-                        isLastPage = viewModel.searchNewsPage == totalPages
-                        if (isLastPage) {
-                            rvSport.setPadding(0, 0, 0, 0)
+                        isLastPage = viewModel.topHeadlinesPageWithCategoryPage == totalPages
+                        if(isLastPage){
+                            rvSports.setPadding(0,0,0,0)
                         }
                     }
                 }
+
                 is Resource.Error -> {
                     hideProgressBar()
                     response.message?.let { message ->
-                        Toast.makeText(activity , "An error occured: $message" , Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity , "An error occurred: $message" , Toast.LENGTH_SHORT).show()
                     }
                 }
                 is Resource.Loading -> {
@@ -85,6 +82,8 @@ class SportFragment : Fragment(R.layout.fragment_sport) {
             }
         })
     }
+
+
 
     private fun hideProgressBar() {
         paginationProgressBar.visibility = View.INVISIBLE
@@ -100,7 +99,7 @@ class SportFragment : Fragment(R.layout.fragment_sport) {
     var isLastPage = false
     var isScrolling = false
 
-    private val scrollListener = object : RecyclerView.OnScrollListener() {
+    val scrollListener = object : RecyclerView.OnScrollListener() {
 
         // this function called when scrolling .. and calculate if the user reach the bottom of the recycler or not using the layoutManager ..
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -123,13 +122,12 @@ class SportFragment : Fragment(R.layout.fragment_sport) {
             // this variable detect if we scrolled down or not yet ..
             val isNotAtTheBeginning = firstVisibleItemPosition >= 0
             // this variable is to check if there are items in recycler more than elements in the query page ..
-            val isTotalMoreThanVisible = totalItemCount >= Constants.QUERY_PAGE_SIZE
+            val isTotalMoreThanVisible = totalItemCount >= QUERY_PAGE_SIZE
             // this variable is to check if the paging should happen or not yet ..
-            val shouldPaging =
-                isNotLoadingAndNotLastPage && isAtLastItem && isNotAtTheBeginning && isTotalMoreThanVisible && isScrolling
+            val shouldPaging = isNotLoadingAndNotLastPage && isAtLastItem && isNotAtTheBeginning && isTotalMoreThanVisible && isScrolling
 
-            if (shouldPaging) {
-                viewModel.searchNews(etSearch.text.toString())
+            if(shouldPaging){
+                viewModel.getTopHeadlinesWithCategory("us", "sports")
                 isScrolling = false
             }
         }
@@ -138,20 +136,19 @@ class SportFragment : Fragment(R.layout.fragment_sport) {
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
             super.onScrollStateChanged(recyclerView, newState)
 
-            if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+            if(newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL){
                 isScrolling = true
             }
         }
     }
 
+
     private fun setupRecyclerView() {
         newsAdapter = NewsAdapter()
-        rvSport.apply {
+        rvSports.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
-            addOnScrollListener(this@SportFragment.scrollListener)
+            addOnScrollListener(this@SportsFragment.scrollListener)
         }
     }
 }
-
-

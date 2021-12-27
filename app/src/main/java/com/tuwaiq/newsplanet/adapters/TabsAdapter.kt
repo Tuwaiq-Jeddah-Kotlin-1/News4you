@@ -1,20 +1,12 @@
 package com.tuwaiq.newsplanet.adapters
 
-import android.content.ContentValues
-import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.tuwaiq.newsplanet.fragments.CategoryFragments.BooksFragment
-import com.tuwaiq.newsplanet.fragments.CategoryFragments.MoviesFragment
-import com.tuwaiq.newsplanet.fragments.CategoryFragments.MusicFragment
-import com.tuwaiq.newsplanet.fragments.SavedNewsfragment
-import com.tuwaiq.newsplanet.fragments.SportFragment
+import com.tuwaiq.newsplanet.fragments.SportsFragment
 import com.tuwaiq.newsplanet.fragments.TechnologyFragment
 import com.tuwaiq.newsplanet.fragments.TopHeadlineFragment
-import com.tuwaiq.newsplanet.ui.NewsViewModel
 
 class TabsPagerAdapter(fm: FragmentManager, lifecycle: Lifecycle, private var numberOfTabs: Int ) : FragmentStateAdapter(fm, lifecycle) {
 
@@ -36,7 +28,7 @@ class TabsPagerAdapter(fm: FragmentManager, lifecycle: Lifecycle, private var nu
             2 -> {
                 // # sports
                 // # Books Fragment
-                val sportFragment = SportFragment()
+                val sportFragment = SportsFragment()
                 return sportFragment
             }
             3 -> {

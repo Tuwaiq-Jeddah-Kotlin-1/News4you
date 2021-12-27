@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide.init
 import com.tuwaiq.newsplanet.R
 import com.tuwaiq.newsplanet.adapters.NewsAdapter
 import com.tuwaiq.newsplanet.ui.NewsActivity
@@ -31,9 +32,14 @@ class TopHeadlineFragment : Fragment(R.layout.fragment_top_headlines_news) {
 
     val TAG = "TopHeadlinesFragment"
 
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).viewModel
+
+        viewModel.getTopHeadlinesWithCategory("us", "general")
+
         bottomNavView.visibility = View.VISIBLE
 
         setupRecyclerView()

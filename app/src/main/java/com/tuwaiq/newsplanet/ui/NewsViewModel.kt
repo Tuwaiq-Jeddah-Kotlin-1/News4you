@@ -65,12 +65,12 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
 
 
 
-     var newsCategory: String = "general"
+     //var newsCategory: String = "general"
 
 
     init {
         getTopHeadlines("us")
-        getTopHeadlinesWithCategory("us", newsCategory)
+        //getTopHeadlinesWithCategory("us", newsCategory)
     }
 
     // this is a coroutines function I used with viewModelScope that will stay alive as long as this viewModel alive ..
@@ -114,12 +114,14 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
     private fun handleHeadlinesNewsWithCategoryResponse(response: Response<NewsResponse>): Resource<NewsResponse> {
         if (response.isSuccessful) {
             response.body()?.let { resultResponse ->
-                // first increase the page number ..
-                topHeadlinesPageWithCategoryPage++
-                // check and set the topHeadlinesResponse ..
-                if (topHeadlinesWithCategoryResponse == null) {
+                // check and set the searchNewsResponse .. first search or new search ..
+                if (topHeadlinesWithCategoryResponse == null || newCategoryHeadlines != oldCategoryHeadlines) {
+                    topHeadlinesPageWithCategoryPage = 1
+                    oldCategoryHeadlines = newCategoryHeadlines
                     topHeadlinesWithCategoryResponse = resultResponse
                 } else {
+                    // first increase the page number ..
+                    searchNewsPage++
                     // if there is a response already .. I pass the articles from the newResponse to the oldResponse ..
                     val oldArticles = topHeadlinesWithCategoryResponse?.articles
                     val newArticles = resultResponse.articles

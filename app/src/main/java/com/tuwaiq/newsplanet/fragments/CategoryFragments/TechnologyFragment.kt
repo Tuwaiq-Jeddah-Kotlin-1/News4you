@@ -29,11 +29,14 @@ class TechnologyFragment : Fragment(R.layout.fragment_technology) {
 
 
 
-    val TAG = "TopHeadlinesFragment"
+
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).viewModel
+        viewModel.getTopHeadlinesWithCategory("us", "technology")
         bottomNavView.visibility = View.VISIBLE
 
         setupRecyclerView()
@@ -49,7 +52,7 @@ class TechnologyFragment : Fragment(R.layout.fragment_technology) {
             )
         }
 
-        viewModel.topHeadlineNews.observe(viewLifecycleOwner, Observer { response ->
+        viewModel.topHeadlineNewsWithCategory.observe(viewLifecycleOwner, Observer { response ->
             when(response) {
                 is Resource.Success -> {
                     hideProgressBar()
@@ -59,7 +62,7 @@ class TechnologyFragment : Fragment(R.layout.fragment_technology) {
                         newsAdapter.mDiffer.submitList(newsResponse.articles.toList())
                         // totalResults is How many results in the response .. +2 cuz last page is always empty and 1 for the rounding ..
                         val totalPages = newsResponse.totalResults / QUERY_PAGE_SIZE + 2
-                        isLastPage = viewModel.topHeadlinesPage == totalPages
+                        isLastPage = viewModel.topHeadlinesPageWithCategoryPage == totalPages
                         if(isLastPage){
                             rvTechnology.setPadding(0,0,0,0)
                         }
@@ -123,7 +126,7 @@ class TechnologyFragment : Fragment(R.layout.fragment_technology) {
             val shouldPaging = isNotLoadingAndNotLastPage && isAtLastItem && isNotAtTheBeginning && isTotalMoreThanVisible && isScrolling
 
             if(shouldPaging){
-                viewModel.getTopHeadlines("us")
+                viewModel.getTopHeadlinesWithCategory("us", "technology")
                 isScrolling = false
             }
         }

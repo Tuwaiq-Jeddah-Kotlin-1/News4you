@@ -37,7 +37,6 @@ class SportsFragment : Fragment(R.layout.fragment_sports) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).viewModel
-        viewModel.getTopHeadlinesWithCategory("us", "sports")
         bottomNavView.visibility = View.VISIBLE
 
         setupRecyclerView()
@@ -53,7 +52,7 @@ class SportsFragment : Fragment(R.layout.fragment_sports) {
             )
         }
 
-        viewModel.topHeadlineNewsWithCategory.observe(viewLifecycleOwner, Observer { response ->
+        viewModel.topHeadlineNewsTechnology.observe(viewLifecycleOwner, Observer { response ->
             when(response) {
                 is Resource.Success -> {
                     hideProgressBar()
@@ -63,7 +62,7 @@ class SportsFragment : Fragment(R.layout.fragment_sports) {
                         newsAdapter.mDiffer.submitList(newsResponse.articles.toList())
                         // totalResults is How many results in the response .. +2 cuz last page is always empty and 1 for the rounding ..
                         val totalPages = newsResponse.totalResults / QUERY_PAGE_SIZE + 2
-                        isLastPage = viewModel.topHeadlinesPageWithCategoryPage == totalPages
+                        isLastPage = viewModel.topHeadlinesPageTechnologyPage == totalPages
                         if(isLastPage){
                             rvSports.setPadding(0,0,0,0)
                         }
@@ -127,7 +126,7 @@ class SportsFragment : Fragment(R.layout.fragment_sports) {
             val shouldPaging = isNotLoadingAndNotLastPage && isAtLastItem && isNotAtTheBeginning && isTotalMoreThanVisible && isScrolling
 
             if(shouldPaging){
-                viewModel.getTopHeadlinesWithCategory("us", "sports")
+                viewModel.getTopHeadlinestechnology("us", "sports")
                 isScrolling = false
             }
         }

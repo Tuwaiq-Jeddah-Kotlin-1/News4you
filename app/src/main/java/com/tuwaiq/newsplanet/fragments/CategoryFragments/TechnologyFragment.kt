@@ -18,25 +18,20 @@ import com.tuwaiq.newsplanet.util.Constants.Companion.QUERY_PAGE_SIZE
 import com.tuwaiq.newsplanet.util.Resource
 import kotlinx.android.synthetic.main.activity_news.*
 import kotlinx.android.synthetic.main.fragment_search_news.*
-import kotlinx.android.synthetic.main.fragment_technology.*
 import kotlinx.android.synthetic.main.fragment_top_headlines_news.*
 import kotlinx.android.synthetic.main.fragment_top_headlines_news.paginationProgressBar
 
-class TechnologyFragment : Fragment(R.layout.fragment_technology) {
+
+
+class TechnologyFragment : Fragment(R.layout.fragment_top_headlines_news) {
 
     lateinit var viewModel: NewsViewModel
     lateinit var newsAdapter: NewsAdapter
 
 
-
-
-
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).viewModel
-        viewModel.getTopHeadlinesWithCategory("us", "technology")
         bottomNavView.visibility = View.VISIBLE
 
         setupRecyclerView()
@@ -52,7 +47,7 @@ class TechnologyFragment : Fragment(R.layout.fragment_technology) {
             )
         }
 
-        viewModel.topHeadlineNewsWithCategory.observe(viewLifecycleOwner, Observer { response ->
+        viewModel.topHeadlineNewsTechnology.observe(viewLifecycleOwner, Observer { response ->
             when(response) {
                 is Resource.Success -> {
                     hideProgressBar()
@@ -62,9 +57,9 @@ class TechnologyFragment : Fragment(R.layout.fragment_technology) {
                         newsAdapter.mDiffer.submitList(newsResponse.articles.toList())
                         // totalResults is How many results in the response .. +2 cuz last page is always empty and 1 for the rounding ..
                         val totalPages = newsResponse.totalResults / QUERY_PAGE_SIZE + 2
-                        isLastPage = viewModel.topHeadlinesPageWithCategoryPage == totalPages
+                        isLastPage = viewModel.topHeadlinesPageTechnologyPage == totalPages
                         if(isLastPage){
-                            rvTechnology.setPadding(0,0,0,0)
+                            rvTopHeadlines.setPadding(0,0,0,0)
                         }
                     }
                 }
@@ -126,7 +121,7 @@ class TechnologyFragment : Fragment(R.layout.fragment_technology) {
             val shouldPaging = isNotLoadingAndNotLastPage && isAtLastItem && isNotAtTheBeginning && isTotalMoreThanVisible && isScrolling
 
             if(shouldPaging){
-                viewModel.getTopHeadlinesWithCategory("us", "technology")
+                viewModel.getTopHeadlinestechnology("us" , "technology")
                 isScrolling = false
             }
         }
@@ -144,7 +139,7 @@ class TechnologyFragment : Fragment(R.layout.fragment_technology) {
 
     private fun setupRecyclerView() {
         newsAdapter = NewsAdapter()
-        rvTechnology.apply {
+        rvTopHeadlines.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
             addOnScrollListener(this@TechnologyFragment.scrollListener)

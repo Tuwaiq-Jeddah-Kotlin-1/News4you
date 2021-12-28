@@ -2,30 +2,21 @@ package com.tuwaiq.newsplanet.ui
 
 import android.app.Application
 import android.content.Context
-import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities.*
 import android.widget.Toast
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.BlendModeColorFilterCompat
-import androidx.core.graphics.BlendModeCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.tuwaiq.newsplanet.NewsApplication
-import com.tuwaiq.newsplanet.R
-import com.tuwaiq.newsplanet.adapters.TabsPagerAdapter
 import com.tuwaiq.newsplanet.models.Article
 import com.tuwaiq.newsplanet.models.NewsResponse
 import com.tuwaiq.newsplanet.models.User
 import com.tuwaiq.newsplanet.repo.NewsRepo
 import com.tuwaiq.newsplanet.util.Resource
-import kotlinx.android.synthetic.main.fragment_top_headlines_news.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -39,9 +30,9 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
 
     // LiveData object ..
     val topHeadlineNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
-    val topHeadlineNewsWithCategory: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
-    val topHeadlineNewsWithCategoryTechnology: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
-    val topHeadlineNewsWithCategorySports: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    val topHeadlineNewsTechnology: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+
+
     val searchNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
 
 
@@ -50,13 +41,13 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
 
     // I declare the page number here in the viewModel cuz if it's in the fragment it will reset with any change ..
     var topHeadlinesPage = 1
-    var topHeadlinesPageWithCategoryPage = 1
+    var topHeadlinesPageTechnologyPage = 1
     var searchNewsPage = 1
 
 
     // this is saved here to handle the response if the activity or fragment changed .. like rotate for example ..
     var topHeadlinesResponse: NewsResponse? = null
-    var topHeadlinesWithCategoryResponse: NewsResponse? = null
+    var topHeadlinesTechnologyResponse: NewsResponse? = null
     var searchNewsResponse: NewsResponse? = null
 
     var newSearchQuery: String? = null
@@ -72,7 +63,7 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
 
     init {
         getTopHeadlines("us")
-        //getTopHeadlinesWithCategory("us", newsCategory)
+        getTopHeadlinestechnology("us", "technology")
     }
 
     // this is a coroutines function I used with viewModelScope that will stay alive as long as this viewModel alive ..
@@ -81,8 +72,8 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
     }
 
     // this is a coroutines function I used with viewModelScope that will stay alive as long as this viewModel alive ..
-    fun getTopHeadlinesWithCategory(countryCode: String, category: String) = viewModelScope.launch {
-        safeTopHeadlinesNewsWithCategoryCall(countryCode, category)
+    fun getTopHeadlinestechnology(countryCode: String, category: String) = viewModelScope.launch {
+        safeTopHeadlinesNewsTechnologyCall(countryCode, category)
     }
 
     fun searchNews(searchQuery: String) = viewModelScope.launch {
@@ -113,24 +104,22 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
     }
 
     // in this function I check if the response is successful or not and send the message to the Resource ..
-    private fun handleHeadlinesNewsWithCategoryResponse(response: Response<NewsResponse>): Resource<NewsResponse> {
+    private fun handleHeadlinesNewsTechnologyResponse(response: Response<NewsResponse>): Resource<NewsResponse> {
         if (response.isSuccessful) {
             response.body()?.let { resultResponse ->
-                // check and set the searchNewsResponse .. first search or new search ..
-                if (topHeadlinesWithCategoryResponse == null || newCategoryHeadlines != oldCategoryHeadlines) {
-                    topHeadlinesPageWithCategoryPage = 1
-                    oldCategoryHeadlines = newCategoryHeadlines
-                    topHeadlinesWithCategoryResponse = resultResponse
+                // first ingress the page number ..
+                topHeadlinesPageTechnologyPage++
+                // check and set the topHeadlinesResponse ..
+                if (topHeadlinesTechnologyResponse == null) {
+                    topHeadlinesTechnologyResponse = resultResponse
                 } else {
-                    // first increase the page number ..
-                    searchNewsPage++
                     // if there is a response already .. I pass the articles from the newResponse to the oldResponse ..
-                    val oldArticles = topHeadlinesWithCategoryResponse?.articles
+                    val oldArticles = topHeadlinesTechnologyResponse?.articles
                     val newArticles = resultResponse.articles
                     // i changes List<Article> to MutableList<Article> so i can add to it here ..
                     oldArticles?.addAll(newArticles)
                 }
-                return Resource.Success(topHeadlinesWithCategoryResponse ?: resultResponse)
+                return Resource.Success(topHeadlinesTechnologyResponse ?: resultResponse)
             }
         }
         return Resource.Error(response.message())
@@ -190,20 +179,20 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
         }
     }
 
-    private suspend fun safeTopHeadlinesNewsWithCategoryCall(countryCode: String, category: String) {
-        topHeadlineNewsWithCategory.postValue(Resource.Loading())
+    private suspend fun safeTopHeadlinesNewsTechnologyCall(countryCode: String, category: String) {
+        topHeadlineNewsTechnology.postValue(Resource.Loading())
         try {
             if (hasInternetConnection()) {
-                val response = newsRepo.getToHeadlinesNewsWithCategory(countryCode, category, topHeadlinesPageWithCategoryPage)
-                topHeadlineNewsWithCategory.postValue(handleHeadlinesNewsWithCategoryResponse(response))
+                val response = newsRepo.getToHeadlinesNewsWithCategory(countryCode, category, topHeadlinesPageTechnologyPage)
+                topHeadlineNewsTechnology.postValue(handleHeadlinesNewsTechnologyResponse(response))
             } else {
-                topHeadlineNewsWithCategory.postValue(Resource.Error("No internet connection"))
+                topHeadlineNewsTechnology.postValue(Resource.Error("No internet connection"))
             }
         } catch (t: Throwable) {
             when (t) {
                 // topHeadlines function could also cause an exception this why I need when here ..
-                is IOException -> topHeadlineNewsWithCategory.postValue(Resource.Error("Network Failure"))
-                else -> topHeadlineNewsWithCategory.postValue(Resource.Error("Another Error not IOException"))
+                is IOException -> topHeadlineNewsTechnology.postValue(Resource.Error("Network Failure"))
+                else -> topHeadlineNewsTechnology.postValue(Resource.Error("Another Error not IOException"))
             }
         }
     }

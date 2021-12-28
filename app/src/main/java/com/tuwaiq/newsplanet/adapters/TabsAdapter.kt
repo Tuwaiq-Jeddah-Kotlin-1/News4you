@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.tuwaiq.newsplanet.fragments.CategoryFragments.BusinessFragment
 import com.tuwaiq.newsplanet.fragments.CategoryFragments.ScienceFragment
 import com.tuwaiq.newsplanet.fragments.SportsFragment
 import com.tuwaiq.newsplanet.fragments.TechnologyFragment
@@ -15,30 +16,24 @@ class TabsPagerAdapter(fm: FragmentManager, lifecycle: Lifecycle, private var nu
     override fun createFragment(position: Int): Fragment {
         when (position) {
             0 -> {
-                // general
-                val topHeadlineFragment = TopHeadlineFragment()
-                return topHeadlineFragment
+                // general ..
+                return TopHeadlineFragment()
             }
             1 -> {
-                // # technology
-                val technologyFragment = TechnologyFragment()
-                return technologyFragment
+                // technology ..
+                return TechnologyFragment()
             }
             2 -> {
-                // # sports
-                val sportFragment = SportsFragment()
-                return sportFragment
+                // sports ..
+                return SportsFragment()
             }
             3 -> {
-//                //science
-                val scienceFragment = ScienceFragment()
-                return scienceFragment
+                // science ..
+                return ScienceFragment()
             }
             4 -> {
                 // business
-//                newsViewModel.newsCategory = "business"
-//                Log.e("category",newsViewModel.newsCategory)
-                return TopHeadlineFragment()
+                return BusinessFragment()
             }
             5 -> {
                 // health

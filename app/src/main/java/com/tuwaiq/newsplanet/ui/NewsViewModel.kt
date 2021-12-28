@@ -33,6 +33,7 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
     val topHeadlineNewsTechnology: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     val topHeadlineNewsSports: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     val topHeadlineNewsScience: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    val topHeadlineNewsBusiness: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
 
     val searchNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
 
@@ -45,6 +46,7 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
     var topHeadlinesPageTechnologyPage = 1
     var topHeadlinesPageSportsPage = 1
     var topHeadlinesPageSciencePage = 1
+    var topHeadlinesPageBusinessPage = 1
     var searchNewsPage = 1
 
 
@@ -53,6 +55,7 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
     var topHeadlinesTechnologyResponse: NewsResponse? = null
     var topHeadlinesSportsResponse: NewsResponse? = null
     var topHeadlinesScienceResponse: NewsResponse? = null
+    var topHeadlinesBusinessResponse: NewsResponse? = null
     var searchNewsResponse: NewsResponse? = null
 
     var newSearchQuery: String? = null
@@ -65,6 +68,7 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
         getTopHeadlinesTechnology("us", "technology")
         getTopHeadlinesSports("us", "sports")
         getTopHeadlinesScience("us", "science")
+        getTopHeadlinesBusiness("us", "business")
     }
 
     // this is a coroutines function I used with viewModelScope that will stay alive as long as this viewModel alive ..
@@ -83,6 +87,10 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
     // Science
     fun getTopHeadlinesScience(countryCode: String, category: String) = viewModelScope.launch {
         safeTopHeadlinesNewsScienceCall(countryCode, category)
+    }
+    // Business
+    fun getTopHeadlinesBusiness(countryCode: String, category: String) = viewModelScope.launch {
+        safeTopHeadlinesNewsBusinessCall(countryCode, category)
     }
 
     fun searchNews(searchQuery: String) = viewModelScope.launch {
@@ -172,6 +180,27 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
                     oldArticles?.addAll(newArticles)
                 }
                 return Resource.Success(topHeadlinesScienceResponse ?: resultResponse)
+            }
+        }
+        return Resource.Error(response.message())
+    }
+    // Business
+    private fun handleHeadlinesNewsBusinessResponse(response: Response<NewsResponse>): Resource<NewsResponse> {
+        if (response.isSuccessful) {
+            response.body()?.let { resultResponse ->
+                // first ingress the page number ..
+                topHeadlinesPageBusinessPage++
+                // check and set the topHeadlinesResponse ..
+                if (topHeadlinesBusinessResponse == null) {
+                    topHeadlinesBusinessResponse = resultResponse
+                } else {
+                    // if there is a response already .. I pass the articles from the newResponse to the oldResponse ..
+                    val oldArticles = topHeadlinesBusinessResponse?.articles
+                    val newArticles = resultResponse.articles
+                    // i changes List<Article> to MutableList<Article> so i can add to it here ..
+                    oldArticles?.addAll(newArticles)
+                }
+                return Resource.Success(topHeadlinesBusinessResponse ?: resultResponse)
             }
         }
         return Resource.Error(response.message())
@@ -283,6 +312,24 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
                 // topHeadlines function could also cause an exception this why I need when here ..
                 is IOException -> topHeadlineNewsScience.postValue(Resource.Error("Network Failure"))
                 else -> topHeadlineNewsScience.postValue(Resource.Error("Another Error not IOException"))
+            }
+        }
+    }
+    // Business ..
+    private suspend fun safeTopHeadlinesNewsBusinessCall(countryCode: String, category: String) {
+        topHeadlineNewsBusiness.postValue(Resource.Loading())
+        try {
+            if (hasInternetConnection()) {
+                val response = newsRepo.getToHeadlinesNewsWithCategory(countryCode, category, topHeadlinesPageBusinessPage)
+                topHeadlineNewsBusiness.postValue(handleHeadlinesNewsBusinessResponse(response))
+            } else {
+                topHeadlineNewsBusiness.postValue(Resource.Error("No internet connection"))
+            }
+        } catch (t: Throwable) {
+            when (t) {
+                // topHeadlines function could also cause an exception this why I need when here ..
+                is IOException -> topHeadlineNewsBusiness.postValue(Resource.Error("Network Failure"))
+                else -> topHeadlineNewsBusiness.postValue(Resource.Error("Another Error not IOException"))
             }
         }
     }

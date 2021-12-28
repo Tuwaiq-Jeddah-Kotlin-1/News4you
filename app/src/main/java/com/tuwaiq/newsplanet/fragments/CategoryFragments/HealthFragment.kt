@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_technology.*
 import kotlinx.android.synthetic.main.fragment_top_headlines_news.*
 import kotlinx.android.synthetic.main.fragment_top_headlines_news.paginationProgressBar
 
-class BusinessFragment : Fragment(R.layout.fragment_top_headlines_news) {
+class HealthFragment : Fragment(R.layout.fragment_top_headlines_news) {
 
     lateinit var viewModel: NewsViewModel
     lateinit var newsAdapter: NewsAdapter
@@ -47,7 +47,7 @@ class BusinessFragment : Fragment(R.layout.fragment_top_headlines_news) {
             )
         }
 
-        viewModel.topHeadlineNewsBusiness.observe(viewLifecycleOwner, Observer { response ->
+        viewModel.topHeadlineNewsHealth.observe(viewLifecycleOwner, Observer { response ->
             when(response) {
                 is Resource.Success -> {
                     hideProgressBar()
@@ -57,7 +57,7 @@ class BusinessFragment : Fragment(R.layout.fragment_top_headlines_news) {
                         newsAdapter.mDiffer.submitList(newsResponse.articles.toList())
                         // totalResults is How many results in the response .. +2 cuz last page is always empty and 1 for the rounding ..
                         val totalPages = newsResponse.totalResults / QUERY_PAGE_SIZE + 2
-                        isLastPage = viewModel.topHeadlinesPageBusinessPage == totalPages
+                        isLastPage = viewModel.topHeadlinesPageHealthPage == totalPages
                         if(isLastPage){
                             rvTopHeadlines.setPadding(0,0,0,0)
                         }
@@ -121,7 +121,7 @@ class BusinessFragment : Fragment(R.layout.fragment_top_headlines_news) {
             val shouldPaging = isNotLoadingAndNotLastPage && isAtLastItem && isNotAtTheBeginning && isTotalMoreThanVisible && isScrolling
 
             if(shouldPaging){
-                viewModel.getTopHeadlinesBusiness("us" , "business")
+                viewModel.getTopHeadlinesHealth("us" , "health")
                 isScrolling = false
             }
         }
@@ -142,7 +142,7 @@ class BusinessFragment : Fragment(R.layout.fragment_top_headlines_news) {
         rvTopHeadlines.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
-            addOnScrollListener(this@BusinessFragment.scrollListener)
+            addOnScrollListener(this@HealthFragment.scrollListener)
         }
     }
 }

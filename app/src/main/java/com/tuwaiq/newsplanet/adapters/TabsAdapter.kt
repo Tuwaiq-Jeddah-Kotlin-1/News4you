@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.tuwaiq.newsplanet.fragments.CategoryFragments.BusinessFragment
+import com.tuwaiq.newsplanet.fragments.CategoryFragments.HealthFragment
 import com.tuwaiq.newsplanet.fragments.CategoryFragments.ScienceFragment
 import com.tuwaiq.newsplanet.fragments.SportsFragment
 import com.tuwaiq.newsplanet.fragments.TechnologyFragment
@@ -32,14 +33,12 @@ class TabsPagerAdapter(fm: FragmentManager, lifecycle: Lifecycle, private var nu
                 return ScienceFragment()
             }
             4 -> {
-                // business
+                // business ..
                 return BusinessFragment()
             }
             5 -> {
-                // health
-//                newsViewModel.newsCategory = "health"
-//                Log.e("category",newsViewModel.newsCategory)
-                return TopHeadlineFragment()
+                // health ..
+                return HealthFragment()
             }
             6 -> {
                 // entertainment

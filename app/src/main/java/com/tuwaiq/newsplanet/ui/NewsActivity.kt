@@ -14,6 +14,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.tuwaiq.newsplanet.R
 import com.tuwaiq.newsplanet.db.ArticleDatabase
 import com.tuwaiq.newsplanet.repo.NewsRepo
+import com.tuwaiq.newsplanet.workmanager.NewsNotificationRepo
 import kotlinx.android.synthetic.main.activity_news.*
 
 
@@ -27,6 +28,10 @@ class NewsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news)
+
+
+        // implementing
+        NewsNotificationRepo().myNotification(this)
 
         getSupportActionBar()?.elevation = 0F
 

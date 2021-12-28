@@ -1,5 +1,7 @@
 package com.tuwaiq.newsplanet.fragments
 
+
+
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -10,7 +12,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide.init
 import com.tuwaiq.newsplanet.R
 import com.tuwaiq.newsplanet.adapters.NewsAdapter
 import com.tuwaiq.newsplanet.ui.NewsActivity
@@ -23,6 +24,8 @@ import kotlinx.android.synthetic.main.fragment_search_news.*
 import kotlinx.android.synthetic.main.fragment_top_headlines_news.*
 import kotlinx.android.synthetic.main.fragment_top_headlines_news.paginationProgressBar
 
+
+
 class TopHeadlineFragment : Fragment(R.layout.fragment_top_headlines_news) {
 
     lateinit var viewModel: NewsViewModel
@@ -32,14 +35,9 @@ class TopHeadlineFragment : Fragment(R.layout.fragment_top_headlines_news) {
 
     val TAG = "TopHeadlinesFragment"
 
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).viewModel
-
-        viewModel.getTopHeadlinesWithCategory("us", "general")
-
         bottomNavView.visibility = View.VISIBLE
 
         setupRecyclerView()
@@ -50,7 +48,7 @@ class TopHeadlineFragment : Fragment(R.layout.fragment_top_headlines_news) {
                 putSerializable("article" , article)
             }
             findNavController().navigate(
-                R.id.action_mainFragment_to_articleFragment,
+                R.id.action_topHeadLineNewsFragment_to_articleFragment,
                 bundle
             )
         }

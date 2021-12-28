@@ -31,7 +31,7 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
     // LiveData object ..
     val topHeadlineNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     val topHeadlineNewsTechnology: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
-
+    val topHeadlineNewsSports: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
 
     val searchNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
 
@@ -42,28 +42,25 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
     // I declare the page number here in the viewModel cuz if it's in the fragment it will reset with any change ..
     var topHeadlinesPage = 1
     var topHeadlinesPageTechnologyPage = 1
+    var topHeadlinesPageSportsPage = 1
     var searchNewsPage = 1
 
 
     // this is saved here to handle the response if the activity or fragment changed .. like rotate for example ..
     var topHeadlinesResponse: NewsResponse? = null
     var topHeadlinesTechnologyResponse: NewsResponse? = null
+    var topHeadlinesSportsResponse: NewsResponse? = null
     var searchNewsResponse: NewsResponse? = null
 
     var newSearchQuery: String? = null
     var oldSearchQuery: String? = null
 
-    var newCategoryHeadlines: String? = null
-    var oldCategoryHeadlines: String? = null
-
-
-
-     //var newsCategory: String = "general"
 
 
     init {
         getTopHeadlines("us")
-        getTopHeadlinestechnology("us", "technology")
+        getTopHeadlinesTechnology("us", "technology")
+        getTopHeadlinesSports("us", "sports")
     }
 
     // this is a coroutines function I used with viewModelScope that will stay alive as long as this viewModel alive ..
@@ -71,9 +68,13 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
         safeTopHeadlinesNewsCall(countryCode)
     }
 
-    // this is a coroutines function I used with viewModelScope that will stay alive as long as this viewModel alive ..
-    fun getTopHeadlinestechnology(countryCode: String, category: String) = viewModelScope.launch {
+    // Technology ..
+    fun getTopHeadlinesTechnology(countryCode: String, category: String) = viewModelScope.launch {
         safeTopHeadlinesNewsTechnologyCall(countryCode, category)
+    }
+    // Sports ..
+    fun getTopHeadlinesSports(countryCode: String, category: String) = viewModelScope.launch {
+        safeTopHeadlinesNewsSportsCall(countryCode, category)
     }
 
     fun searchNews(searchQuery: String) = viewModelScope.launch {
@@ -103,7 +104,7 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
         return Resource.Error(response.message())
     }
 
-    // in this function I check if the response is successful or not and send the message to the Resource ..
+    // Technology ..
     private fun handleHeadlinesNewsTechnologyResponse(response: Response<NewsResponse>): Resource<NewsResponse> {
         if (response.isSuccessful) {
             response.body()?.let { resultResponse ->
@@ -120,6 +121,28 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
                     oldArticles?.addAll(newArticles)
                 }
                 return Resource.Success(topHeadlinesTechnologyResponse ?: resultResponse)
+            }
+        }
+        return Resource.Error(response.message())
+    }
+
+    // Sports ..
+    private fun handleHeadlinesNewsSportsResponse(response: Response<NewsResponse>): Resource<NewsResponse> {
+        if (response.isSuccessful) {
+            response.body()?.let { resultResponse ->
+                // first ingress the page number ..
+                topHeadlinesPageSportsPage++
+                // check and set the topHeadlinesResponse ..
+                if (topHeadlinesSportsResponse == null) {
+                    topHeadlinesSportsResponse = resultResponse
+                } else {
+                    // if there is a response already .. I pass the articles from the newResponse to the oldResponse ..
+                    val oldArticles = topHeadlinesSportsResponse?.articles
+                    val newArticles = resultResponse.articles
+                    // i changes List<Article> to MutableList<Article> so i can add to it here ..
+                    oldArticles?.addAll(newArticles)
+                }
+                return Resource.Success(topHeadlinesSportsResponse ?: resultResponse)
             }
         }
         return Resource.Error(response.message())
@@ -179,6 +202,7 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
         }
     }
 
+    // Technology ..
     private suspend fun safeTopHeadlinesNewsTechnologyCall(countryCode: String, category: String) {
         topHeadlineNewsTechnology.postValue(Resource.Loading())
         try {
@@ -193,6 +217,25 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
                 // topHeadlines function could also cause an exception this why I need when here ..
                 is IOException -> topHeadlineNewsTechnology.postValue(Resource.Error("Network Failure"))
                 else -> topHeadlineNewsTechnology.postValue(Resource.Error("Another Error not IOException"))
+            }
+        }
+    }
+
+    // Sports ..
+    private suspend fun safeTopHeadlinesNewsSportsCall(countryCode: String, category: String) {
+        topHeadlineNewsSports.postValue(Resource.Loading())
+        try {
+            if (hasInternetConnection()) {
+                val response = newsRepo.getToHeadlinesNewsWithCategory(countryCode, category, topHeadlinesPageSportsPage)
+                topHeadlineNewsSports.postValue(handleHeadlinesNewsSportsResponse(response))
+            } else {
+                topHeadlineNewsSports.postValue(Resource.Error("No internet connection"))
+            }
+        } catch (t: Throwable) {
+            when (t) {
+                // topHeadlines function could also cause an exception this why I need when here ..
+                is IOException -> topHeadlineNewsSports.postValue(Resource.Error("Network Failure"))
+                else -> topHeadlineNewsSports.postValue(Resource.Error("Another Error not IOException"))
             }
         }
     }

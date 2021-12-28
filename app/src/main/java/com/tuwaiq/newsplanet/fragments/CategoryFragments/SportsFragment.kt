@@ -23,15 +23,10 @@ import kotlinx.android.synthetic.main.fragment_technology.*
 import kotlinx.android.synthetic.main.fragment_top_headlines_news.*
 import kotlinx.android.synthetic.main.fragment_top_headlines_news.paginationProgressBar
 
-class SportsFragment : Fragment(R.layout.fragment_sports) {
+class SportsFragment : Fragment(R.layout.fragment_top_headlines_news) {
 
     lateinit var viewModel: NewsViewModel
     lateinit var newsAdapter: NewsAdapter
-
-
-
-
-
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -47,12 +42,12 @@ class SportsFragment : Fragment(R.layout.fragment_sports) {
                 putSerializable("article" , article)
             }
             findNavController().navigate(
-                R.id.action_topHeadLineNewsFragment_to_articleFragment,
+                R.id.action_mainFragment_to_articleFragment,
                 bundle
             )
         }
 
-        viewModel.topHeadlineNewsTechnology.observe(viewLifecycleOwner, Observer { response ->
+        viewModel.topHeadlineNewsSports.observe(viewLifecycleOwner, Observer { response ->
             when(response) {
                 is Resource.Success -> {
                     hideProgressBar()
@@ -62,9 +57,9 @@ class SportsFragment : Fragment(R.layout.fragment_sports) {
                         newsAdapter.mDiffer.submitList(newsResponse.articles.toList())
                         // totalResults is How many results in the response .. +2 cuz last page is always empty and 1 for the rounding ..
                         val totalPages = newsResponse.totalResults / QUERY_PAGE_SIZE + 2
-                        isLastPage = viewModel.topHeadlinesPageTechnologyPage == totalPages
+                        isLastPage = viewModel.topHeadlinesPageSportsPage == totalPages
                         if(isLastPage){
-                            rvSports.setPadding(0,0,0,0)
+                            rvTopHeadlines.setPadding(0,0,0,0)
                         }
                     }
                 }
@@ -126,7 +121,7 @@ class SportsFragment : Fragment(R.layout.fragment_sports) {
             val shouldPaging = isNotLoadingAndNotLastPage && isAtLastItem && isNotAtTheBeginning && isTotalMoreThanVisible && isScrolling
 
             if(shouldPaging){
-                viewModel.getTopHeadlinestechnology("us", "sports")
+                viewModel.getTopHeadlinesSports("us" , "sports")
                 isScrolling = false
             }
         }
@@ -144,7 +139,7 @@ class SportsFragment : Fragment(R.layout.fragment_sports) {
 
     private fun setupRecyclerView() {
         newsAdapter = NewsAdapter()
-        rvSports.apply {
+        rvTopHeadlines.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
             addOnScrollListener(this@SportsFragment.scrollListener)

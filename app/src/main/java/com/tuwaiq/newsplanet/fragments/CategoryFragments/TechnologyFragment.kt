@@ -121,7 +121,7 @@ class TechnologyFragment : Fragment(R.layout.fragment_top_headlines_news) {
             val shouldPaging = isNotLoadingAndNotLastPage && isAtLastItem && isNotAtTheBeginning && isTotalMoreThanVisible && isScrolling
 
             if(shouldPaging){
-                viewModel.getTopHeadlinestechnology("us" , "technology")
+                viewModel.getTopHeadlinesTechnology("us" , "technology")
                 isScrolling = false
             }
         }

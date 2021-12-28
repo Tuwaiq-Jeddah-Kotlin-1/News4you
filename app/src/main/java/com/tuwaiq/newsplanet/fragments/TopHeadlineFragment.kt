@@ -50,7 +50,7 @@ class TopHeadlineFragment : Fragment(R.layout.fragment_top_headlines_news) {
                 putSerializable("article" , article)
             }
             findNavController().navigate(
-                R.id.action_topHeadLineNewsFragment_to_articleFragment,
+                R.id.action_mainFragment_to_articleFragment,
                 bundle
             )
         }

@@ -109,5 +109,9 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.tuwaiq.newsplanet.fragments.MainFragment"
-        android:label="MainFragment" />
+        android:label="MainFragment" >
+        <action
+            android:id="@+id/action_mainFragment_to_articleFragment"
+            app:destination="@id/articleFragment" />
+    </fragment>
 </navigation>

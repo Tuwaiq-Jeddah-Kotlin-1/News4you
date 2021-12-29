@@ -321,10 +321,11 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
     }
 
     // Technology ..
-    private suspend fun safeTopHeadlinesNewsTechnologyCall(countryCode: String, category: String) {
+    private suspend fun safeTopHeadlinesNewsTechnologyCall(countryCode: String, category: String  ="") {
         topHeadlineNewsTechnology.postValue(Resource.Loading())
         try {
             if (hasInternetConnection()) {
+
                 val response = newsRepo.getToHeadlinesNewsWithCategory(countryCode, category, topHeadlinesPageTechnologyPage)
                 topHeadlineNewsTechnology.postValue(handleHeadlinesNewsTechnologyResponse(response))
             } else {

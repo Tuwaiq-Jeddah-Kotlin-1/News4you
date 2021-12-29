@@ -18,12 +18,13 @@ import com.tuwaiq.newsplanet.util.Constants.Companion.QUERY_PAGE_SIZE
 import com.tuwaiq.newsplanet.util.Resource
 import kotlinx.android.synthetic.main.activity_news.*
 import kotlinx.android.synthetic.main.fragment_search_news.*
+import kotlinx.android.synthetic.main.fragment_technology.*
 import kotlinx.android.synthetic.main.fragment_top_headlines_news.*
 import kotlinx.android.synthetic.main.fragment_top_headlines_news.paginationProgressBar
 
 
 
-class TechnologyFragment : Fragment(R.layout.fragment_top_headlines_news) {
+class TechnologyFragment : Fragment(R.layout.fragment_technology) {
 
     lateinit var viewModel: NewsViewModel
     lateinit var newsAdapter: NewsAdapter
@@ -59,7 +60,7 @@ class TechnologyFragment : Fragment(R.layout.fragment_top_headlines_news) {
                         val totalPages = newsResponse.totalResults / QUERY_PAGE_SIZE + 2
                         isLastPage = viewModel.topHeadlinesPageTechnologyPage == totalPages
                         if(isLastPage){
-                            rvTopHeadlines.setPadding(0,0,0,0)
+                            rvTechnology.setPadding(0,0,0,0)
                         }
                     }
                 }
@@ -139,7 +140,7 @@ class TechnologyFragment : Fragment(R.layout.fragment_top_headlines_news) {
 
     private fun setupRecyclerView() {
         newsAdapter = NewsAdapter()
-        rvTopHeadlines.apply {
+        rvTechnology.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
             addOnScrollListener(this@TechnologyFragment.scrollListener)

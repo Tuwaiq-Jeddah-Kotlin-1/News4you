@@ -16,7 +16,7 @@
             android:background="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="@+id/toggleGroup">
 
             <ImageView
                 android:layout_width="150dp"
@@ -30,16 +30,16 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="62dp"
             android:layout_marginEnd="16dp"
             android:drawableStart="@drawable/ic_person"
             android:drawableTint="@color/black"
             android:gravity="center"
-            android:text=" User Name "
+            android:text="@string/username"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/frameLayoutInLogeIn" />
 
         <TextView
             android:id="@+id/emailTV"
@@ -52,7 +52,7 @@
             android:drawableStart="@drawable/ic_baseline_email_24"
             android:drawableTint="@color/black"
             android:gravity="center"
-            android:text=" Email "
+            android:text="@string/email"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/phoneNumberTV"
             app:layout_constraintEnd_toEndOf="parent"
@@ -61,39 +61,83 @@
 
         <TextView
             android:id="@+id/phoneNumberTV"
-            android:layout_width="0dp"
+            android:layout_width="379dp"
             android:layout_height="match_parent"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="88dp"
+            android:layout_marginBottom="35dp"
             android:drawableStart="@drawable/ic_phone"
             android:drawableTint="@color/black"
             android:gravity="center"
-            android:text="Phone Number"
+            android:text="@string/phone_number"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintBottom_toTopOf="@+id/switch2"
+            app:layout_constraintEnd_toEndOf="@+id/btniOS"
+            app:layout_constraintStart_toEndOf="@+id/btniOS" />
 
         <Button
             android:id="@+id/btn_update"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="70dp"
-            android:text="Update"
+            android:layout_marginEnd="18dp"
+            android:text="@string/update"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btn_logout" />
 
         <Button
             android:id="@+id/btn_logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="61dp"
-            android:text="Log Out"
+            android:layout_marginEnd="9dp"
+            android:text="@string/log_out"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_update"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <Switch
+            android:id="@+id/switch2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="83dp"
+            android:text="@string/dark_mode"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/toggleGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:checkedButton="@id/btnAndroid"
+            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:singleSelection="true">
+
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <Button
+            android:id="@+id/btnAndroid"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="19dp"
+            android:text="English"
+            app:layout_constraintBaseline_toBaselineOf="@+id/btniOS"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/btniOS"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="23dp"
+            android:text="العربية"
+            app:layout_constraintStart_toEndOf="@+id/btnAndroid"
+            app:layout_constraintTop_toBottomOf="@+id/phoneNumberTV" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

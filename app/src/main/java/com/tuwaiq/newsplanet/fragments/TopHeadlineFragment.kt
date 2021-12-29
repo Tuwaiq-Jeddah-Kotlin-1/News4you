@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.fragment_top_headlines_news.paginationProg
 
 
 
-class TopHeadlineFragment : Fragment(R.layout.fragment_top_headlines_news) {
+class TopHeadlineFragment() : Fragment(R.layout.fragment_top_headlines_news) {
 
     lateinit var viewModel: NewsViewModel
     lateinit var newsAdapter: NewsAdapter

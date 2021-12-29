@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">كوكب الآخبار</string>
+    <string name="logo_text">Logo Text</string>
+    <string name="you_don_t_have_an_account">لا تمتلك حساب ؟</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="top_headlines">آخر الاخباد</string>
+    <string name="saved_news">الاخبار المحفوظة</string>
+    <string name="search_news">بحث في الأخبار</string>
+    <string name="settings">الإعدادات</string>
+    <string name="share">مشاركة</string>
+    <string name="you_dont_t_have_an_account">ليس لديك حساب؟</string>
+    <string name="sign_in">تسجيل الدخول</string>
+    <string name="sign_up">تسجيل</string>
+    <string name="username">اسم المستخدم</string>
+    <string name="phone_number">رقم الهاتف</string>
+    <string name="email">البريد الإلكتروني</string>
+    <string name="password">كلمة المرور</string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="remember_me">تذكرني</string>
+    <string name="i_forgot_my_password">لقد نسيت كلمة المرور الخاصة بي</string>
+    <string name="update">تحديث</string>
+    <string name="log_out">تسجيل الخروج</string>
+    <string name="title">TITLE</string>
+    <string name="description">DESCRIPTION</string>
+    <string name="search">بحث ...</string>
+    <string name="dark_mode">النمط الليلي</string>
+</resources>

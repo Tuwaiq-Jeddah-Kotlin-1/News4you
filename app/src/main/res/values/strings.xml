@@ -2,6 +2,26 @@
     <string name="app_name">NewsPlanet</string>
     <string name="logo_text">Logo Text</string>
     <string name="you_don_t_have_an_account">You don\'t have an account?</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="top_headlines">Top Headlines</string>
+    <string name="saved_news">Saved News</string>
+    <string name="search_news">Search News</string>
+    <string name="settings">Settings</string>
+    <string name="share">share</string>
+    <string name="you_dont_t_have_an_account">You dont\'t have an account?</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="username">Username</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="remember_me">Remember Me</string>
+    <string name="i_forgot_my_password">I forgot my password</string>
+    <string name="update">Update</string>
+    <string name="log_out">Log Out</string>
+    <string name="title">TITLE</string>
+    <string name="description">DESCRIPTION</string>
+    <string name="search">Search...</string>
+    <string name="dark_mode">Dark Mode</string>
 </resources>

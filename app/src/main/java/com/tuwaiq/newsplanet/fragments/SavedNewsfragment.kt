@@ -9,6 +9,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.material.Colors
+import androidx.compose.ui.graphics.Color
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -20,6 +22,7 @@ import com.tuwaiq.newsplanet.R
 import com.tuwaiq.newsplanet.adapters.NewsAdapter
 import com.tuwaiq.newsplanet.ui.NewsActivity
 import com.tuwaiq.newsplanet.ui.NewsViewModel
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import kotlinx.android.synthetic.main.fragment_saved_news.*
 import kotlinx.android.synthetic.main.fragment_search_news.*
 
@@ -82,6 +85,15 @@ class SavedNewsfragment : Fragment(R.layout.fragment_saved_news) {
                     }
                     show()
                 }
+            }
+
+            override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
+                RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                    .addSwipeLeftBackgroundColor(android.graphics.Color.parseColor("#CD5C5C"))
+                    .addSwipeLeftActionIcon(R.drawable.ic_delete)
+                    .create()
+                    .decorate()
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
             }
         }
 

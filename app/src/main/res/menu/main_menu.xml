@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:title="share"
+    <item android:title="@string/share"
         android:id="@+id/share_menu"
         app:showAsAction="always"
         android:icon="@drawable/ic_share" />

@@ -43,6 +43,7 @@ class ProfileFragment() : Fragment( R.layout.profile_fragment) {
     lateinit var viewModel: NewsViewModel
     lateinit var usernameBET : TextInputEditText
     lateinit var phoneNumberBET : TextInputEditText
+    lateinit var settingsSharedPreferance : SharedPreferences
 
     lateinit var userSharedPreferance : SharedPreferences
 
@@ -57,7 +58,7 @@ class ProfileFragment() : Fragment( R.layout.profile_fragment) {
 
 
         userSharedPreferance = this.requireActivity().getSharedPreferences("user" , Context.MODE_PRIVATE)
-
+        settingsSharedPreferance = this.requireActivity().getSharedPreferences("settings", Context.MODE_PRIVATE)
 
         return super.onCreateView(inflater, container, savedInstanceState)
     }
@@ -97,13 +98,23 @@ class ProfileFragment() : Fragment( R.layout.profile_fragment) {
 
         englishBtn.setOnClickListener {
             language = "en"
+            val editor: SharedPreferences.Editor = settingsSharedPreferance.edit()
+            editor.putString("LANGUAGE", "en")
+            editor.apply()
             setLocales(language)
+
         }
 
         arabicBtn.setOnClickListener {
             language = "ar"
+            val editor: SharedPreferences.Editor = settingsSharedPreferance.edit()
+            editor.putString("LANGUAGE", "ar")
+            editor.apply()
             setLocales(language)
         }
+
+
+
 
 
 
@@ -225,8 +236,8 @@ class ProfileFragment() : Fragment( R.layout.profile_fragment) {
     }
 
 
-    private fun setLocales(lang: String) {
-        val locale = Locale(lang)
+    private fun setLocales(language: String) {
+        val locale = Locale(language)
         Locale.setDefault(locale)
         val config = Configuration()
         config.locale = locale

@@ -1,10 +1,10 @@
 package com.tuwaiq.newsplanet.ui
 
-import android.content.Intent
+import android.app.Activity
+import android.content.Context
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -15,7 +15,7 @@ import com.tuwaiq.newsplanet.R
 import com.tuwaiq.newsplanet.db.ArticleDatabase
 import com.tuwaiq.newsplanet.repo.NewsRepo
 import com.tuwaiq.newsplanet.workmanager.NewsNotificationRepo
-import kotlinx.android.synthetic.main.activity_news.*
+import java.util.*
 
 
 public lateinit var bottomNavView: BottomNavigationView
@@ -33,6 +33,11 @@ class NewsActivity : AppCompatActivity() {
         // implementing Worm Manager ..
         NewsNotificationRepo().myNotification(this)
 
+        val sharedPreferences = getSharedPreferences("settings", Activity.MODE_PRIVATE)
+        val language = sharedPreferences.getString("LANGUAGE", "")!!
+        setLocales(language)
+
+
         getSupportActionBar()?.elevation = 0F
 
         val navHostFragment = supportFragmentManager
@@ -46,5 +51,16 @@ class NewsActivity : AppCompatActivity() {
         val newsRepository = NewsRepo(ArticleDatabase(this))
         val viewModelProviderFactory = NewsViewModelProviderFactory(application , newsRepository)
         viewModel = ViewModelProvider(this, viewModelProviderFactory).get(NewsViewModel::class.java)
+    }
+
+    private fun setLocales(language: String) {
+        val locale = Locale(language)
+        Locale.setDefault(locale)
+        val config = Configuration()
+        config.locale = locale
+        this.resources?.updateConfiguration(config, this.resources?.displayMetrics)
+        val editor = this.getSharedPreferences("settings", Context.MODE_PRIVATE).edit()
+        editor.putString("LANGUAGE", language)
+        editor.apply()
     }
 }

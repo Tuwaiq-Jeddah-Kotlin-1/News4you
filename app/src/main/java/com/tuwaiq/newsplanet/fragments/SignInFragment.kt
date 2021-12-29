@@ -40,12 +40,13 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
     lateinit var forgetPassTV: TextView
     lateinit var emailTextInputLayout : TextInputLayout
     lateinit var passwordTextInputLayout : TextInputLayout
-    lateinit var userSharedPreferance : SharedPreferences
+    //lateinit var userSharedPreferance : SharedPreferences
 
 
     private lateinit var sharedPreferences: SharedPreferences
 
     var isRemembered = false
+    var appLanguage = "en"
     private lateinit var rememberMe: CheckBox
 
 
@@ -59,7 +60,7 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
     ): View? {
 
         val view = inflater.inflate(R.layout.sign_in_fragment, container, false)
-        userSharedPreferance = this.requireActivity().getSharedPreferences("user" , Context.MODE_PRIVATE)
+        //userSharedPreferance = this.requireActivity().getSharedPreferences("user" , Context.MODE_PRIVATE)
 
 
         emailET = view.findViewById(R.id.emailET)
@@ -77,6 +78,7 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
         sharedPreferences =
             this.requireActivity().getSharedPreferences("preference", Context.MODE_PRIVATE)
         isRemembered = sharedPreferences.getBoolean("CHECKBOX", false)
+
 
         bottomNavView.visibility = View.INVISIBLE
 
@@ -116,7 +118,7 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
                                 editor.putBoolean("CHECKBOX", checked)
                                 editor.apply()
 
-                                retrieveUserData()
+                                //retrieveUserData()
 
                                 Toast.makeText(
                                     context,
@@ -148,24 +150,24 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
         return view
     }
 
-    private fun retrieveUserData() = CoroutineScope(Dispatchers.IO).launch{
-        val uId =FirebaseAuth.getInstance().currentUser?.uid
-        val db = FirebaseFirestore.getInstance()
-        db.collection("Users").document("$uId")
-            .get().addOnCompleteListener {
-                if (it.result?.exists()!!) {
-                    val name = it.result!!.getString("username")
-                    val email = it.result!!.getString("email")
-                    val phoneNumber = it.result!!.getString("phoneNumber")
-                    userSharedPreferance = requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE)
-                    val editor:SharedPreferences.Editor = userSharedPreferance.edit()
-                    editor.putString("refUsername",name.toString())
-                    editor.putString("refEmail",email.toString())
-                    editor.putString("refPhone",phoneNumber.toString())
-                    editor.apply()
-                }else {
-                    Log.e("error \n", "Nope")
-                }
-            }
-    }
+//    private fun retrieveUserData() = CoroutineScope(Dispatchers.IO).launch{
+//        val uId =FirebaseAuth.getInstance().currentUser?.uid
+//        val db = FirebaseFirestore.getInstance()
+//        db.collection("Users").document("$uId")
+//            .get().addOnCompleteListener {
+//                if (it.result?.exists()!!) {
+//                    val name = it.result!!.getString("username")
+//                    val email = it.result!!.getString("email")
+//                    val phoneNumber = it.result!!.getString("phoneNumber")
+//                    userSharedPreferance = requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE)
+//                    val editor:SharedPreferences.Editor = userSharedPreferance.edit()
+//                    editor.putString("refUsername",name.toString())
+//                    editor.putString("refEmail",email.toString())
+//                    editor.putString("refPhone",phoneNumber.toString())
+//                    editor.apply()
+//                }else {
+//                    Log.e("error \n", "Nope")
+//                }
+//            }
+//    }
 }

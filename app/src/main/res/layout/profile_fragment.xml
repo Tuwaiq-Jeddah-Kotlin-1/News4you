@@ -12,17 +12,17 @@
         <FrameLayout
             android:id="@+id/frameLayoutInLogeIn"
             android:layout_width="0dp"
-            android:layout_height="180dp"
+            android:layout_height="150dp"
             android:background="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/toggleGroup">
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:layout_width="150dp"
-                android:layout_height="100dp"
+                android:layout_width="120dp"
+                android:layout_height="80dp"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_profile" />
+                android:src="@drawable/ic_settings" />
         </FrameLayout>
 
         <TextView
@@ -61,17 +61,19 @@
 
         <TextView
             android:id="@+id/phoneNumberTV"
-            android:layout_width="379dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginBottom="35dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="24dp"
             android:drawableStart="@drawable/ic_phone"
             android:drawableTint="@color/black"
             android:gravity="center"
             android:text="@string/phone_number"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/switch2"
-            app:layout_constraintEnd_toEndOf="@+id/btniOS"
-            app:layout_constraintStart_toEndOf="@+id/btniOS" />
+            app:layout_constraintBottom_toTopOf="@+id/toggleGroup"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/btn_update"
@@ -99,45 +101,41 @@
             android:id="@+id/switch2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="83dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="35dp"
             android:text="@string/dark_mode"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btn_update"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/phoneNumberTV"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
 
         <com.google.android.material.button.MaterialButtonToggleGroup
             android:id="@+id/toggleGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:checkedButton="@id/btnAndroid"
-            app:layout_constraintBottom_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="73dp"
+            app:checkedButton="@id/englishBtn"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:singleSelection="true">
 
+            <Button
+                android:id="@+id/englishBtn"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="English" />
+
+            <Button
+                android:id="@+id/arabicBtn"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="العربية" />
+
         </com.google.android.material.button.MaterialButtonToggleGroup>
-
-        <Button
-            android:id="@+id/btnAndroid"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="19dp"
-            android:text="English"
-            app:layout_constraintBaseline_toBaselineOf="@+id/btniOS"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <Button
-            android:id="@+id/btniOS"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="23dp"
-            android:text="العربية"
-            app:layout_constraintStart_toEndOf="@+id/btnAndroid"
-            app:layout_constraintTop_toBottomOf="@+id/phoneNumberTV" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

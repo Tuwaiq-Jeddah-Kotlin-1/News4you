@@ -5,19 +5,18 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
 import com.tuwaiq.newsplanet.R
 import com.tuwaiq.newsplanet.ui.bottomNavView
 import kotlinx.android.synthetic.main.activity_news.*
@@ -27,6 +26,9 @@ import kotlinx.android.synthetic.main.fragment_top_headlines_news.*
 import kotlinx.android.synthetic.main.sign_in_fragment.*
 import kotlinx.android.synthetic.main.sign_in_fragment.emailTextInputSignIn
 import kotlinx.android.synthetic.main.sign_up_fragment.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class SignInFragment : Fragment(R.layout.sign_in_fragment) {
@@ -38,6 +40,8 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
     lateinit var forgetPassTV: TextView
     lateinit var emailTextInputLayout : TextInputLayout
     lateinit var passwordTextInputLayout : TextInputLayout
+    lateinit var userSharedPreferance : SharedPreferences
+
 
     private lateinit var sharedPreferences: SharedPreferences
 
@@ -55,6 +59,8 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
     ): View? {
 
         val view = inflater.inflate(R.layout.sign_in_fragment, container, false)
+        userSharedPreferance = this.requireActivity().getSharedPreferences("user" , Context.MODE_PRIVATE)
+
 
         emailET = view.findViewById(R.id.emailET)
         passwordET = view.findViewById(R.id.passwordET)
@@ -63,6 +69,7 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
         forgetPassTV = view.findViewById(R.id.forgetPassTV)
         emailTextInputLayout = view.findViewById(R.id.emailTextInputSignIn)
         passwordTextInputLayout = view.findViewById(R.id.passwordTextInputSignIn)
+
 
 
 
@@ -109,6 +116,8 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
                                 editor.putBoolean("CHECKBOX", checked)
                                 editor.apply()
 
+                                retrieveUserData()
+
                                 Toast.makeText(
                                     context,
                                     "You lodged in successfully",
@@ -137,5 +146,26 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
         }
 
         return view
+    }
+
+    private fun retrieveUserData() = CoroutineScope(Dispatchers.IO).launch{
+        val uId =FirebaseAuth.getInstance().currentUser?.uid
+        val db = FirebaseFirestore.getInstance()
+        db.collection("Users").document("$uId")
+            .get().addOnCompleteListener {
+                if (it.result?.exists()!!) {
+                    val name = it.result!!.getString("username")
+                    val email = it.result!!.getString("email")
+                    val phoneNumber = it.result!!.getString("phoneNumber")
+                    userSharedPreferance = requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE)
+                    val editor:SharedPreferences.Editor = userSharedPreferance.edit()
+                    editor.putString("refUsername",name.toString())
+                    editor.putString("refEmail",email.toString())
+                    editor.putString("refPhone",phoneNumber.toString())
+                    editor.apply()
+                }else {
+                    Log.e("error \n", "Nope")
+                }
+            }
     }
 }

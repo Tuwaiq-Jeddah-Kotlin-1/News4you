@@ -24,4 +24,12 @@
     <string name="description">DESCRIPTION</string>
     <string name="search">Search...</string>
     <string name="dark_mode">Dark Mode</string>
+    <string name="technology">Technology</string>
+    <string name="sports">Sport</string>
+    <string name="science">Science</string>
+    <string name="business">Business</string>
+    <string name="health">Health</string>
+    <string name="entertainment">Entertainment</string>
+    <string name="general">General</string>
+    <string name="data_update">Data Update</string>
 </resources>

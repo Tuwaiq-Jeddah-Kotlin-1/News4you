@@ -2,14 +2,16 @@ package com.tuwaiq.newsplanet.fragments
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
+import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -31,6 +33,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.lang.Exception
+import java.util.*
 
 class ProfileFragment() : Fragment( R.layout.profile_fragment) {
 
@@ -40,6 +43,8 @@ class ProfileFragment() : Fragment( R.layout.profile_fragment) {
     lateinit var viewModel: NewsViewModel
     lateinit var usernameBET : TextInputEditText
     lateinit var phoneNumberBET : TextInputEditText
+
+    lateinit var userSharedPreferance : SharedPreferences
 
     val userCollectionRef = Firebase.firestore.collection("users")
     val db = FirebaseFirestore.getInstance()
@@ -51,6 +56,7 @@ class ProfileFragment() : Fragment( R.layout.profile_fragment) {
     ): View? {
 
 
+        userSharedPreferance = this.requireActivity().getSharedPreferences("user" , Context.MODE_PRIVATE)
 
 
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -67,9 +73,9 @@ class ProfileFragment() : Fragment( R.layout.profile_fragment) {
 
         signOutButton = view.findViewById(R.id.btn_logout)
 
-
         val userUID = FirebaseAuth.getInstance().currentUser?.uid
         val docRef = db.collection("users").document("$userUID")
+
 
         docRef.get().addOnSuccessListener { documentSnapshot ->
             val user = documentSnapshot.toObject<User>()
@@ -77,6 +83,28 @@ class ProfileFragment() : Fragment( R.layout.profile_fragment) {
             emailTV.text = user.email
             phoneNumberTV.text = user.phoneNumber
         }
+
+//        retrieveUserData()
+//
+//        val usernameReferencence = userSharedPreferance.getString("refUsername", " ")
+//        usernameTV.text = usernameReferencence
+//        val emailReferencence = userSharedPreferance.getString("refEmail", " ")
+//        emailTV.text = emailReferencence
+//        val phoneReferencence = userSharedPreferance.getString("refPhone", " ")
+//        phoneNumberTV.text = phoneReferencence
+
+        var language : String = "en"
+
+        englishBtn.setOnClickListener {
+            language = "en"
+            setLocales(language)
+        }
+
+        arabicBtn.setOnClickListener {
+            language = "ar"
+            setLocales(language)
+        }
+
 
 
 
@@ -173,5 +201,37 @@ class ProfileFragment() : Fragment( R.layout.profile_fragment) {
         }
         builder.setContentView(view)
         builder.show()
+    }
+
+    private fun retrieveUserData() = CoroutineScope(Dispatchers.IO).launch{
+        val uId =FirebaseAuth.getInstance().currentUser?.uid
+        val db = FirebaseFirestore.getInstance()
+        db.collection("Users").document("$uId")
+            .get().addOnCompleteListener {
+                if (it.result?.exists()!!) {
+                    val name = it.result!!.getString("username")
+                    val email = it.result!!.getString("email")
+                    val phoneNumber = it.result!!.getString("phoneNumber")
+                    userSharedPreferance = requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE)
+                    val editor:SharedPreferences.Editor = userSharedPreferance.edit()
+                    editor.putString("refUsername",name.toString())
+                    editor.putString("refEmail",email.toString())
+                    editor.putString("refPhone",phoneNumber.toString())
+                    editor.apply()
+                }else {
+                    Log.e("error \n", "Nope")
+                }
+            }
+    }
+
+
+    private fun setLocales(lang: String) {
+        val locale = Locale(lang)
+        Locale.setDefault(locale)
+        val config = Configuration()
+        config.locale = locale
+        context?.resources?.updateConfiguration(config, context?.resources?.displayMetrics)
+        val refresh = Intent(context, NewsActivity::class.java)
+        startActivity(refresh)
     }
 }

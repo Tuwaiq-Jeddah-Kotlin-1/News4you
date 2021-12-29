@@ -73,31 +73,31 @@ class MainFragment : Fragment() {
         TabLayoutMediator(tab_layout, tabs_viewpager) { tab, position ->
             when (position) {
                 0 -> {
-                    tab.text = "General"
+                    tab.text = getString(R.string.general)
                     tab.setIcon(R.drawable.newspaper)
                 }
                 1 -> {
-                    tab.text = "Technology"
+                    tab.text = getString(R.string.technology)
                     tab.setIcon(R.drawable.tech)
                 }
                 2 -> {
-                    tab.text = "Sport"
+                    tab.text = getString(R.string.sports)
                     tab.setIcon(R.drawable.sport)
                 }
                 3 -> {
-                    tab.text = "Science"
+                    tab.text = getString(R.string.science)
                     tab.setIcon(R.drawable.ic_science)
                 }
                 4 -> {
-                    tab.text = "Business"
+                    tab.text = getString(R.string.business)
                     tab.setIcon(R.drawable.buisness)
                 }
                 5 -> {
-                    tab.text = "Health"
+                    tab.text = getString(R.string.health)
                     tab.setIcon(R.drawable.health)
                 }
                 6 -> {
-                    tab.text = "Entertainment"
+                    tab.text = getString(R.string.entertainment)
                     tab.setIcon(R.drawable.entertainment)
                 }
             }

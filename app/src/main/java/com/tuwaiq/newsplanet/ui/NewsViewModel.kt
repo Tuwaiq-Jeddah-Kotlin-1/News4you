@@ -486,6 +486,4 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
             }
         }
     }
-
-
 }

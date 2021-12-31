@@ -38,9 +38,9 @@ class MainFragment : Fragment() {
 
     fun setupTabs(){
         // Tabs Customization
-        tab_layout.setSelectedTabIndicatorColor(Color.parseColor("#f9f9f9"))
-        tab_layout.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorPrimary))
-        tab_layout.tabTextColors = ContextCompat.getColorStateList(requireContext(), R.color.colorPrimaryDark)
+          tab_layout.setSelectedTabIndicatorColor(Color.parseColor("#f79771"))
+//        tab_layout.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorPrimary))
+        tab_layout.tabTextColors = ContextCompat.getColorStateList(requireContext(), R.color.black)
 
         // Set different Text Color for Tabs for when are selected or not
         //tab_layout.setTabTextColors(R.color.normalTabTextColor, R.color.selectedTabTextColor)
@@ -104,7 +104,7 @@ class MainFragment : Fragment() {
             // Change color of the icons
             tab.icon?.colorFilter =
                 BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
-                    Color.parseColor("#22485C"),
+                    Color.BLACK,
                     BlendModeCompat.SRC_ATOP
                 )
         }.attach()

@@ -5,6 +5,13 @@
       <map>
         <entry key="../../../../layout/compose-model-1640003841774.xml" value="0.25" />
         <entry key="../../../../layout/compose-model-1640805295130.xml" value="0.1" />
+        <entry key="..\:/Users/Darker/AndroidStudioprojects/NewsPlanet/app/src/main/res/drawable-v24/btn_shape.xml" value="0.34444444444444444" />
+        <entry key="..\:/Users/Darker/AndroidStudioprojects/NewsPlanet/app/src/main/res/drawable-v24/ed_background.xml" value="0.34444444444444444" />
+        <entry key="..\:/Users/Darker/AndroidStudioprojects/NewsPlanet/app/src/main/res/drawable-v24/login_shape_bk.xml" value="0.34444444444444444" />
+        <entry key="..\:/Users/Darker/AndroidStudioprojects/NewsPlanet/app/src/main/res/drawable/actionbar_bg.xml" value="0.3828125" />
+        <entry key="..\:/Users/Darker/AndroidStudioprojects/NewsPlanet/app/src/main/res/drawable/card_edge.xml" value="0.34444444444444444" />
+        <entry key="..\:/Users/Darker/AndroidStudioprojects/NewsPlanet/app/src/main/res/drawable/color_cursor.xml" value="0.3425925925925926" />
+        <entry key="..\:/Users/Darker/AndroidStudioprojects/NewsPlanet/app/src/main/res/drawable/ic_profile.xml" value="0.3828125" />
         <entry key="..\:/Users/Darker/AndroidStudioprojects/NewsPlanet/app/src/main/res/drawable/ic_sport.xml" value="0.2935185185185185" />
         <entry key="..\:/Users/Darker/AndroidStudioprojects/NewsPlanet/app/src/main/res/layout/activity_news.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Darker/AndroidStudioprojects/NewsPlanet/app/src/main/res/layout/fragment_books.xml" value="0.36666666666666664" />
@@ -19,7 +26,9 @@
         <entry key="..\:/Users/Darker/AndroidStudioprojects/NewsPlanet/app/src/main/res/layout/fragment_technology.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Darker/AndroidStudioprojects/NewsPlanet/app/src/main/res/layout/fragment_top_headlines_news.xml" value="0.25" />
         <entry key="..\:/Users/Darker/AndroidStudioprojects/NewsPlanet/app/src/main/res/layout/item_article_preview.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/Darker/AndroidStudioprojects/NewsPlanet/app/src/main/res/layout/profile_fragment.xml" value="0.1" />
+        <entry key="..\:/Users/Darker/AndroidStudioprojects/NewsPlanet/app/src/main/res/layout/profile_fragment.xml" value="0.33" />
+        <entry key="..\:/Users/Darker/AndroidStudioprojects/NewsPlanet/app/src/main/res/layout/sign_in_fragment.xml" value="0.17831813576494426" />
+        <entry key="..\:/Users/Darker/AndroidStudioprojects/NewsPlanet/app/src/main/res/layout/sign_up_fragment.xml" value="0.33" />
         <entry key="..\:/Users/Darker/AndroidStudioprojects/NewsPlanet/app/src/main/res/layout/splashscreen.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Darker/AndroidStudioprojects/NewsPlanet/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Darker/AndroidStudioprojects/NewsPlanet/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3828125" />

@@ -27,8 +27,14 @@ class NewsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
         setContentView(R.layout.activity_news)
         getSupportActionBar()?.show()
+        getSupportActionBar()?.elevation = 0F
+        supportActionBar?.setBackgroundDrawable(getDrawable(R.drawable.actionbar_bg))
+
+
+
 
         // implementing Worm Manager ..
         NewsNotificationRepo().myNotification(this)
@@ -38,7 +44,7 @@ class NewsActivity : AppCompatActivity() {
         setLocales(language)
 
 
-        getSupportActionBar()?.elevation = 0F
+
 
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.newsNavHostFragment) as NavHostFragment

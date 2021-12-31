@@ -38,7 +38,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="@string/sign_in"
-                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="15sp" />
         </LinearLayout>
 
@@ -50,6 +51,7 @@
             android:backgroundTint="#66c2ff"
             android:text="@string/sign_up"
             android:textSize="20sp"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
@@ -83,7 +85,7 @@
                 android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:contentDescription="@string/logo_text"
-                android:src="@drawable/newsplanetlogo" />
+                android:src="@drawable/news4youlogot" />
         </FrameLayout>
 
         <com.google.android.material.textfield.TextInputLayout

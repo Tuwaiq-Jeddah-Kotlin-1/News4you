@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">news4you</string>
+    <string name="app_name">News4you</string>
     <string name="logo_text">Logo Text</string>
     <string name="you_don_t_have_an_account">You don\'t have an account?</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>

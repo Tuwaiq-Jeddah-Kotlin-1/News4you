@@ -126,6 +126,7 @@
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:shapeAppearance="@style/Cut"
                 android:text="English" />
 
             <Button
@@ -133,6 +134,7 @@
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:shapeAppearance="@style/Cut"
                 android:text="العربية" />
 
         </com.google.android.material.button.MaterialButtonToggleGroup>

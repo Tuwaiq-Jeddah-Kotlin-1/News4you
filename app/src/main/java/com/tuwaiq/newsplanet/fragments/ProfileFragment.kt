@@ -44,7 +44,6 @@ class ProfileFragment() : Fragment( R.layout.profile_fragment) {
     lateinit var usernameBET : TextInputEditText
     lateinit var phoneNumberBET : TextInputEditText
     lateinit var settingsSharedPreferance : SharedPreferences
-
     lateinit var userSharedPreferance : SharedPreferences
 
     val userCollectionRef = Firebase.firestore.collection("users")
@@ -102,7 +101,6 @@ class ProfileFragment() : Fragment( R.layout.profile_fragment) {
             editor.putString("LANGUAGE", "en")
             editor.apply()
             setLocales(language)
-
         }
 
         arabicBtn.setOnClickListener {
@@ -112,12 +110,6 @@ class ProfileFragment() : Fragment( R.layout.profile_fragment) {
             editor.apply()
             setLocales(language)
         }
-
-
-
-
-
-
 
         btn_update.setOnClickListener {
             bottomSheetToUpdate()

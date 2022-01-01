@@ -3,7 +3,6 @@ package com.tuwaiq.newsplanet.fragments
 
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AbsListView
 import android.widget.Toast
@@ -23,22 +22,24 @@ import kotlinx.android.synthetic.main.activity_news.*
 import kotlinx.android.synthetic.main.fragment_search_news.*
 import kotlinx.android.synthetic.main.fragment_top_headlines_news.*
 import kotlinx.android.synthetic.main.fragment_top_headlines_news.paginationProgressBar
+import java.io.IOException
 
 
-
-class TopHeadlineFragment() : Fragment(R.layout.fragment_top_headlines_news) {
+class TopHeadlineFragment(val type : String) : Fragment(R.layout.fragment_top_headlines_news) {
 
     lateinit var viewModel: NewsViewModel
     lateinit var newsAdapter: NewsAdapter
 
 
 
-    val TAG = "TopHeadlinesFragment"
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).viewModel
         bottomNavView.visibility = View.VISIBLE
+
+        viewModel.getTopHeadlinesGeneral("us", type)
 
         setupRecyclerView()
 
@@ -53,7 +54,11 @@ class TopHeadlineFragment() : Fragment(R.layout.fragment_top_headlines_news) {
             )
         }
 
-        viewModel.topHeadlineNews.observe(viewLifecycleOwner, Observer { response ->
+
+
+
+        viewModel.topHeadlineNewsGeneral.observe(viewLifecycleOwner, Observer { response ->
+
             when(response) {
                 is Resource.Success -> {
                     hideProgressBar()
@@ -63,7 +68,7 @@ class TopHeadlineFragment() : Fragment(R.layout.fragment_top_headlines_news) {
                         newsAdapter.mDiffer.submitList(newsResponse.articles.toList())
                         // totalResults is How many results in the response .. +2 cuz last page is always empty and 1 for the rounding ..
                         val totalPages = newsResponse.totalResults / QUERY_PAGE_SIZE + 2
-                        isLastPage = viewModel.topHeadlinesPage == totalPages
+                        isLastPage = viewModel.topHeadlinesPageGeneralPage == totalPages
                         if(isLastPage){
                             rvTopHeadlines.setPadding(0,0,0,0)
                         }
@@ -127,7 +132,7 @@ class TopHeadlineFragment() : Fragment(R.layout.fragment_top_headlines_news) {
             val shouldPaging = isNotLoadingAndNotLastPage && isAtLastItem && isNotAtTheBeginning && isTotalMoreThanVisible && isScrolling
 
             if(shouldPaging){
-                viewModel.getTopHeadlines("us")
+                viewModel.getTopHeadlinesGeneral("us" , type)
                 isScrolling = false
             }
         }
@@ -151,4 +156,6 @@ class TopHeadlineFragment() : Fragment(R.layout.fragment_top_headlines_news) {
             addOnScrollListener(this@TopHeadlineFragment.scrollListener)
         }
     }
+
+
 }

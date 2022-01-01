@@ -14,12 +14,11 @@ import com.tuwaiq.newsplanet.fragments.TopHeadlineFragment
 
 class TabsPagerAdapter(fm: FragmentManager, lifecycle: Lifecycle, private var numberOfTabs: Int ) : FragmentStateAdapter(fm, lifecycle) {
 
-
     override fun createFragment(position: Int): Fragment {
         when (position) {
             0 -> {
                 // general ..
-                return TopHeadlineFragment()
+                return TopHeadlineFragment("general")
             }
             1 -> {
                 // technology ..
@@ -45,7 +44,7 @@ class TabsPagerAdapter(fm: FragmentManager, lifecycle: Lifecycle, private var nu
                 // entertainment ..
                 return EntertainmentFragment()
             }
-            else -> return TopHeadlineFragment()
+            else -> return TopHeadlineFragment("general")
         }
     }
 

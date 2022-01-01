@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -45,6 +46,7 @@ class ProfileFragment() : Fragment( R.layout.profile_fragment) {
     lateinit var phoneNumberBET : TextInputEditText
     lateinit var settingsSharedPreferance : SharedPreferences
     lateinit var userSharedPreferance : SharedPreferences
+    lateinit var darkSharedPreferance : SharedPreferences
 
     val userCollectionRef = Firebase.firestore.collection("users")
     val db = FirebaseFirestore.getInstance()
@@ -58,6 +60,8 @@ class ProfileFragment() : Fragment( R.layout.profile_fragment) {
 
         userSharedPreferance = this.requireActivity().getSharedPreferences("user" , Context.MODE_PRIVATE)
         settingsSharedPreferance = this.requireActivity().getSharedPreferences("settings", Context.MODE_PRIVATE)
+        darkSharedPreferance = this.requireActivity().getSharedPreferences("darkMode", Context.MODE_PRIVATE)
+
 
         return super.onCreateView(inflater, container, savedInstanceState)
     }
@@ -66,6 +70,8 @@ class ProfileFragment() : Fragment( R.layout.profile_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val isDarkMode = darkSharedPreferance.getBoolean("DARKMODE" , false)
+        val darkSharedEditor :SharedPreferences.Editor = darkSharedPreferance.edit()
         // to access the activity's ViewModel ..
         viewModel = (activity as NewsActivity).viewModel
 
@@ -94,6 +100,22 @@ class ProfileFragment() : Fragment( R.layout.profile_fragment) {
 //        phoneNumberTV.text = phoneReferencence
 
         var language : String = "en"
+
+        switch2.setOnClickListener {
+            if(isDarkMode){
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                darkSharedEditor.putBoolean("DARKMODE" , false)
+                darkSharedEditor.apply()
+                val refresh = Intent(context, NewsActivity::class.java)
+                startActivity(refresh)
+            }else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                darkSharedEditor.putBoolean("DARKMODE" , true)
+                darkSharedEditor.apply()
+                val refresh = Intent(context, NewsActivity::class.java)
+                startActivity(refresh)
+            }
+        }
 
         englishBtn.setOnClickListener {
             language = "en"

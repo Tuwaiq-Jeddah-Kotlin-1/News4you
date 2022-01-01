@@ -41,6 +41,8 @@ class NewsActivity : AppCompatActivity() {
 
         val sharedPreferences = getSharedPreferences("settings", Activity.MODE_PRIVATE)
         val language = sharedPreferences.getString("LANGUAGE", "")!!
+        val darkSharedPreferance = this.getSharedPreferences("darkMode", Context.MODE_PRIVATE)
+        val isDarkMode = darkSharedPreferance.getBoolean("DARKMODE" , false)
         setLocales(language)
 
 

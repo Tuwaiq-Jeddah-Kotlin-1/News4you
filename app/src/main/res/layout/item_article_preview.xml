@@ -9,7 +9,6 @@
     android:elevation="30dp"
     app:cardCornerRadius="35dp"
     app:cardElevation="30dp"
-    android:foreground="@drawable/ed_background"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">
@@ -37,7 +36,6 @@
             android:ellipsize="end"
             android:maxLines="3"
             android:text="@string/title"
-            android:textColor="@color/black"
             android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -55,7 +53,6 @@
             android:ellipsize="end"
             android:maxLines="5"
             android:text="@string/description"
-            android:textColor="@android:color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

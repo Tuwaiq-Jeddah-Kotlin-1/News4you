@@ -18,8 +18,6 @@ import com.tuwaiq.newsplanet.util.Constants.Companion.QUERY_PAGE_SIZE
 import com.tuwaiq.newsplanet.util.Resource
 import kotlinx.android.synthetic.main.activity_news.*
 import kotlinx.android.synthetic.main.fragment_search_news.*
-import kotlinx.android.synthetic.main.fragment_sports.*
-import kotlinx.android.synthetic.main.fragment_technology.*
 import kotlinx.android.synthetic.main.fragment_top_headlines_news.*
 import kotlinx.android.synthetic.main.fragment_top_headlines_news.paginationProgressBar
 

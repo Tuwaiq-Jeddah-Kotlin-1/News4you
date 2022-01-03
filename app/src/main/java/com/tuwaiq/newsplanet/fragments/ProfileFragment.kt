@@ -1,6 +1,7 @@
 package com.tuwaiq.newsplanet.fragments
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -13,8 +14,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.app.ActivityCompat.recreate
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
@@ -26,6 +30,7 @@ import com.tuwaiq.newsplanet.R
 import com.tuwaiq.newsplanet.models.User
 import com.tuwaiq.newsplanet.ui.NewsActivity
 import com.tuwaiq.newsplanet.ui.NewsViewModel
+import com.tuwaiq.newsplanet.ui.bottomNavView
 import kotlinx.android.synthetic.main.bottom_sheet_update.*
 import kotlinx.android.synthetic.main.profile_fragment.*
 import kotlinx.coroutines.CoroutineScope
@@ -211,6 +216,8 @@ class ProfileFragment() : Fragment( R.layout.profile_fragment) {
         usernameBET.setText(usernameTV.text.toString())
         phoneNumberBET.setText(phoneNumberTV.text.toString())
 
+
+
         updateBBtn.setOnClickListener {
             if (usernameBET.text.toString().isNotEmpty() &&
                 phoneNumberBET.text.toString().isNotEmpty() &&
@@ -256,7 +263,6 @@ class ProfileFragment() : Fragment( R.layout.profile_fragment) {
         val config = Configuration()
         config.locale = locale
         context?.resources?.updateConfiguration(config, context?.resources?.displayMetrics)
-        val refresh = Intent(context, NewsActivity::class.java)
-        startActivity(refresh)
+        recreate(context as Activity)
     }
 }

@@ -13,10 +13,13 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
+    <style name="HussamButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:background">@color/black</item>
+        <item name="android:colorButtonNormal">#2196f3</item>
+    </style>
 
     <style name="Cut" parent="ShapeAppearance.MaterialComponents.MediumComponent">
         <item name="cornerFamily">cut</item>
         <item name="cornerSize">12dp</item>
     </style>
-
 </resources>

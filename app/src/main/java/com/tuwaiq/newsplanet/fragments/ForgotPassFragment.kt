@@ -34,31 +34,32 @@ class ForgotPassFragment : Fragment(R.layout.forget_pass_fragment) {
         }
 
         reseteBtn.setOnClickListener {
-            val email = forgotPassET.text.toString().trim{it <= ' '}
-            if (email.isEmpty()){
+            val email = forgotPassET.text.toString().trim { it <= ' ' }
+            if (email.isEmpty()) {
                 Toast.makeText(
                     context,
                     "You need to fell the email field",
                     Toast.LENGTH_LONG
                 ).show()
-            }
-            FirebaseAuth.getInstance().sendPasswordResetEmail(email)
-                .addOnCompleteListener {  task ->
-                    if(task.isSuccessful){
-                        Toast.makeText(
-                            context,
-                            "Email sent successfully to reset your password ",
-                            Toast.LENGTH_LONG
-                        ).show()
-                        findNavController().navigate(R.id.action_forgotPassFragment_to_signInFragment)
-                    } else {
-                        Toast.makeText(
-                            context,
-                            task.exception!!.message.toString(),
-                            Toast.LENGTH_LONG
-                        ).show()
+            } else {
+                FirebaseAuth.getInstance().sendPasswordResetEmail(email)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Toast.makeText(
+                                context,
+                                "Email sent successfully to reset your password ",
+                                Toast.LENGTH_LONG
+                            ).show()
+                            findNavController().navigate(R.id.action_forgotPassFragment_to_signInFragment)
+                        } else {
+                            Toast.makeText(
+                                context,
+                                task.exception!!.message.toString(),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
                     }
-                }
+            }
         }
 
         // to access the activity's ViewModel

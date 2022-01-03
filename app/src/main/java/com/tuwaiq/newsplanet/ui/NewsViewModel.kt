@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities.*
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -22,6 +21,7 @@ import com.tuwaiq.newsplanet.models.NewsResponse
 import com.tuwaiq.newsplanet.models.User
 import com.tuwaiq.newsplanet.repo.NewsRepo
 import com.tuwaiq.newsplanet.util.Resource
+import kotlinx.android.synthetic.main.profile_fragment.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -33,8 +33,15 @@ import java.io.IOException
 // used AndroidViewModel to use the Application context in internet connection .. and able to use getApplication() ..
 class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewModel(app) {
 
+    val userCollectionRef = Firebase.firestore.collection("users")
+    val db = FirebaseFirestore.getInstance()
 
-    lateinit var userSharedPreferance : SharedPreferences
+
+    val userUID = FirebaseAuth.getInstance().currentUser?.uid
+    var user : User = User()
+
+
+
 
     // LiveData object ..
     val topHeadlineNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
@@ -49,14 +56,12 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
     val searchNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
 
 
-    private val userCollectionRef = Firebase.firestore.collection("users")
-
     val topHeadlineFragment = TopHeadlineFragment("")
 
 
     // I declare the page number here in the viewModel cuz if it's in the fragment it will reset with any change ..
     var topHeadlinesPage = 1
-    public var topHeadlinesPageTechnologyPage = 1
+    var topHeadlinesPageTechnologyPage = 1
     var topHeadlinesPageSportsPage = 1
     var topHeadlinesPageSciencePage = 1
     var topHeadlinesPageBusinessPage = 1
@@ -92,6 +97,7 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
         getTopHeadlinesBusiness("us", "business")
         getTopHeadlinesHealth("us", "health")
         getTopHeadlinesEntertainment("us", "entertainment")
+        //getUserinfo()
         //getTopHeadlinesGeneral("us", "general")
     }
 
@@ -540,4 +546,11 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
             }
         }
     }
+
+//    fun getUserinfo() {
+//        val docRef = db.collection("users").document("$userUID")
+//        docRef.get().addOnSuccessListener { documentSnapshot ->
+//            user = documentSnapshot.toObject<User>()!!
+//        }
+//    }
 }

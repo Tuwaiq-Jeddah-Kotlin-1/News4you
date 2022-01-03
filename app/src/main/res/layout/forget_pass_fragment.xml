@@ -22,14 +22,13 @@
             android:textSize="20sp"
             app:layout_constraintBaseline_toBaselineOf="@+id/resetePassBtn"
             app:layout_constraintStart_toStartOf="parent"
-            app:shapeAppearanceOverlay="@style/Button1" />
+            app:shapeAppearanceOverlay="@style/Buttons" />
 
         <FrameLayout
             android:id="@+id/frameLayoutInLogeIn"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginBottom="30dp"
-            android:background="@color/black"
             app:layout_constraintBottom_toTopOf="@+id/txtForgotPass"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -39,7 +38,7 @@
                 android:layout_width="150dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_launcher_foreground" />
+                android:src="@drawable/news4youlogot" />
         </FrameLayout>
 
         <Button
@@ -55,7 +54,7 @@
             app:layout_constraintHorizontal_bias="0.587"
             app:layout_constraintStart_toEndOf="@+id/backToLoginBtn"
             app:layout_constraintTop_toBottomOf="@+id/emailTextInputSignIn"
-            app:shapeAppearanceOverlay="@style/Button1" />
+            app:shapeAppearanceOverlay="@style/Buttons" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelineInSignIn"

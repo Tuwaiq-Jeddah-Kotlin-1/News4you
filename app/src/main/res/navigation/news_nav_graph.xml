@@ -85,7 +85,8 @@
         android:label="ProfileFragment" >
         <action
             android:id="@+id/action_profileFragment_to_signInFragment"
-            app:destination="@id/signInFragment" />
+            app:destination="@id/signInFragment"
+            app:popUpTo="@id/news_nav_graph" />
     </fragment>
     <fragment
         android:id="@+id/forgotPassFragment"

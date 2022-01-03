@@ -48,15 +48,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:backgroundTint="#66c2ff"
             android:text="@string/sign_up"
             android:textSize="20sp"
+            android:background="@drawable/custom_buttons"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/phoneNumberTextInputSignUp"
-            app:shapeAppearanceOverlay="@style/Button1" />
+            app:shapeAppearanceOverlay="@style/Buttons" />
 
         <TextView
             android:id="@+id/txtSignUp"

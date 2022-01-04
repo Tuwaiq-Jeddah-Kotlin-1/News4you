@@ -6,6 +6,7 @@ import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -35,22 +36,22 @@ class NewsActivity : AppCompatActivity() {
         val language = sharedPreferences.getString("LANGUAGE", "")!!
         val darkSharedPreferance = this.getSharedPreferences("darkMode", Context.MODE_PRIVATE)
         val isDarkMode = darkSharedPreferance.getBoolean("DARKMODE" , false)
+
+
+        if(isDarkMode){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        }else{
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
+
         setLocales(language)
 
         getSupportActionBar()?.show()
         getSupportActionBar()?.elevation = 0F
         supportActionBar?.setBackgroundDrawable(getDrawable(R.drawable.actionbar_bg))
 
-
-
-
         // implementing Worm Manager ..
         NewsNotificationRepo().myNotification(this)
-
-
-
-
-
 
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.newsNavHostFragment) as NavHostFragment

@@ -14,7 +14,7 @@
         <FrameLayout
             android:id="@+id/frameLayoutInLogeIn"
             android:layout_width="match_parent"
-            android:layout_height="130dp"
+            android:layout_height="100dp"
             android:layout_marginTop="28dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -66,6 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:text="@string/sign_up"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="15sp"
@@ -80,7 +81,8 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="50dp"
             android:layout_marginBottom="32dp"
-            android:backgroundTint="#66c2ff"
+            app:backgroundTint="@null"
+            android:background="@drawable/custom_buttons"
             android:text="@string/login"
             android:textSize="20sp"
             android:textColor="@color/black"
@@ -155,7 +157,7 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtForgotPass"
-            app:startIconDrawable="@drawable/ic_email">
+            app:startIconDrawable="@drawable/ic_baseline_email_24">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/emailET"
@@ -174,7 +176,7 @@
             android:layout_marginTop="60dp"
             android:layout_marginEnd="50dp"
             android:text="@string/i_forgot_my_password"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/pink"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

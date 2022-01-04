@@ -107,19 +107,16 @@ class ProfileFragment() : Fragment( R.layout.profile_fragment) {
 
         var language : String = "en"
 
+        switch2.isChecked = darkSharedPreferance.getBoolean("DARKMODE" , false)
         switch2.setOnClickListener {
             if(isDarkMode){
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 darkSharedEditor.putBoolean("DARKMODE" , false)
                 darkSharedEditor.apply()
-                val refresh = Intent(context, NewsActivity::class.java)
-                startActivity(refresh)
             }else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 darkSharedEditor.putBoolean("DARKMODE" , true)
                 darkSharedEditor.apply()
-                val refresh = Intent(context, NewsActivity::class.java)
-                startActivity(refresh)
             }
         }
 

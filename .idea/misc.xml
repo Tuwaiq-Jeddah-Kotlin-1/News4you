@@ -42,14 +42,15 @@
         <entry key="app/src/main/res/drawable/actionbar_bg.xml" value="0.2140625" />
         <entry key="app/src/main/res/drawable/buttom_sheet_style.xml" value="0.21510416666666668" />
         <entry key="app/src/main/res/drawable/button_edit.xml" value="0.21510416666666668" />
-        <entry key="app/src/main/res/drawable/card_edge.xml" value="0.2140625" />
+        <entry key="app/src/main/res/drawable/card_edge.xml" value="0.20462962962962963" />
+        <entry key="app/src/main/res/drawable/color_cursor.xml" value="0.20462962962962963" />
         <entry key="app/src/main/res/drawable/custom_buttons.xml" value="0.21510416666666668" />
         <entry key="app/src/main/res/drawable/gradient.xml" value="0.2140625" />
         <entry key="app/src/main/res/drawable/ic_profile.xml" value="0.20871794871794871" />
         <entry key="app/src/main/res/layout/activity_news.xml" value="0.15353260869565216" />
         <entry key="app/src/main/res/layout/bottom_sheet_update.xml" value="0.25" />
         <entry key="app/src/main/res/layout/forget_pass_fragment.xml" value="0.165" />
-        <entry key="app/src/main/res/layout/fragment_article.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_article.xml" value="0.12129629629629629" />
         <entry key="app/src/main/res/layout/fragment_breaking_news.xml" value="0.15353260869565216" />
         <entry key="app/src/main/res/layout/fragment_business.xml" value="0.2578125" />
         <entry key="app/src/main/res/layout/fragment_entertainment.xml" value="0.1" />
@@ -64,7 +65,7 @@
         <entry key="app/src/main/res/layout/fragment_technology.xml" value="0.14537037037037037" />
         <entry key="app/src/main/res/layout/fragment_top_headlines_news.xml" value="0.1503623188405797" />
         <entry key="app/src/main/res/layout/item_article_preview.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/profile_fragment.xml" value="0.17407407407407408" />
+        <entry key="app/src/main/res/layout/profile_fragment.xml" value="0.375" />
         <entry key="app/src/main/res/layout/sign_in_fragment.xml" value="0.19895833333333332" />
         <entry key="app/src/main/res/layout/sign_up_fragment.xml" value="0.19895833333333332" />
         <entry key="app/src/main/res/layout/splashscreen.xml" value="0.19895833333333332" />

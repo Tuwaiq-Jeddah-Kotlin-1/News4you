@@ -16,5 +16,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="wallpaper">#f9f9f9</color>
     <color name="red">#CD5C5C</color>
+    <color name="pink">#dc65c9</color>
+    <color name="green">#0accc9</color>
+    <color name="orange">#f79771</color>
 
 </resources>

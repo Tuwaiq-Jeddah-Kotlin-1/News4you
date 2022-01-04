@@ -22,7 +22,6 @@ import kotlinx.android.synthetic.main.activity_news.*
 import kotlinx.android.synthetic.main.fragment_search_news.*
 import kotlinx.android.synthetic.main.fragment_top_headlines_news.*
 import kotlinx.android.synthetic.main.fragment_top_headlines_news.paginationProgressBar
-import java.io.IOException
 
 
 class TopHeadlineFragment(val type : String) : Fragment(R.layout.fragment_top_headlines_news) {
@@ -39,7 +38,42 @@ class TopHeadlineFragment(val type : String) : Fragment(R.layout.fragment_top_he
         viewModel = (activity as NewsActivity).viewModel
         bottomNavView.visibility = View.VISIBLE
 
-        viewModel.getTopHeadlinesGeneral("us", type)
+        viewModel.newCategory = type
+        viewModel.getTopHeadlinesWithCategory("us", type , viewLifecycleOwner )
+
+
+
+        viewModel.topHeadlineNewsWithCategory.observe(viewLifecycleOwner, Observer { response ->
+
+            when (response) {
+                is Resource.Success -> {
+                    hideProgressBar()
+                    response.data?.let { newsResponse ->
+                        /* Here I changed the articles from MutableList to a List cuz Deffer doesn't work with Mutable list perfectly ..
+                        this solved the problem for me .. */
+                        newsAdapter.mDiffer.submitList(newsResponse.articles)
+                        // totalResults is How many results in the response .. +2 cuz last page is always empty and 1 for the rounding ..
+                        val totalPages = newsResponse.totalResults / QUERY_PAGE_SIZE + 2
+                        isLastPage = viewModel.topHeadlinesPageWithCategoryPage == totalPages
+                        if (isLastPage) {
+                            rvTopHeadlines.setPadding(0, 0, 0, 0)
+                        }
+                    }
+                }
+
+                is Resource.Error -> {
+                    hideProgressBar()
+                    response.message?.let { message ->
+                        Toast.makeText(activity, "An error occurred: $message", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+                is Resource.Loading -> {
+                    showProgressBar()
+                }
+            }
+        })
+
 
         setupRecyclerView()
 
@@ -56,36 +90,34 @@ class TopHeadlineFragment(val type : String) : Fragment(R.layout.fragment_top_he
 
 
 
-
-        viewModel.topHeadlineNewsGeneral.observe(viewLifecycleOwner, Observer { response ->
-
-            when(response) {
-                is Resource.Success -> {
-                    hideProgressBar()
-                    response.data?.let { newsResponse ->
-                        /* Here I changed the articles from MutableList to a List cuz Deffer doesn't work with Mutable list perfectly ..
-                        this solved the problem for me .. */
-                        newsAdapter.mDiffer.submitList(newsResponse.articles.toList())
-                        // totalResults is How many results in the response .. +2 cuz last page is always empty and 1 for the rounding ..
-                        val totalPages = newsResponse.totalResults / QUERY_PAGE_SIZE + 2
-                        isLastPage = viewModel.topHeadlinesPageGeneralPage == totalPages
-                        if(isLastPage){
-                            rvTopHeadlines.setPadding(0,0,0,0)
-                        }
-                    }
-                }
-
-                is Resource.Error -> {
-                    hideProgressBar()
-                    response.message?.let { message ->
-                        Toast.makeText(activity , "An error occurred: $message" , Toast.LENGTH_SHORT).show()
-                    }
-                }
-                is Resource.Loading -> {
-                    showProgressBar()
-                }
-            }
-        })
+//        viewModel.topHeadlineNewsGeneral.observe(viewLifecycleOwner, Observer { response ->
+//            when(response) {
+//                is Resource.Success -> {
+//                    hideProgressBar()
+//                    response.data?.let { newsResponse ->
+//                        /* Here I changed the articles from MutableList to a List cuz Deffer doesn't work with Mutable list perfectly ..
+//                        this solved the problem for me .. */
+//                        newsAdapter.mDiffer.submitList(newsResponse.articles.toList())
+//                        // totalResults is How many results in the response .. +2 cuz last page is always empty and 1 for the rounding ..
+//                        val totalPages = newsResponse.totalResults / QUERY_PAGE_SIZE + 2
+//                        isLastPage = viewModel.topHeadlinesPageGeneralPage == totalPages
+//                        if(isLastPage){
+//                            rvTopHeadlines.setPadding(0,0,0,0)
+//                        }
+//                    }
+//                }
+//
+//                is Resource.Error -> {
+//                    hideProgressBar()
+//                    response.message?.let { message ->
+//                        Toast.makeText(activity , "An error occurred: $message" , Toast.LENGTH_SHORT).show()
+//                    }
+//                }
+//                is Resource.Loading -> {
+//                    showProgressBar()
+//                }
+//            }
+//        })
     }
 
 
@@ -132,7 +164,7 @@ class TopHeadlineFragment(val type : String) : Fragment(R.layout.fragment_top_he
             val shouldPaging = isNotLoadingAndNotLastPage && isAtLastItem && isNotAtTheBeginning && isTotalMoreThanVisible && isScrolling
 
             if(shouldPaging){
-                viewModel.getTopHeadlinesGeneral("us" , type)
+                viewModel.getTopHeadlinesWithCategory("us" , type,viewLifecycleOwner)
                 isScrolling = false
             }
         }

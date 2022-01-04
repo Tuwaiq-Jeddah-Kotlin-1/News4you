@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.activity_news.*
 import java.util.*
 
 
-public lateinit var bottomNavView: BottomNavigationView
+lateinit var bottomNavView: BottomNavigationView
 
 class NewsActivity : AppCompatActivity() {
 

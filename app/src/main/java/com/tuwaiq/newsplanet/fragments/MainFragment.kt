@@ -61,7 +61,7 @@ class MainFragment : Fragment() {
         tab_layout.isInlineLabel = true
 
         // Set the ViewPager Adapter
-        val adapter = TabsPagerAdapter(getChildFragmentManager(), lifecycle, numberOfTabs)
+        val adapter = TabsPagerAdapter(requireFragmentManager(), lifecycle, numberOfTabs)
         tabs_viewpager.adapter = adapter
 
         // Enable Swipe

@@ -96,14 +96,6 @@ class ProfileFragment() : Fragment( R.layout.profile_fragment) {
             phoneNumberTV.text = user.phoneNumber
         }
 
-//        retrieveUserData()
-//
-//        val usernameReferencence = userSharedPreferance.getString("refUsername", " ")
-//        usernameTV.text = usernameReferencence
-//        val emailReferencence = userSharedPreferance.getString("refEmail", " ")
-//        emailTV.text = emailReferencence
-//        val phoneReferencence = userSharedPreferance.getString("refPhone", " ")
-//        phoneNumberTV.text = phoneReferencence
 
         var language : String = "en"
 

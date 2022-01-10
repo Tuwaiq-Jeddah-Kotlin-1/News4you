@@ -1,7 +1,6 @@
 package com.tuwaiq.newsplanet.fragments
 
 import android.os.Bundle
-import android.text.TextUtils
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,12 +19,9 @@ import com.tuwaiq.newsplanet.models.User
 import com.tuwaiq.newsplanet.ui.NewsActivity
 import com.tuwaiq.newsplanet.ui.NewsViewModel
 import com.tuwaiq.newsplanet.ui.bottomNavView
+import com.tuwaiq.newsplanet.validateEmail
+import com.tuwaiq.newsplanet.validatePass
 import kotlinx.android.synthetic.main.sign_up_fragment.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
 
 class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
 
@@ -64,12 +60,14 @@ class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
 
 
         signUpButton.setOnClickListener {
+            val emailTrim = emailET.text.toString().trim { it <= ' ' }
+            val passTrim = passwordET.text.toString().trim { it <= ' ' }
             when {
-                TextUtils.isEmpty(emailET.text.toString().trim { it <= ' ' }) -> {
-                    emailTextInputSignIn.helperText = "* Required"
+                validateEmail(emailTrim) -> {
+                    emailTextInputSignUp.helperText = "* Required"
                 }
-                TextUtils.isEmpty(passwordET.text.toString().trim { it <= ' ' }) -> {
-                    passwordTextInputSignIn.helperText = "* Required"
+                validatePass(passTrim) -> {
+                    emailTextInputSignUp.helperText = "* Required"
                 }
                 else -> {
                     val userName: String = usernameET.text.toString().trim { it <= ' ' }

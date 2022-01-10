@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,20 +14,13 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.FirebaseFirestore
 import com.tuwaiq.newsplanet.R
 import com.tuwaiq.newsplanet.ui.bottomNavView
 import kotlinx.android.synthetic.main.activity_news.*
 import kotlinx.android.synthetic.main.fragment_search_news.*
-import kotlinx.android.synthetic.main.fragment_search_news.paginationProgressBar
 import kotlinx.android.synthetic.main.fragment_top_headlines_news.*
 import kotlinx.android.synthetic.main.sign_in_fragment.*
-import kotlinx.android.synthetic.main.sign_in_fragment.emailTextInputSignIn
 import kotlinx.android.synthetic.main.sign_up_fragment.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 
 class SignInFragment : Fragment(R.layout.sign_in_fragment) {
@@ -68,8 +60,8 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
         signInButton = view.findViewById(R.id.signInBtn)
         signUpTv = view.findViewById(R.id.signupTV)
         forgetPassTV = view.findViewById(R.id.forgetPassTV)
-        emailTextInputLayout = view.findViewById(R.id.emailTextInputSignIn)
-        passwordTextInputLayout = view.findViewById(R.id.passwordTextInputSignIn)
+        emailTextInputLayout = view.findViewById(R.id.emailTextInputSignUp)
+        passwordTextInputLayout = view.findViewById(R.id.passwordTextInputSignUp)
 
 
 
@@ -128,7 +120,7 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
 
                                 findNavController().navigate(R.id.action_signInFragment_to_mainFragment)
                             } else {
-                                // if the registreation is not succsesful then show error massage
+                                // if the registration is not successful then show error massage
                                 Toast.makeText(
                                     context,
                                     task.exception?.localizedMessage,

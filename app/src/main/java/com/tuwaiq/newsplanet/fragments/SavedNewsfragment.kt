@@ -2,15 +2,11 @@ package com.tuwaiq.newsplanet.fragments
 
 import android.content.ContentValues
 import android.graphics.Canvas
-import android.graphics.Paint
 import android.os.Bundle
-import android.text.style.BackgroundColorSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.material.Colors
-import androidx.compose.ui.graphics.Color
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController

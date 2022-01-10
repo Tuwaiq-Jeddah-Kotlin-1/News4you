@@ -16,7 +16,7 @@ interface NewsAPI {
         @Query("page")
         pageNumber : Int = 1,
         @Query("apiKey")
-        apiKey : String = API_KEY
+        apiKey : String = API_KEY3
     ) : Response<NewsResponse>
 
     @GET("v2/top-headlines")
@@ -28,7 +28,7 @@ interface NewsAPI {
         @Query("page")
         pageNumber : Int = 1,
         @Query("apiKey")
-        apiKey : String = API_KEY
+        apiKey : String = API_KEY3
     ) : Response<NewsResponse>
 
     @GET("v2/everything")
@@ -38,6 +38,6 @@ interface NewsAPI {
         @Query("page")
         pageNumber : Int = 1,
         @Query("apiKey")
-        apiKey : String = API_KEY
+        apiKey : String = API_KEY3
     ) : Response<NewsResponse>
 }

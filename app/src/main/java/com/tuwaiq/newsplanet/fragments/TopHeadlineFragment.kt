@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.fragment_top_headlines_news.*
 import kotlinx.android.synthetic.main.fragment_top_headlines_news.paginationProgressBar
 
 
-class TopHeadlineFragment(val type : String) : Fragment(R.layout.fragment_top_headlines_news) {
+class TopHeadlineFragment() : Fragment(R.layout.fragment_top_headlines_news) {
 
     lateinit var viewModel: NewsViewModel
     lateinit var newsAdapter: NewsAdapter
@@ -38,12 +38,12 @@ class TopHeadlineFragment(val type : String) : Fragment(R.layout.fragment_top_he
         viewModel = (activity as NewsActivity).viewModel
         bottomNavView.visibility = View.VISIBLE
 
-        viewModel.newCategory = type
-        viewModel.getTopHeadlinesWithCategory("us", type , viewLifecycleOwner )
+        //viewModel.newCategory = type
 
 
 
-        viewModel.topHeadlineNewsWithCategory.observe(viewLifecycleOwner, Observer { response ->
+
+        viewModel.topHeadlineNewsGeneral.observe(viewLifecycleOwner, Observer { response ->
             when (response) {
                 is Resource.Success -> {
                     hideProgressBar()
@@ -53,13 +53,12 @@ class TopHeadlineFragment(val type : String) : Fragment(R.layout.fragment_top_he
                         newsAdapter.mDiffer.submitList(newsResponse.articles)
                         // totalResults is How many results in the response .. +2 cuz last page is always empty and 1 for the rounding ..
                         val totalPages = newsResponse.totalResults / QUERY_PAGE_SIZE + 2
-                        isLastPage = viewModel.topHeadlinesPageWithCategoryPage == totalPages
+                        isLastPage = viewModel.topHeadlinesPageGeneralPage == totalPages
                         if (isLastPage) {
                             rvTopHeadlines.setPadding(0, 0, 0, 0)
                         }
                     }
                 }
-
                 is Resource.Error -> {
                     hideProgressBar()
                     response.message?.let { message ->
@@ -132,7 +131,7 @@ class TopHeadlineFragment(val type : String) : Fragment(R.layout.fragment_top_he
             val shouldPaging = isNotLoadingAndNotLastPage && isAtLastItem && isNotAtTheBeginning && isTotalMoreThanVisible && isScrolling
 
             if(shouldPaging){
-                viewModel.getTopHeadlinesWithCategory("us" , type,viewLifecycleOwner)
+                viewModel.getTopHeadlinesGeneral("us" , "general")
                 isScrolling = false
             }
         }
@@ -156,6 +155,4 @@ class TopHeadlineFragment(val type : String) : Fragment(R.layout.fragment_top_he
             addOnScrollListener(this@TopHeadlineFragment.scrollListener)
         }
     }
-
-
 }

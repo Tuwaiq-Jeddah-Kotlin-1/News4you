@@ -33,7 +33,7 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
         }
     }
 
-    // this AsyncListDiffer will word on the background thread ..
+    // this AsyncListDiffer will work on the background thread ..
     val mDiffer = AsyncListDiffer(this, diffCallback)
 
 

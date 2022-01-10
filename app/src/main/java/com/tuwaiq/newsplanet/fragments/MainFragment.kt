@@ -14,13 +14,10 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.tuwaiq.newsplanet.R
 import com.tuwaiq.newsplanet.adapters.TabsPagerAdapter
 import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.fragment_top_headlines_news.*
 
 class MainFragment : Fragment() {
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,8 +34,8 @@ class MainFragment : Fragment() {
 
     fun setupTabs(){
         // Tabs Customization
-          tab_layout.setSelectedTabIndicatorColor(Color.parseColor("#f79771"))
-        //tab_layout.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorPrimary))
+        tab_layout.setSelectedTabIndicatorColor(Color.parseColor("#f79771"))
+//        tab_layout.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorPrimary))
         tab_layout.tabTextColors = ContextCompat.getColorStateList(requireContext(), R.color.black)
 
         // Set different Text Color for Tabs for when are selected or not

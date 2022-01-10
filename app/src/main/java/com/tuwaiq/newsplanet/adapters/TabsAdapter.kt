@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.tuwaiq.newsplanet.fragments.CategoryFragments.*
 import com.tuwaiq.newsplanet.fragments.TopHeadlineFragment
 
 class TabsPagerAdapter(fm: FragmentManager, lifecycle: Lifecycle, private var numberOfTabs: Int ) : FragmentStateAdapter(fm, lifecycle) {
@@ -12,33 +13,33 @@ class TabsPagerAdapter(fm: FragmentManager, lifecycle: Lifecycle, private var nu
         when (position) {
             0 -> {
                 // general ..
-                return TopHeadlineFragment("general")
+                return TopHeadlineFragment()
             }
             1 -> {
                 // technology ..
-                return TopHeadlineFragment("technology")
+                return TechnologyFragment()
             }
             2 -> {
                 // sports ..
-                return TopHeadlineFragment("sports")
+                return SportsFragment()
             }
             3 -> {
                 // science ..
-                return TopHeadlineFragment("science")
+                return ScienceFragment()
             }
             4 -> {
                 // business ..
-                return TopHeadlineFragment("business")
+                return BusinessFragment()
             }
             5 -> {
                 // health ..
-                return TopHeadlineFragment("health")
+                return HealthFragment()
             }
             6 -> {
                 // entertainment ..
-                return TopHeadlineFragment("entertainment")
+                return EntertainmentFragment()
             }
-            else -> return TopHeadlineFragment("general")
+            else -> return TopHeadlineFragment()
         }
     }
 

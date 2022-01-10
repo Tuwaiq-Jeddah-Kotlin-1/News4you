@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
-        android:backgroundTint="#66c2ff"
+        android:backgroundTint="#dc65c9"
         android:src="@drawable/ic_baseline_favorite_red_all"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"

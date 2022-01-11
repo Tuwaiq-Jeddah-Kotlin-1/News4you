@@ -32,10 +32,10 @@ class NewsActivity : AppCompatActivity() {
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
         setContentView(R.layout.activity_news)
 
-        val sharedPreferences = getSharedPreferences("settings", Activity.MODE_PRIVATE)
-        val language = sharedPreferences.getString("LANGUAGE", "")!!
-        val darkSharedPreferance = this.getSharedPreferences("darkMode", Context.MODE_PRIVATE)
-        val isDarkMode = darkSharedPreferance.getBoolean("DARKMODE" , false)
+
+        val profileSharedPreferance = this.getSharedPreferences("userSettings", Context.MODE_PRIVATE)
+        val language = profileSharedPreferance.getString("LANGUAGE", "")!!
+        val isDarkMode = profileSharedPreferance.getBoolean("DARKMODE" , false)
 
 
         if(isDarkMode){
@@ -77,6 +77,8 @@ class NewsActivity : AppCompatActivity() {
                 }
             }
         }
+
+
 
 
         val newsRepository = NewsRepo(ArticleDatabase(this))

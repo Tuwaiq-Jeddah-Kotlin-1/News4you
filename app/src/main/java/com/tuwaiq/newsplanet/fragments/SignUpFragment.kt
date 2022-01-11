@@ -1,5 +1,7 @@
 package com.tuwaiq.newsplanet.fragments
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -37,6 +39,7 @@ class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
     lateinit var signUpButton: Button
 
     lateinit var viewModel: NewsViewModel
+    lateinit var profileSharedPreferance : SharedPreferences
 
 
 
@@ -52,6 +55,8 @@ class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
         phoneNumberET = view.findViewById(R.id.phoneNumberET)
         signUpButton = view.findViewById(R.id.signUpBtn)
         signInTV = view.findViewById(R.id.signInTV)
+
+        profileSharedPreferance = this.requireActivity().getSharedPreferences("userSettings", Context.MODE_PRIVATE)
 
         bottomNavView.visibility = View.INVISIBLE
 
@@ -80,13 +85,18 @@ class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
                     FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener { task ->
 
-                            // if the registration is sucessfully done
+                            // if the registration is successfully done
                             if (task.isSuccessful) {
                                 //firebase register user
                                 val firebaseUser: FirebaseUser = task.result!!.user!!
                                 val user = User(userName, email, phoneNumber)
                                 viewModel.saveUser(user)
-                                findNavController().navigate(R.id.action_signUpFragment_to_topHeadlineFragment)
+                                val editor: SharedPreferences.Editor = profileSharedPreferance.edit()
+                                editor.putString("USERNAME" , user!!.username)
+                                editor.putString("EMAIL" , user.email)
+                                editor.putString("PHONENUMBER" , user.phoneNumber)
+                                editor.apply()
+                                findNavController().navigate(R.id.action_signUpFragment_to_mainFragment)
                             } else {
                                 // if the registration is not successful then show error massage
                                 Toast.makeText(

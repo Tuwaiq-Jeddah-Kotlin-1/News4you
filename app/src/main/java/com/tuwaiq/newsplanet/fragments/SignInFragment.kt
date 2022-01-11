@@ -14,11 +14,17 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.ktx.Firebase
 import com.tuwaiq.newsplanet.R
+import com.tuwaiq.newsplanet.models.User
 import com.tuwaiq.newsplanet.ui.bottomNavView
 import kotlinx.android.synthetic.main.activity_news.*
 import kotlinx.android.synthetic.main.fragment_search_news.*
 import kotlinx.android.synthetic.main.fragment_top_headlines_news.*
+import kotlinx.android.synthetic.main.profile_fragment.*
 import kotlinx.android.synthetic.main.sign_in_fragment.*
 import kotlinx.android.synthetic.main.sign_up_fragment.*
 
@@ -36,6 +42,7 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
 
 
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var profileSharedPreferance: SharedPreferences
 
     var isRemembered = false
     var appLanguage = "en"
@@ -62,13 +69,15 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
         forgetPassTV = view.findViewById(R.id.forgetPassTV)
         emailTextInputLayout = view.findViewById(R.id.emailTextInputSignUp)
         passwordTextInputLayout = view.findViewById(R.id.passwordTextInputSignUp)
+        val userCollectionRef = Firebase.firestore.collection("users")
+        val db = FirebaseFirestore.getInstance()
 
 
 
 
         rememberMe = view.findViewById(R.id.cbRemember)
-        sharedPreferences =
-            this.requireActivity().getSharedPreferences("preference", Context.MODE_PRIVATE)
+        sharedPreferences = this.requireActivity().getSharedPreferences("preference", Context.MODE_PRIVATE)
+        profileSharedPreferance = this.requireActivity().getSharedPreferences("userSettings", Context.MODE_PRIVATE)
         isRemembered = sharedPreferences.getBoolean("CHECKBOX", false)
 
 
@@ -80,9 +89,6 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
         }
 
         signInButton.setOnClickListener {
-            val email = emailET.editableText.toString()
-            val password = passwordET.editableText.toString()
-            Toast.makeText(context, "Data Stored", Toast.LENGTH_SHORT).show()
             when {
                 TextUtils.isEmpty(emailET.text.toString().trim { it <= ' ' }) -> {
                     emailTextInputLayout.helperText = "* Required"
@@ -99,24 +105,24 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
                             // if the logIn is successfully done
                             if (task.isSuccessful) {
 
-                                val emailPreference: String = email
-                                val passwordPreference: String = password
-
                                 val checked: Boolean = rememberMe.isChecked
 
+                                val userUID = FirebaseAuth.getInstance().currentUser?.uid
+                                val docRef = db.collection("users").document("$userUID")
+
+
+                                docRef.get().addOnSuccessListener { documentSnapshot ->
+                                    val user = documentSnapshot.toObject<User>()
+                                    val editor: SharedPreferences.Editor = profileSharedPreferance.edit()
+                                    editor.putString("USERNAME" , user!!.username)
+                                    editor.putString("EMAIL" , user.email)
+                                    editor.putString("PHONENUMBER" , user.phoneNumber)
+                                    editor.apply()
+                                }
+
                                 val editor: SharedPreferences.Editor = sharedPreferences.edit()
-                                editor.putString("EMAIL", emailPreference)
-                                editor.putString("PASSWORD", passwordPreference)
                                 editor.putBoolean("CHECKBOX", checked)
                                 editor.apply()
-
-                                //retrieveUserData()
-
-                                Toast.makeText(
-                                    context,
-                                    "You lodged in successfully",
-                                    Toast.LENGTH_LONG
-                                ).show()
 
                                 findNavController().navigate(R.id.action_signInFragment_to_mainFragment)
                             } else {

@@ -3,11 +3,9 @@ package com.tuwaiq.newsplanet.fragments
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,10 +14,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat.recreate
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
@@ -31,7 +26,6 @@ import com.tuwaiq.newsplanet.R
 import com.tuwaiq.newsplanet.models.User
 import com.tuwaiq.newsplanet.ui.NewsActivity
 import com.tuwaiq.newsplanet.ui.NewsViewModel
-import com.tuwaiq.newsplanet.ui.bottomNavView
 import kotlinx.android.synthetic.main.bottom_sheet_update.*
 import kotlinx.android.synthetic.main.profile_fragment.*
 import kotlinx.coroutines.CoroutineScope
@@ -42,17 +36,15 @@ import kotlinx.coroutines.withContext
 import java.lang.Exception
 import java.util.*
 
-class ProfileFragment() : Fragment( R.layout.profile_fragment) {
+class ProfileFragment() : Fragment(R.layout.profile_fragment) {
 
-    lateinit var updateBBtn : Button
-    lateinit var signOutButton : Button
-    private lateinit var pref : SharedPreferences
+    lateinit var updateBBtn: Button
+    lateinit var signOutButton: Button
+    private lateinit var pref: SharedPreferences
     lateinit var viewModel: NewsViewModel
-    lateinit var usernameBET : TextInputEditText
-    lateinit var phoneNumberBET : TextInputEditText
-    lateinit var settingsSharedPreferance : SharedPreferences
-    lateinit var userSharedPreferance : SharedPreferences
-    lateinit var darkSharedPreferance : SharedPreferences
+    lateinit var usernameBET: TextInputEditText
+    lateinit var phoneNumberBET: TextInputEditText
+    lateinit var profileSharedPreferance: SharedPreferences
 
     val userCollectionRef = Firebase.firestore.collection("users")
     val db = FirebaseFirestore.getInstance()
@@ -64,9 +56,8 @@ class ProfileFragment() : Fragment( R.layout.profile_fragment) {
     ): View? {
 
 
-        userSharedPreferance = this.requireActivity().getSharedPreferences("user" , Context.MODE_PRIVATE)
-        settingsSharedPreferance = this.requireActivity().getSharedPreferences("settings", Context.MODE_PRIVATE)
-        darkSharedPreferance = this.requireActivity().getSharedPreferences("darkMode", Context.MODE_PRIVATE)
+        profileSharedPreferance =
+            this.requireActivity().getSharedPreferences("userSettings", Context.MODE_PRIVATE)
 
 
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -76,45 +67,42 @@ class ProfileFragment() : Fragment( R.layout.profile_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val isDarkMode = darkSharedPreferance.getBoolean("DARKMODE" , false)
-        val darkSharedEditor :SharedPreferences.Editor = darkSharedPreferance.edit()
         // to access the activity's ViewModel ..
         viewModel = (activity as NewsActivity).viewModel
+
+        val isDarkMode = profileSharedPreferance.getBoolean("DARKMODE", false)
+        val profileSharedEditor: SharedPreferences.Editor = profileSharedPreferance.edit()
+
 
 
 
         signOutButton = view.findViewById(R.id.btn_logout)
 
-        val userUID = FirebaseAuth.getInstance().currentUser?.uid
-        val docRef = db.collection("users").document("$userUID")
+
+        usernameTV.text = profileSharedPreferance.getString("USERNAME", "")!!
+        emailTV.text = profileSharedPreferance.getString("EMAIL", "")!!
+        phoneNumberTV.text = profileSharedPreferance.getString("PHONENUMBER", "")!!
 
 
-        docRef.get().addOnSuccessListener { documentSnapshot ->
-            val user = documentSnapshot.toObject<User>()
-            usernameTV.text = user!!.username
-            emailTV.text = user.email
-            phoneNumberTV.text = user.phoneNumber
-        }
+        var language: String = "en"
 
+        switch2.isChecked = profileSharedPreferance.getBoolean("DARKMODE", false)
 
-        var language : String = "en"
-
-        switch2.isChecked = darkSharedPreferance.getBoolean("DARKMODE" , false)
         switch2.setOnClickListener {
-            if(isDarkMode){
+            if (isDarkMode) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                darkSharedEditor.putBoolean("DARKMODE" , false)
-                darkSharedEditor.apply()
-            }else {
+                profileSharedEditor.putBoolean("DARKMODE", false)
+                profileSharedEditor.apply()
+            } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                darkSharedEditor.putBoolean("DARKMODE" , true)
-                darkSharedEditor.apply()
+                profileSharedEditor.putBoolean("DARKMODE", true)
+                profileSharedEditor.apply()
             }
         }
 
         englishBtn.setOnClickListener {
             language = "en"
-            val editor: SharedPreferences.Editor = settingsSharedPreferance.edit()
+            val editor: SharedPreferences.Editor = profileSharedPreferance.edit()
             editor.putString("LANGUAGE", "en")
             editor.apply()
             setLocales(language)
@@ -122,7 +110,7 @@ class ProfileFragment() : Fragment( R.layout.profile_fragment) {
 
         arabicBtn.setOnClickListener {
             language = "ar"
-            val editor: SharedPreferences.Editor = settingsSharedPreferance.edit()
+            val editor: SharedPreferences.Editor = profileSharedPreferance.edit()
             editor.putString("LANGUAGE", "ar")
             editor.apply()
             setLocales(language)
@@ -185,9 +173,9 @@ class ProfileFragment() : Fragment( R.layout.profile_fragment) {
     private fun updateInFirestore(newUsername: String, newPhoneNumber: String) {
         val UID = FirebaseAuth.getInstance().currentUser?.uid
         val collectionRef = Firebase.firestore.collection("users")
-        collectionRef.document(UID.toString()).update("username", newUsername, "phoneNumber", newPhoneNumber)
+        collectionRef.document(UID.toString())
+            .update("username", newUsername, "phoneNumber", newPhoneNumber)
     }
-
 
 
     @SuppressLint("InflateParams")
@@ -214,36 +202,18 @@ class ProfileFragment() : Fragment( R.layout.profile_fragment) {
                 phoneNumberBET.text.toString().length == 10
             ) {
                 usernameTV.setText(usernameBET.text.toString())
-                updateInFirestore("${usernameBET.text.toString()}", "${phoneNumberBET.text.toString()}")
+                updateInFirestore(
+                    "${usernameBET.text.toString()}",
+                    "${phoneNumberBET.text.toString()}"
+                )
                 builder.dismiss()
 
             } else {
-                Toast.makeText(context , "There is a problem" , Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "There is a problem", Toast.LENGTH_LONG).show()
             }
         }
         builder.setContentView(view)
         builder.show()
-    }
-
-    private fun retrieveUserData() = CoroutineScope(Dispatchers.IO).launch{
-        val uId =FirebaseAuth.getInstance().currentUser?.uid
-        val db = FirebaseFirestore.getInstance()
-        db.collection("Users").document("$uId")
-            .get().addOnCompleteListener {
-                if (it.result?.exists()!!) {
-                    val name = it.result!!.getString("username")
-                    val email = it.result!!.getString("email")
-                    val phoneNumber = it.result!!.getString("phoneNumber")
-                    userSharedPreferance = requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE)
-                    val editor:SharedPreferences.Editor = userSharedPreferance.edit()
-                    editor.putString("refUsername",name.toString())
-                    editor.putString("refEmail",email.toString())
-                    editor.putString("refPhone",phoneNumber.toString())
-                    editor.apply()
-                }else {
-                    Log.e("error \n", "Nope")
-                }
-            }
     }
 
 

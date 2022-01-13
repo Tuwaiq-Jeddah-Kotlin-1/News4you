@@ -1,7 +1,8 @@
 package com.tuwaiq.newsplanet.fragments
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.text.TextUtils
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,12 +14,21 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.tuwaiq.newsplanet.R
+import com.tuwaiq.newsplanet.models.User
+import com.tuwaiq.newsplanet.ui.NewsActivity
+import com.tuwaiq.newsplanet.ui.NewsViewModel
+import com.tuwaiq.newsplanet.ui.SplashScreenActivity
+import com.tuwaiq.newsplanet.ui.bottomNavView
+import com.tuwaiq.newsplanet.validateEmail
+import com.tuwaiq.newsplanet.validatePass
+import kotlinx.android.synthetic.main.sign_up_fragment.*
 
-class SignUpFragment : Fragment() {
+class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
 
-    //private val userCollectionRef = Firebase.firestore.collection("users")
-
+    private val userCollectionRef = Firebase.firestore.collection("users")
 
 
     lateinit var usernameET: TextInputEditText
@@ -29,13 +39,16 @@ class SignUpFragment : Fragment() {
 
     lateinit var signUpButton: Button
 
+    lateinit var viewModel: NewsViewModel
+    lateinit var profileSharedPreferance : SharedPreferences
+
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.sign_up_fragment, container, false)
-
-
 
         usernameET = view.findViewById(R.id.usernameET)
         emailET = view.findViewById(R.id.emailET)
@@ -44,50 +57,47 @@ class SignUpFragment : Fragment() {
         signUpButton = view.findViewById(R.id.signUpBtn)
         signInTV = view.findViewById(R.id.signInTV)
 
+        profileSharedPreferance = this.requireActivity().getSharedPreferences("userSettings", Context.MODE_PRIVATE)
+
+        bottomNavView.visibility = View.INVISIBLE
+
+        // to access the activity's ViewModel
+        viewModel = (activity as NewsActivity).viewModel
+
+
         signUpButton.setOnClickListener {
+            val emailTrim = emailET.text.toString().trim { it <= ' ' }
+            val passTrim = passwordET.text.toString().trim { it <= ' ' }
             when {
-                TextUtils.isEmpty(emailET.text.toString().trim { it <= ' ' }) -> {
-                    Toast.makeText(
-                        context,
-                        "Please Enter Email",
-                        Toast.LENGTH_LONG
-                    ).show()
+                validateEmail(emailTrim) -> {
+                    emailTextInputSignUp.helperText = "* Required"
                 }
-
-                TextUtils.isEmpty(passwordET.text.toString().trim { it <= ' ' }) -> {
-                    Toast.makeText(
-                        context,
-                        "Please Enter Password",
-                        Toast.LENGTH_LONG
-                    ).show()
-
+                validatePass(passTrim) -> {
+                    emailTextInputSignUp.helperText = "* Required"
                 }
                 else -> {
-                    val userID: String = FirebaseAuth.getInstance().currentUser?.uid.toString()
                     val userName: String = usernameET.text.toString().trim { it <= ' ' }
                     val email: String = emailET.text.toString().trim { it <= ' ' }
                     val password: String = passwordET.text.toString().trim { it <= ' ' }
-                    val birthday: String = phoneNumberET.text.toString().trim { it <= ' ' }
+                    val phoneNumber: String = phoneNumberET.text.toString().trim { it <= ' ' }
 
 
                     // create an instance and create a register with email and password
                     FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener { task ->
 
-                            // if the registration is sucessfully done
+                            // if the registration is successfully done
                             if (task.isSuccessful) {
                                 //firebase register user
                                 val firebaseUser: FirebaseUser = task.result!!.user!!
-                                //val user = User(userID, userName, email, birthday)
-                                //saveUser(user)
-
-                                Toast.makeText(
-                                    context,
-                                    "You were registered successfully",
-                                    Toast.LENGTH_LONG
-                                ).show()
-
-                                findNavController().navigate(R.id.action_signUpFragment_to_breakingNewsFragment)
+                                val user = User(userName, email, phoneNumber)
+                                viewModel.saveUser(user)
+                                val editor: SharedPreferences.Editor = profileSharedPreferance.edit()
+                                editor.putString("USERNAME" , user!!.username)
+                                editor.putString("EMAIL" , user.email)
+                                editor.putString("PHONENUMBER" , user.phoneNumber)
+                                editor.apply()
+                                findNavController().navigate(R.id.action_signUpFragment_to_mainFragment)
                             } else {
                                 // if the registration is not successful then show error massage
                                 Toast.makeText(
@@ -101,29 +111,9 @@ class SignUpFragment : Fragment() {
             }
         }
 
-        phoneNumberET.setOnClickListener {
-
-        }
-
         signInTV.setOnClickListener {
             findNavController().navigate(R.id.action_signUpFragment_to_signInFragment)
         }
         return view
     }
-
-
-
-//    fun saveUser(user: User) = CoroutineScope(Dispatchers.IO).launch {
-//        val userUid = FirebaseAuth.getInstance().currentUser!!.uid
-//        try {
-//            userCollectionRef.document("$userUid").set(user).await()
-//            withContext(Dispatchers.Main) {
-//                Toast.makeText(context, "Successfully saved data", Toast.LENGTH_LONG).show()
-//            }
-//        } catch (e: Exception) {
-//            withContext(Dispatchers.Main) {
-//                Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
-//            }
-//        }
-//    }
 }

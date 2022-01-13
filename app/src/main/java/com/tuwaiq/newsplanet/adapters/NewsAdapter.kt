@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import coil.load
 import com.tuwaiq.newsplanet.R
 import com.tuwaiq.newsplanet.models.Article
 import kotlinx.android.synthetic.main.item_article_preview.view.*
@@ -32,7 +32,7 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
         }
     }
 
-    // this AsyncListDiffer will word on the background thread ..
+    // this AsyncListDiffer will work on the background thread ..
     val mDiffer = AsyncListDiffer(this, diffCallback)
 
 
@@ -49,12 +49,16 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         val article = mDiffer.currentList[position]
         holder.itemView.apply {
+
             // to load the image from the api to my imageView I'm using Glide library ..
-            Glide.with(this).load(article.urlToImage).into(ivArticleImage)
-            tvSource.text = article.source.name
+            //Glide.with(this).load(article.urlToImage).into(ivArticleImage)
+
+            // trying coil ..
+            ivArticleImage.load(article.urlToImage)
+            //tvSource.text = article.source.name
             tvTitle.text = article.title
             tvDescription.text = article.description
-            tvPublishedAt.text = article.publishedAt
+            //tvPublishedAt.text = article.publishedAt
             setOnClickListener {
                 // here I used let to check if onClickListener is not null I call the fun with this article ..
                 onItemClickListener?.let {
@@ -76,5 +80,4 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
     fun setOnItemClickListener(listener: (Article) -> Unit) {
         onItemClickListener = listener
     }
-
 }

@@ -1,15 +1,14 @@
 package com.tuwaiq.newsplanet.db
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
+import androidx.room.*
 import com.tuwaiq.newsplanet.models.Article
 
 @Database(
     entities = [Article::class],
-    version = 1
+    version = 1,
+    // after changing the variable types in Article Dataclass I nedded to change the version and do the autoMigration ..
+    //autoMigrations = [AutoMigration (from = 1, to = 2) ]
 )
 
 // to tell the database where are the converters

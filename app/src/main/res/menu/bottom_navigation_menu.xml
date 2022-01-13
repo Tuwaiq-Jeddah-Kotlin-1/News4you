@@ -2,24 +2,24 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/topHeadlineNewsFragment"
+        android:id="@+id/mainFragment"
         android:icon="@drawable/ic_article"
-        android:title="Top Headlines" />
+        android:title="@string/top_headlines" />
 
     <item
         android:id="@+id/savedNewsfragment"
-        android:icon="@drawable/ic_save"
-        android:title="Saved News" />
+        android:icon="@drawable/ic_favorite"
+        android:title="@string/saved_news" />
 
     <item
         android:id="@+id/seasrchNewsFragment"
         android:icon="@drawable/ic_search"
-        android:title="Search News" />
+        android:title="@string/search_news" />
 
     <item
         android:id="@+id/profileFragment"
-        android:icon="@drawable/ic_profile"
-        android:title="Profile" />
+        android:icon="@drawable/ic_settings"
+        android:title="@string/settings" />
 
 
 

@@ -18,6 +18,7 @@ import com.tuwaiq.newsplanet.R
 import com.tuwaiq.newsplanet.adapters.NewsAdapter
 import com.tuwaiq.newsplanet.ui.NewsActivity
 import com.tuwaiq.newsplanet.ui.NewsViewModel
+import com.tuwaiq.newsplanet.ui.SplashScreenActivity
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import kotlinx.android.synthetic.main.fragment_saved_news.*
 import kotlinx.android.synthetic.main.fragment_search_news.*
@@ -85,7 +86,7 @@ class SavedNewsfragment : Fragment(R.layout.fragment_saved_news) {
 
             override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
                 RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-                    .addSwipeLeftBackgroundColor(android.graphics.Color.parseColor("#CD5C5C"))
+                    .addSwipeLeftBackgroundColor(android.graphics.Color.parseColor("#ffcccc"))
                     .addSwipeLeftActionIcon(R.drawable.ic_delete)
                     .create()
                     .decorate()

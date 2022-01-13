@@ -11,6 +11,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.tuwaiq.newsplanet.R
 import com.tuwaiq.newsplanet.ui.NewsActivity
 import com.tuwaiq.newsplanet.ui.NewsViewModel
+import com.tuwaiq.newsplanet.ui.SplashScreenActivity
 import com.tuwaiq.newsplanet.ui.bottomNavView
 
 class ForgotPassFragment : Fragment(R.layout.forget_pass_fragment) {

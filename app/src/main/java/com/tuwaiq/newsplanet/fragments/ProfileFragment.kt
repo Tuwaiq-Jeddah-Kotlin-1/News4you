@@ -26,6 +26,8 @@ import com.tuwaiq.newsplanet.R
 import com.tuwaiq.newsplanet.models.User
 import com.tuwaiq.newsplanet.ui.NewsActivity
 import com.tuwaiq.newsplanet.ui.NewsViewModel
+import com.tuwaiq.newsplanet.ui.SplashScreenActivity
+import com.tuwaiq.newsplanet.util.LangSetting
 import kotlinx.android.synthetic.main.bottom_sheet_update.*
 import kotlinx.android.synthetic.main.profile_fragment.*
 import kotlinx.coroutines.CoroutineScope
@@ -45,20 +47,16 @@ class ProfileFragment() : Fragment(R.layout.profile_fragment) {
     lateinit var usernameBET: TextInputEditText
     lateinit var phoneNumberBET: TextInputEditText
     lateinit var profileSharedPreferance: SharedPreferences
-
-    val userCollectionRef = Firebase.firestore.collection("users")
-    val db = FirebaseFirestore.getInstance()
+    lateinit var langSetting : LangSetting
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-
+        langSetting = LangSetting(requireContext())
         profileSharedPreferance =
             this.requireActivity().getSharedPreferences("userSettings", Context.MODE_PRIVATE)
-
 
         return super.onCreateView(inflater, container, savedInstanceState)
     }
@@ -73,16 +71,11 @@ class ProfileFragment() : Fragment(R.layout.profile_fragment) {
         val isDarkMode = profileSharedPreferance.getBoolean("DARKMODE", false)
         val profileSharedEditor: SharedPreferences.Editor = profileSharedPreferance.edit()
 
-
-
-
         signOutButton = view.findViewById(R.id.btn_logout)
-
 
         usernameTV.text = profileSharedPreferance.getString("USERNAME", "")!!
         emailTV.text = profileSharedPreferance.getString("EMAIL", "")!!
         phoneNumberTV.text = profileSharedPreferance.getString("PHONENUMBER", "")!!
-
 
         var language: String = "en"
 
@@ -106,6 +99,7 @@ class ProfileFragment() : Fragment(R.layout.profile_fragment) {
             editor.putString("LANGUAGE", "en")
             editor.apply()
             setLocales(language)
+            recreate(context as Activity)
         }
 
         arabicBtn.setOnClickListener {
@@ -114,6 +108,7 @@ class ProfileFragment() : Fragment(R.layout.profile_fragment) {
             editor.putString("LANGUAGE", "ar")
             editor.apply()
             setLocales(language)
+            recreate(context as Activity)
         }
 
         btn_update.setOnClickListener {
@@ -129,44 +124,6 @@ class ProfileFragment() : Fragment(R.layout.profile_fragment) {
             // Logout from app
             FirebaseAuth.getInstance().signOut()
             findNavController().navigate(R.id.action_profileFragment_to_signInFragment)
-        }
-    }
-
-    // this block of code acts like liveData .. This will work perfectly with our events RV
-    fun subscribeToRealtimeUpdate() {
-        userCollectionRef.addSnapshotListener { querySnapshot, FirebaseFirestoreException ->
-            FirebaseFirestoreException?.let {
-                Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
-                return@addSnapshotListener
-            }
-            querySnapshot?.let {
-                val strBuilder = StringBuilder()
-                for (document in it.documents) {
-                    val user = document.toObject(User::class.java)
-                    strBuilder.append("$user\n")
-                }
-            }
-        }
-    }
-
-    fun retriveUser() = CoroutineScope(Dispatchers.IO).launch {
-        try {
-            val querySnapshot = userCollectionRef.get().await()
-            val strBuilder = StringBuilder()
-            for (document in querySnapshot.documents) {
-                val user = document.toObject(User::class.java)
-                strBuilder.append("$user\n")
-                usernameTV.text = user!!.username
-                emailTV.text = user.email
-                phoneNumberTV.text = user.phoneNumber
-            }
-            withContext(Dispatchers.Main) {
-
-            }
-        } catch (e: Exception) {
-            withContext(Dispatchers.Main) {
-                Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
-            }
         }
     }
 
@@ -218,11 +175,6 @@ class ProfileFragment() : Fragment(R.layout.profile_fragment) {
 
 
     private fun setLocales(language: String) {
-        val locale = Locale(language)
-        Locale.setDefault(locale)
-        val config = Configuration()
-        config.locale = locale
-        context?.resources?.updateConfiguration(config, context?.resources?.displayMetrics)
-        recreate(context as Activity)
+        langSetting.setLocals(language)
     }
 }

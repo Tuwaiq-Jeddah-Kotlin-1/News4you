@@ -15,6 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.tuwaiq.newsplanet.R
 import com.tuwaiq.newsplanet.db.ArticleDatabase
 import com.tuwaiq.newsplanet.repo.NewsRepo
+import com.tuwaiq.newsplanet.util.LangSetting
 import com.tuwaiq.newsplanet.workmanager.NewsNotificationRepo
 import kotlinx.android.synthetic.main.activity_news.*
 import java.util.*
@@ -23,28 +24,12 @@ import java.util.*
 lateinit var bottomNavView: BottomNavigationView
 
 class NewsActivity : AppCompatActivity() {
-
     lateinit var viewModel: NewsViewModel
     private lateinit var navController: NavController
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
         setContentView(R.layout.activity_news)
-
-
-        val profileSharedPreferance = this.getSharedPreferences("userSettings", Context.MODE_PRIVATE)
-        val language = profileSharedPreferance.getString("LANGUAGE", "")!!
-        val isDarkMode = profileSharedPreferance.getBoolean("DARKMODE" , false)
-
-
-        if(isDarkMode){
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        }else{
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        }
-
-        setLocales(language)
 
         getSupportActionBar()?.show()
         getSupportActionBar()?.elevation = 0F
@@ -77,9 +62,6 @@ class NewsActivity : AppCompatActivity() {
                 }
             }
         }
-
-
-
 
         val newsRepository = NewsRepo(ArticleDatabase(this))
         val viewModelProviderFactory = NewsViewModelProviderFactory(application , newsRepository)

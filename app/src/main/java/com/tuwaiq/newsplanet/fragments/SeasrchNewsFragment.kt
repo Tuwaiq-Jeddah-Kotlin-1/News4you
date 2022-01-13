@@ -15,6 +15,7 @@ import com.tuwaiq.newsplanet.R
 import com.tuwaiq.newsplanet.adapters.NewsAdapter
 import com.tuwaiq.newsplanet.ui.NewsActivity
 import com.tuwaiq.newsplanet.ui.NewsViewModel
+import com.tuwaiq.newsplanet.ui.SplashScreenActivity
 import com.tuwaiq.newsplanet.util.Constants
 import com.tuwaiq.newsplanet.util.Constants.Companion.QUERY_PAGE_SIZE
 import com.tuwaiq.newsplanet.util.Constants.Companion.SEARCH_QUERY_TIME_DELAY

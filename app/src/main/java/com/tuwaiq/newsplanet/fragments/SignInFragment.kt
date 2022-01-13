@@ -147,25 +147,4 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
 
         return view
     }
-
-//    private fun retrieveUserData() = CoroutineScope(Dispatchers.IO).launch{
-//        val uId =FirebaseAuth.getInstance().currentUser?.uid
-//        val db = FirebaseFirestore.getInstance()
-//        db.collection("Users").document("$uId")
-//            .get().addOnCompleteListener {
-//                if (it.result?.exists()!!) {
-//                    val name = it.result!!.getString("username")
-//                    val email = it.result!!.getString("email")
-//                    val phoneNumber = it.result!!.getString("phoneNumber")
-//                    userSharedPreferance = requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE)
-//                    val editor:SharedPreferences.Editor = userSharedPreferance.edit()
-//                    editor.putString("refUsername",name.toString())
-//                    editor.putString("refEmail",email.toString())
-//                    editor.putString("refPhone",phoneNumber.toString())
-//                    editor.apply()
-//                }else {
-//                    Log.e("error \n", "Nope")
-//                }
-//            }
-//    }
 }

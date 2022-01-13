@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.bumptech.glide.Glide
 import com.tuwaiq.newsplanet.R
 import com.tuwaiq.newsplanet.models.Article
 import kotlinx.android.synthetic.main.item_article_preview.view.*

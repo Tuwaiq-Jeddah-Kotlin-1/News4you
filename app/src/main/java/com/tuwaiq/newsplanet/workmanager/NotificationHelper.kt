@@ -12,11 +12,8 @@ import com.tuwaiq.newsplanet.ui.NewsActivity
 
 class NotificationHelper(val context: Context) {
 
-
     private val CHANNEL_ID = "News Notify ID"
     private val NOTIFICATION_ID = 1
-
-
 
     fun createNotification(title: String, message: String){
         createNotificationChannel()
@@ -32,7 +29,6 @@ class NotificationHelper(val context: Context) {
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .build()
         NotificationManagerCompat.from(context).notify(NOTIFICATION_ID,notification)
-
     }
 
     private fun createNotificationChannel(){

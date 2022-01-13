@@ -34,7 +34,7 @@ class MainFragment : Fragment() {
 
     fun setupTabs(){
         // Tabs Customization
-        tab_layout.setSelectedTabIndicatorColor(Color.parseColor("#f79771"))
+        tab_layout.setSelectedTabIndicatorColor(Color.parseColor("#000000"))
 //        tab_layout.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorPrimary))
         tab_layout.tabTextColors = ContextCompat.getColorStateList(requireContext(), R.color.black)
 

@@ -2,7 +2,6 @@ package com.tuwaiq.newsplanet.ui
 
 import android.app.Application
 import android.content.Context
-import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities.*
 import android.widget.Toast
@@ -12,16 +11,15 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.tuwaiq.newsplanet.NewsApplication
-import com.tuwaiq.newsplanet.fragments.TopHeadlineFragment
+import com.tuwaiq.newsplanet.api.currentKey
 import com.tuwaiq.newsplanet.models.Article
 import com.tuwaiq.newsplanet.models.NewsResponse
 import com.tuwaiq.newsplanet.models.User
 import com.tuwaiq.newsplanet.repo.NewsRepo
+import com.tuwaiq.newsplanet.util.Constants.Companion.API_KEY2
 import com.tuwaiq.newsplanet.util.Resource
-import kotlinx.android.synthetic.main.profile_fragment.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -38,9 +36,7 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
 
 
     val userUID = FirebaseAuth.getInstance().currentUser?.uid
-    var user : User = User()
-
-
+    var user: User = User()
 
 
     // LiveData object ..
@@ -54,7 +50,6 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
     val topHeadlineNewsGeneral: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
 
     val searchNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
-
 
 
     // I declare the page number here in the viewModel cuz if it's in the fragment it will reset with any change ..
@@ -71,7 +66,6 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
 
 
     // this is saved here to handle the response if the activity or fragment changed .. like rotate for example ..
-    var topHeadlinesResponse: NewsResponse? = null
     var topHeadlinesTechnologyResponse: NewsResponse? = null
     var topHeadlinesSportsResponse: NewsResponse? = null
     var topHeadlinesScienceResponse: NewsResponse? = null
@@ -86,48 +80,48 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
     var oldSearchQuery: String? = null
 
 
-
     init {
-        getTopHeadlines("us")
+        getTopHeadlinesGeneral("us", "general")
         getTopHeadlinesTechnology("us", "technology")
         getTopHeadlinesSports("us", "sports")
         getTopHeadlinesScience("us", "science")
         getTopHeadlinesBusiness("us", "business")
         getTopHeadlinesHealth("us", "health")
         getTopHeadlinesEntertainment("us", "entertainment")
-        //getUserinfo()
-        getTopHeadlinesGeneral("us", "general")
     }
+
 
     // this is a coroutines function I used with viewModelScope that will stay alive as long as this viewModel alive ..
-    fun getTopHeadlines(countryCode: String) = viewModelScope.launch {
-        safeTopHeadlinesNewsCall(countryCode)
-    }
-
     // Technology ..
     fun getTopHeadlinesTechnology(countryCode: String, category: String) = viewModelScope.launch {
         safeTopHeadlinesNewsTechnologyCall(countryCode, category)
     }
+
     // Sports ..
     fun getTopHeadlinesSports(countryCode: String, category: String) = viewModelScope.launch {
         safeTopHeadlinesNewsSportsCall(countryCode, category)
     }
+
     // Science ..
     fun getTopHeadlinesScience(countryCode: String, category: String) = viewModelScope.launch {
         safeTopHeadlinesNewsScienceCall(countryCode, category)
     }
+
     // Business ..
     fun getTopHeadlinesBusiness(countryCode: String, category: String) = viewModelScope.launch {
         safeTopHeadlinesNewsBusinessCall(countryCode, category)
     }
+
     // Health ..
     fun getTopHeadlinesHealth(countryCode: String, category: String) = viewModelScope.launch {
         safeTopHeadlinesNewsHealthCall(countryCode, category)
     }
+
     // Entertainment ..
-    fun getTopHeadlinesEntertainment(countryCode: String, category: String) = viewModelScope.launch {
-        safeTopHeadlinesNewsEntertainmentCall(countryCode, category)
-    }
+    fun getTopHeadlinesEntertainment(countryCode: String, category: String) =
+        viewModelScope.launch {
+            safeTopHeadlinesNewsEntertainmentCall(countryCode, category)
+        }
 
     // General ..
     fun getTopHeadlinesGeneral(countryCode: String, category: String) = viewModelScope.launch {
@@ -138,29 +132,7 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
         safeSearchNewsCall(searchQuery)
     }
 
-
     // in this function I check if the response is successful or not and send the message to the Resource ..
-    private fun handleHeadlinesNewsResponse(response: Response<NewsResponse>): Resource<NewsResponse> {
-        if (response.isSuccessful) {
-            response.body()?.let { resultResponse ->
-                // first ingress the page number ..
-                topHeadlinesPage++
-                // check and set the topHeadlinesResponse ..
-                if (topHeadlinesResponse == null) {
-                    topHeadlinesResponse = resultResponse
-                } else {
-                    // if there is a response already .. I pass the articles from the newResponse to the oldResponse ..
-                    val oldArticles = topHeadlinesResponse?.articles
-                    val newArticles = resultResponse.articles
-                    // i changes List<Article> to MutableList<Article> so i can add to it here ..
-                    oldArticles?.addAll(newArticles)
-                }
-                return Resource.Success(topHeadlinesResponse ?: resultResponse)
-            }
-        }
-        return Resource.Error(response.message())
-    }
-
     // Technology ..
     fun handleHeadlinesNewsTechnologyResponse(response: Response<NewsResponse>): Resource<NewsResponse> {
         if (response.isSuccessful) {
@@ -179,6 +151,9 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
                 }
                 return Resource.Success(topHeadlinesTechnologyResponse ?: resultResponse)
             }
+        } else {
+            currentKey = API_KEY2
+            handleHeadlinesNewsTechnologyResponse(response)
         }
         return Resource.Error(response.message())
     }
@@ -201,9 +176,13 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
                 }
                 return Resource.Success(topHeadlinesSportsResponse ?: resultResponse)
             }
+        } else {
+            currentKey = API_KEY2
+            handleHeadlinesNewsSportsResponse(response)
         }
         return Resource.Error(response.message())
     }
+
     // Science ..
     private fun handleHeadlinesNewsScienceResponse(response: Response<NewsResponse>): Resource<NewsResponse> {
         if (response.isSuccessful) {
@@ -222,9 +201,13 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
                 }
                 return Resource.Success(topHeadlinesScienceResponse ?: resultResponse)
             }
+        } else {
+            currentKey = API_KEY2
+            handleHeadlinesNewsScienceResponse(response)
         }
         return Resource.Error(response.message())
     }
+
     // Business ..
     private fun handleHeadlinesNewsBusinessResponse(response: Response<NewsResponse>): Resource<NewsResponse> {
         if (response.isSuccessful) {
@@ -243,9 +226,13 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
                 }
                 return Resource.Success(topHeadlinesBusinessResponse ?: resultResponse)
             }
+        } else {
+            currentKey = API_KEY2
+            handleHeadlinesNewsBusinessResponse(response)
         }
         return Resource.Error(response.message())
     }
+
     // Health ..
     private fun handleHeadlinesNewsHealthResponse(response: Response<NewsResponse>): Resource<NewsResponse> {
         if (response.isSuccessful) {
@@ -264,6 +251,9 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
                 }
                 return Resource.Success(topHeadlinesHealthResponse ?: resultResponse)
             }
+        } else {
+            currentKey = API_KEY2
+            handleHeadlinesNewsHealthResponse(response)
         }
         return Resource.Error(response.message())
     }
@@ -286,6 +276,9 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
                 }
                 return Resource.Success(topHeadlinesEntertainmentResponse ?: resultResponse)
             }
+        } else {
+            currentKey = API_KEY2
+            handleHeadlinesNewsEntertainmentResponse(response)
         }
         return Resource.Error(response.message())
     }
@@ -308,6 +301,9 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
                 }
                 return Resource.Success(topHeadlinesGeneralResponse ?: resultResponse)
             }
+        } else {
+            currentKey = API_KEY2
+            handleHeadlinesNewsGeneralResponse(response)
         }
         return Resource.Error(response.message())
     }
@@ -332,6 +328,9 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
                 }
                 return Resource.Success(searchNewsResponse ?: resultResponse)
             }
+        } else {
+            currentKey = API_KEY2
+            handleSearchNewsResponse(response)
         }
         return Resource.Error(response.message())
     }
@@ -348,31 +347,17 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
         newsRepo.deleteArticle(article)
     }
 
-    private suspend fun safeTopHeadlinesNewsCall(countryCode: String) {
-        topHeadlineNews.postValue(Resource.Loading())
-        try {
-            if (hasInternetConnection()) {
-                val response = newsRepo.getToHeadlinesNews(countryCode, topHeadlinesPage)
-                topHeadlineNews.postValue(handleHeadlinesNewsResponse(response))
-            } else {
-                topHeadlineNews.postValue(Resource.Error("No internet connection"))
-            }
-        } catch (t: Throwable) {
-            when (t) {
-                // topHeadlines function could also cause an exception this why I need when here ..
-                is IOException -> topHeadlineNews.postValue(Resource.Error("Network Failure"))
-                else -> topHeadlineNews.postValue(Resource.Error("Another Error not IOException"))
-            }
-        }
-    }
 
     // Technology ..
-    suspend fun safeTopHeadlinesNewsTechnologyCall(countryCode: String, category: String  ="") {
+    suspend fun safeTopHeadlinesNewsTechnologyCall(countryCode: String, category: String = "") {
         topHeadlineNewsTechnology.postValue(Resource.Loading())
         try {
             if (hasInternetConnection()) {
-
-                val response = newsRepo.getToHeadlinesNewsWithCategory(countryCode, category, topHeadlinesPageTechnologyPage)
+                val response = newsRepo.getToHeadlinesNewsWithCategory(
+                    countryCode,
+                    category,
+                    topHeadlinesPageTechnologyPage
+                )
                 topHeadlineNewsTechnology.postValue(handleHeadlinesNewsTechnologyResponse(response))
             } else {
                 topHeadlineNewsTechnology.postValue(Resource.Error("No internet connection"))
@@ -391,7 +376,11 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
         topHeadlineNewsSports.postValue(Resource.Loading())
         try {
             if (hasInternetConnection()) {
-                val response = newsRepo.getToHeadlinesNewsWithCategory(countryCode, category, topHeadlinesPageSportsPage)
+                val response = newsRepo.getToHeadlinesNewsWithCategory(
+                    countryCode,
+                    category,
+                    topHeadlinesPageSportsPage
+                )
                 topHeadlineNewsSports.postValue(handleHeadlinesNewsSportsResponse(response))
             } else {
                 topHeadlineNewsSports.postValue(Resource.Error("No internet connection"))
@@ -404,12 +393,17 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
             }
         }
     }
+
     // Science ..
     private suspend fun safeTopHeadlinesNewsScienceCall(countryCode: String, category: String) {
         topHeadlineNewsScience.postValue(Resource.Loading())
         try {
             if (hasInternetConnection()) {
-                val response = newsRepo.getToHeadlinesNewsWithCategory(countryCode, category, topHeadlinesPageSciencePage)
+                val response = newsRepo.getToHeadlinesNewsWithCategory(
+                    countryCode,
+                    category,
+                    topHeadlinesPageSciencePage
+                )
                 topHeadlineNewsScience.postValue(handleHeadlinesNewsScienceResponse(response))
             } else {
                 topHeadlineNewsScience.postValue(Resource.Error("No internet connection"))
@@ -422,12 +416,17 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
             }
         }
     }
+
     // Business ..
     private suspend fun safeTopHeadlinesNewsBusinessCall(countryCode: String, category: String) {
         topHeadlineNewsBusiness.postValue(Resource.Loading())
         try {
             if (hasInternetConnection()) {
-                val response = newsRepo.getToHeadlinesNewsWithCategory(countryCode, category, topHeadlinesPageBusinessPage)
+                val response = newsRepo.getToHeadlinesNewsWithCategory(
+                    countryCode,
+                    category,
+                    topHeadlinesPageBusinessPage
+                )
                 topHeadlineNewsBusiness.postValue(handleHeadlinesNewsBusinessResponse(response))
             } else {
                 topHeadlineNewsBusiness.postValue(Resource.Error("No internet connection"))
@@ -440,12 +439,17 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
             }
         }
     }
+
     // Health ..
     private suspend fun safeTopHeadlinesNewsHealthCall(countryCode: String, category: String) {
         topHeadlineNewsHealth.postValue(Resource.Loading())
         try {
             if (hasInternetConnection()) {
-                val response = newsRepo.getToHeadlinesNewsWithCategory(countryCode, category, topHeadlinesPageHealthPage)
+                val response = newsRepo.getToHeadlinesNewsWithCategory(
+                    countryCode,
+                    category,
+                    topHeadlinesPageHealthPage
+                )
                 topHeadlineNewsHealth.postValue(handleHeadlinesNewsHealthResponse(response))
             } else {
                 topHeadlineNewsHealth.postValue(Resource.Error("No internet connection"))
@@ -458,13 +462,25 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
             }
         }
     }
+
     // Entertainment ..
-    private suspend fun safeTopHeadlinesNewsEntertainmentCall(countryCode: String, category: String) {
+    private suspend fun safeTopHeadlinesNewsEntertainmentCall(
+        countryCode: String,
+        category: String
+    ) {
         topHeadlineNewsEntertainment.postValue(Resource.Loading())
         try {
             if (hasInternetConnection()) {
-                val response = newsRepo.getToHeadlinesNewsWithCategory(countryCode, category, topHeadlinesPageEntertainmentPage)
-                topHeadlineNewsEntertainment.postValue(handleHeadlinesNewsEntertainmentResponse(response))
+                val response = newsRepo.getToHeadlinesNewsWithCategory(
+                    countryCode,
+                    category,
+                    topHeadlinesPageEntertainmentPage
+                )
+                topHeadlineNewsEntertainment.postValue(
+                    handleHeadlinesNewsEntertainmentResponse(
+                        response
+                    )
+                )
             } else {
                 topHeadlineNewsEntertainment.postValue(Resource.Error("No internet connection"))
             }
@@ -482,7 +498,11 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
         topHeadlineNewsGeneral.postValue(Resource.Loading())
         try {
             if (hasInternetConnection()) {
-                val response = newsRepo.getToHeadlinesNewsWithCategory(countryCode, category, topHeadlinesPageEntertainmentPage)
+                val response = newsRepo.getToHeadlinesNewsWithCategory(
+                    countryCode,
+                    category,
+                    topHeadlinesPageEntertainmentPage
+                )
                 topHeadlineNewsGeneral.postValue(handleHeadlinesNewsGeneralResponse(response))
             } else {
                 topHeadlineNewsGeneral.postValue(Resource.Error("No internet connection"))
@@ -544,11 +564,4 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
             }
         }
     }
-
-//    fun getUserinfo() {
-//        val docRef = db.collection("users").document("$userUID")
-//        docRef.get().addOnSuccessListener { documentSnapshot ->
-//            user = documentSnapshot.toObject<User>()!!
-//        }
-//    }
 }

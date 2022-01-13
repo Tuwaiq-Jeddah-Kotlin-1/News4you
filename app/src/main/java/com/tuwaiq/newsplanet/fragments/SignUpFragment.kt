@@ -20,6 +20,7 @@ import com.tuwaiq.newsplanet.R
 import com.tuwaiq.newsplanet.models.User
 import com.tuwaiq.newsplanet.ui.NewsActivity
 import com.tuwaiq.newsplanet.ui.NewsViewModel
+import com.tuwaiq.newsplanet.ui.SplashScreenActivity
 import com.tuwaiq.newsplanet.ui.bottomNavView
 import com.tuwaiq.newsplanet.validateEmail
 import com.tuwaiq.newsplanet.validatePass

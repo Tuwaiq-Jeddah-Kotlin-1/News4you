@@ -49,10 +49,6 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         val article = mDiffer.currentList[position]
         holder.itemView.apply {
-
-            // to load the image from the api to my imageView I'm using Glide library ..
-            //Glide.with(this).load(article.urlToImage).into(ivArticleImage)
-
             // trying coil ..
             ivArticleImage.load(article.urlToImage)
             //tvSource.text = article.source.name

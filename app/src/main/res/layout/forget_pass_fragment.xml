@@ -12,54 +12,6 @@
         android:layout_height="match_parent">
 
 
-        <Button
-            android:id="@+id/backToLoginBtn"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
-            app:backgroundTint="@null"
-            android:background="@drawable/custom_buttons"
-            android:textColor="@color/black"
-            android:text="Back"
-            android:textSize="20sp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/resetePassBtn"
-            app:layout_constraintStart_toStartOf="parent"
-            app:shapeAppearanceOverlay="@style/Buttons" />
-
-        <FrameLayout
-            android:id="@+id/frameLayoutInLogeIn"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginBottom="30dp"
-            app:layout_constraintBottom_toTopOf="@+id/txtForgotPass"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:layout_width="150dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
-                android:src="@drawable/news4youlogot" />
-        </FrameLayout>
-
-        <Button
-            android:id="@+id/resetePassBtn"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="49dp"
-            app:backgroundTint="@null"
-            android:background="@drawable/custom_buttons"
-            android:textColor="@color/black"
-            android:text=" Reset "
-            android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/LinearLayoutSignIn"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.587"
-            app:layout_constraintStart_toEndOf="@+id/backToLoginBtn"
-            app:layout_constraintTop_toBottomOf="@+id/emailTextInputSignUp"
-            app:shapeAppearanceOverlay="@style/Buttons" />
-
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelineInSignIn"
             android:layout_width="wrap_content"
@@ -78,19 +30,6 @@
             app:layout_constraintStart_toStartOf="@+id/backToLoginBtn"
             app:layout_constraintTop_toBottomOf="@+id/resetePassBtn" />
 
-        <TextView
-            android:id="@+id/txtForgotPass"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="51dp"
-            android:text="Forgot Password"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            app:layout_constraintBottom_toTopOf="@+id/emailTextInputSignUp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/frameLayoutInLogeIn" />
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emailTextInputSignUp"
             android:layout_width="0dp"
@@ -103,9 +42,10 @@
             app:helperTextTextColor="#D50000"
             app:layout_constraintBottom_toTopOf="@+id/resetePassBtn"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtForgotPass"
-            app:startIconDrawable="@drawable/ic_email">
+            app:startIconDrawable="@drawable/ic_baseline_email_24">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/forgotEmailET"
@@ -113,6 +53,69 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/resetePassBtn"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="49dp"
+            android:background="@drawable/custom_buttons"
+            android:text=" Reset "
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:backgroundTint="@null"
+            app:layout_constraintBottom_toTopOf="@+id/LinearLayoutSignIn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.589"
+            app:layout_constraintStart_toEndOf="@+id/backToLoginBtn"
+            app:layout_constraintTop_toBottomOf="@+id/emailTextInputSignUp"
+            app:shapeAppearanceOverlay="@style/Buttons" />
+
+        <Button
+            android:id="@+id/backToLoginBtn"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:background="@drawable/custom_buttons"
+            android:text="Back"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:backgroundTint="@null"
+            app:layout_constraintBaseline_toBaselineOf="@+id/resetePassBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:shapeAppearanceOverlay="@style/Buttons" />
+
+        <TextView
+            android:id="@+id/txtForgotPass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="Forgot Password"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/emailTextInputSignUp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frameLayoutInLogeIn" />
+
+        <FrameLayout
+            android:id="@+id/frameLayoutInLogeIn"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="128dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:src="@drawable/news4youlogot" />
+
+        </FrameLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

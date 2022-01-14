@@ -62,24 +62,4 @@ class ArticleFragment : Fragment(R.layout.fragment_article) {
         }
         return true
     }
-
-
-
-
-
-//    override fun onOptionsItemSelected(menu: Menu, inflater: MenuInflater) {
-//        inflater.inflate(R.menu.main_menu, menu)
-//        val shareIcon: MenuItem = menu.findItem(R.id.share_menu)
-//        if (shareIcon.itemId == R.id.share_menu) {
-//            val shareIntent = Intent().apply {
-//                this.action = Intent.ACTION_SEND
-//                this.putExtra(Intent.EXTRA_TEXT, "News Planet is the best app to track top news ..")
-//                this.type = "text/plain"
-//            }
-//            startActivity(shareIntent)
-//        } else {
-//            return super.onCreateOptionsMenu(menu, inflater)
-//        }
-//
-//    }
 }

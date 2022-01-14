@@ -39,7 +39,6 @@ import java.lang.Exception
 import java.util.*
 
 class ProfileFragment() : Fragment(R.layout.profile_fragment) {
-
     lateinit var updateBBtn: Button
     lateinit var signOutButton: Button
     private lateinit var pref: SharedPreferences
@@ -47,7 +46,7 @@ class ProfileFragment() : Fragment(R.layout.profile_fragment) {
     lateinit var usernameBET: TextInputEditText
     lateinit var phoneNumberBET: TextInputEditText
     lateinit var profileSharedPreferance: SharedPreferences
-    lateinit var langSetting : LangSetting
+    lateinit var langSetting: LangSetting
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -69,6 +68,7 @@ class ProfileFragment() : Fragment(R.layout.profile_fragment) {
         viewModel = (activity as NewsActivity).viewModel
 
         val isDarkMode = profileSharedPreferance.getBoolean("DARKMODE", false)
+        val isArabic = profileSharedPreferance.getBoolean("ARABIC", false)
         val profileSharedEditor: SharedPreferences.Editor = profileSharedPreferance.edit()
 
         signOutButton = view.findViewById(R.id.btn_logout)
@@ -78,6 +78,8 @@ class ProfileFragment() : Fragment(R.layout.profile_fragment) {
         phoneNumberTV.text = profileSharedPreferance.getString("PHONENUMBER", "")!!
 
         var language: String = "en"
+
+
 
         switch2.isChecked = profileSharedPreferance.getBoolean("DARKMODE", false)
 
@@ -93,10 +95,17 @@ class ProfileFragment() : Fragment(R.layout.profile_fragment) {
             }
         }
 
+        if (isArabic) {
+            toggleGroup.check(R.id.arabicBtn)
+        } else {
+            toggleGroup.check(R.id.englishBtn)
+        }
+
         englishBtn.setOnClickListener {
             language = "en"
             val editor: SharedPreferences.Editor = profileSharedPreferance.edit()
             editor.putString("LANGUAGE", "en")
+            editor.putBoolean("ARABIC", false)
             editor.apply()
             setLocales(language)
             recreate(context as Activity)
@@ -106,6 +115,7 @@ class ProfileFragment() : Fragment(R.layout.profile_fragment) {
             language = "ar"
             val editor: SharedPreferences.Editor = profileSharedPreferance.edit()
             editor.putString("LANGUAGE", "ar")
+            editor.putBoolean("ARABIC", true)
             editor.apply()
             setLocales(language)
             recreate(context as Activity)
@@ -142,11 +152,9 @@ class ProfileFragment() : Fragment(R.layout.profile_fragment) {
 
         val builder = BottomSheetDialog(requireView().context as Context)
 
-
         updateBBtn = view.findViewById(R.id.updateBBtn)
         usernameBET = view.findViewById(R.id.usernameBET)
         phoneNumberBET = view.findViewById(R.id.phoneNumberBET)
-
 
         usernameBET.setText(usernameTV.text.toString())
         phoneNumberBET.setText(phoneNumberTV.text.toString())

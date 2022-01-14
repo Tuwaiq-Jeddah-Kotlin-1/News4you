@@ -121,6 +121,7 @@
             app:checkedButton="@id/englishBtn"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+
             app:singleSelection="true">
 
             <Button

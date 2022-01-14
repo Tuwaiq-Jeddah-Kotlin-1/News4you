@@ -62,7 +62,6 @@ class ForgotPassFragment : Fragment(R.layout.forget_pass_fragment) {
                     }
             }
         }
-
         // to access the activity's ViewModel
         viewModel = (activity as NewsActivity).viewModel
     }

@@ -554,10 +554,6 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
         val userUid = FirebaseAuth.getInstance().currentUser!!.uid
         try {
             userCollectionRef.document("$userUid").set(user).await()
-            withContext(Dispatchers.Main) {
-                Toast.makeText(app.applicationContext, "Successfully saved data", Toast.LENGTH_LONG)
-                    .show()
-            }
         } catch (e: Exception) {
             withContext(Dispatchers.Main) {
                 Toast.makeText(app.applicationContext, e.message, Toast.LENGTH_LONG).show()

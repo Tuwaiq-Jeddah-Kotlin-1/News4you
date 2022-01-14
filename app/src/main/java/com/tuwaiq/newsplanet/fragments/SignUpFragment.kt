@@ -36,13 +36,9 @@ class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
     lateinit var passwordET: TextInputEditText
     lateinit var phoneNumberET: TextInputEditText
     lateinit var signInTV: TextView
-
     lateinit var signUpButton: Button
-
     lateinit var viewModel: NewsViewModel
     lateinit var profileSharedPreferance : SharedPreferences
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -88,8 +84,6 @@ class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
 
                             // if the registration is successfully done
                             if (task.isSuccessful) {
-                                //firebase register user
-                                val firebaseUser: FirebaseUser = task.result!!.user!!
                                 val user = User(userName, email, phoneNumber)
                                 viewModel.saveUser(user)
                                 val editor: SharedPreferences.Editor = profileSharedPreferance.edit()

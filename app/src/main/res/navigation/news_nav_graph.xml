@@ -8,50 +8,59 @@
     <fragment
         android:id="@+id/seasrchNewsFragment"
         android:name="com.tuwaiq.newsplanet.fragments.SeasrchNewsFragment"
-        android:label="SeasrchNewsFragment">
+        android:label="SeasrchNewsFragment"
+        tools:layout="@layout/fragment_search_news">
         <action
             android:id="@+id/action_seasrchNewsFragment_to_articleFragment"
             app:destination="@id/articleFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/articleFragment" />
     </fragment>
     <fragment
         android:id="@+id/savedNewsfragment"
         android:name="com.tuwaiq.newsplanet.fragments.SavedNewsfragment"
-        android:label="SavedNewsfragment">
+        android:label="SavedNewsfragment"
+        tools:layout="@layout/fragment_saved_news">
         <action
             android:id="@+id/action_savedNewsfragment_to_articleFragment"
             app:destination="@id/articleFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/articleFragment" />
     </fragment>
     <fragment
         android:id="@+id/articleFragment"
         android:name="com.tuwaiq.newsplanet.fragments.ArticleFragment"
-        android:label="ArticleFragment" >
+        android:label="ArticleFragment"
+        tools:layout="@layout/fragment_article">
         <argument
             android:name="article"
             app:argType="com.tuwaiq.newsplanet.models.Article" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
+        tools:layout="@layout/sign_up_fragment"
         android:name="com.tuwaiq.newsplanet.fragments.SignUpFragment"
-        android:label="SignUpFragment" >
+        android:label="SignUpFragment">
         <action
             android:id="@+id/action_signUpFragment_to_signInFragment"
             app:destination="@id/signInFragment" />
         <action
             android:id="@+id/action_signUpFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/news_nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/signInFragment"
+        tools:layout="@layout/sign_in_fragment"
         android:name="com.tuwaiq.newsplanet.fragments.SignInFragment"
-        android:label="SignInFragment" >
+        android:label="SignInFragment">
         <action
             android:id="@+id/action_signInFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
@@ -70,8 +79,9 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
+        tools:layout="@layout/profile_fragment"
         android:name="com.tuwaiq.newsplanet.fragments.ProfileFragment"
-        android:label="ProfileFragment" >
+        android:label="ProfileFragment">
         <action
             android:id="@+id/action_profileFragment_to_signInFragment"
             app:destination="@id/signInFragment"
@@ -79,27 +89,18 @@
     </fragment>
     <fragment
         android:id="@+id/forgotPassFragment"
+        tools:layout="@layout/forget_pass_fragment"
         android:name="com.tuwaiq.newsplanet.fragments.ForgotPassFragment"
-        android:label="ForgotPassFragment" >
+        android:label="ForgotPassFragment">
         <action
             android:id="@+id/action_forgotPassFragment_to_signInFragment"
             app:destination="@id/signInFragment" />
     </fragment>
     <fragment
-        android:id="@+id/splashFragment"
-        android:name="com.tuwaiq.newsplanet.fragments.SplashFragment"
-        android:label="fragment_splash"
-        tools:layout="@layout/fragment_splash" >
-        <action
-            android:id="@+id/action_splashFragment_to_signInFragment"
-            app:destination="@id/signInFragment"
-            app:popUpTo="@id/news_nav_graph"
-            app:popUpToInclusive="true" />
-    </fragment>
-    <fragment
         android:id="@+id/mainFragment"
         android:name="com.tuwaiq.newsplanet.fragments.MainFragment"
-        android:label="MainFragment" >
+        android:label="MainFragment"
+        tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_articleFragment"
             app:destination="@id/articleFragment"
@@ -107,7 +108,6 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/articleFragment"
-            app:popUpToInclusive="true" />
+            app:popUpTo="@id/articleFragment" />
     </fragment>
 </navigation>

@@ -28,9 +28,6 @@ import kotlinx.android.synthetic.main.sign_up_fragment.*
 
 class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
 
-    private val userCollectionRef = Firebase.firestore.collection("users")
-
-
     lateinit var usernameET: TextInputEditText
     lateinit var emailET: TextInputEditText
     lateinit var passwordET: TextInputEditText
@@ -76,7 +73,6 @@ class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
                     val email: String = emailET.text.toString().trim { it <= ' ' }
                     val password: String = passwordET.text.toString().trim { it <= ' ' }
                     val phoneNumber: String = phoneNumberET.text.toString().trim { it <= ' ' }
-
 
                     // create an instance and create a register with email and password
                     FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)

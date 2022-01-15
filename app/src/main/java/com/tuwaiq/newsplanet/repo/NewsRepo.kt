@@ -8,11 +8,7 @@ import com.tuwaiq.newsplanet.models.Article
 // inside it an object from the database to access the functions in that database ..
 class NewsRepo(val db: ArticleDatabase) {
 
-
     // this function is to get the top headlines from NewsApi .. and it's suspend cuz network functions are suspend ..
-    suspend fun getToHeadlinesNews(countryCode: String, pageNumber: Int) =
-        RetrofitInstance.api.getTopHeadlines(countryCode, pageNumber)
-
     suspend fun getToHeadlinesNewsWithCategory(countryCode: String, category : String, pageNumber: Int) =
         RetrofitInstance.api.getTopHeadlinesWithCategory(countryCode, category ,pageNumber)
 
@@ -27,5 +23,4 @@ class NewsRepo(val db: ArticleDatabase) {
     fun getSavedNews() = db.getArticleDao().getAllArticles()
 
     suspend fun deleteArticle(article: Article) = db.getArticleDao().deleteArticle(article)
-
 }

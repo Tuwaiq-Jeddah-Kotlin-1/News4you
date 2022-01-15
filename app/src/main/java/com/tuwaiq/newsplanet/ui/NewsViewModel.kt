@@ -33,14 +33,10 @@ class NewsViewModel(val app: Application, val newsRepo: NewsRepo) : AndroidViewM
 
     val userCollectionRef = Firebase.firestore.collection("users")
     val db = FirebaseFirestore.getInstance()
-
-
-    val userUID = FirebaseAuth.getInstance().currentUser?.uid
     var user: User = User()
 
 
     // LiveData object ..
-    val topHeadlineNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     val topHeadlineNewsTechnology: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     val topHeadlineNewsSports: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     val topHeadlineNewsScience: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()

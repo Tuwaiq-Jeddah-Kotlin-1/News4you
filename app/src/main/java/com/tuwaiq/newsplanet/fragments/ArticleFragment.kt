@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.webkit.WebViewClient
 import android.window.SplashScreen
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
@@ -26,6 +27,7 @@ class ArticleFragment : Fragment(R.layout.fragment_article) {
 
         // to access the activity's ViewModel
         viewModel = (activity as NewsActivity).viewModel
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = "Article"
         val article = args.article
 
         setHasOptionsMenu(true)

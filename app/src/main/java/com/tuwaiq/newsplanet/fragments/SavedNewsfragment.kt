@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -33,9 +34,7 @@ class SavedNewsfragment : Fragment(R.layout.fragment_saved_news) {
     ): View? {
         // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_saved_news, container, false)
-
         val fragmentName = arguments?.getString("fragmentName")
-
         Log.e(ContentValues.TAG, "onCreateView: $fragmentName")
         return rootView
     }
@@ -45,7 +44,7 @@ class SavedNewsfragment : Fragment(R.layout.fragment_saved_news) {
 
         // to access the activity's ViewModel
         viewModel = (activity as NewsActivity).viewModel
-
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = "Saved News"
         setupRecyclerView()
 
         // here I put the article in a bundle to pass it between the fragments ..

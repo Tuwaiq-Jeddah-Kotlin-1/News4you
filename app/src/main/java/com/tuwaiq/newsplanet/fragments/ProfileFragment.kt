@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat.recreate
 import androidx.fragment.app.Fragment
@@ -66,7 +67,7 @@ class ProfileFragment() : Fragment(R.layout.profile_fragment) {
 
         // to access the activity's ViewModel ..
         viewModel = (activity as NewsActivity).viewModel
-
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = "User Settings"
         val isDarkMode = profileSharedPreferance.getBoolean("DARKMODE", false)
         val isArabic = profileSharedPreferance.getBoolean("ARABIC", false)
         val profileSharedEditor: SharedPreferences.Editor = profileSharedPreferance.edit()

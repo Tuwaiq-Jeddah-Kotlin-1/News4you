@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AbsListView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -37,6 +38,7 @@ class GeneralFragment() : Fragment(R.layout.fragment_top_headlines_news) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).viewModel
         bottomNavView.visibility = View.VISIBLE
+
 
         //viewModel.newCategory = type
 

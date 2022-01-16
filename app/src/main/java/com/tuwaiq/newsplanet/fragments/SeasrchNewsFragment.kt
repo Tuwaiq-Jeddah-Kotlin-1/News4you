@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import android.widget.AbsListView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -38,6 +39,7 @@ class SeasrchNewsFragment : Fragment(R.layout.fragment_search_news) {
 
         // to access the activity's ViewModel
         viewModel = (activity as NewsActivity).viewModel
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = "News Search"
 
         setupRecyclerView()
 

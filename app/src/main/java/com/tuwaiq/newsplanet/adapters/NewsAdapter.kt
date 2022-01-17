@@ -51,10 +51,11 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
         holder.itemView.apply {
             // trying coil ..
             ivArticleImage.load(article.urlToImage)
-            //tvSource.text = article.source.name
+            tvSource.text = article.source.name
             tvTitle.text = article.title
             tvDescription.text = article.description
-            //tvPublishedAt.text = article.publishedAt
+            var articleDate = article.publishedAt.removeRange(9 , 18).replace('Z',' ')
+            tvPublishedAt.text = articleDate
             setOnClickListener {
                 // here I used let to check if onClickListener is not null I call the fun with this article ..
                 onItemClickListener?.let {

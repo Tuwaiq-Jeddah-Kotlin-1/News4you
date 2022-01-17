@@ -49,6 +49,7 @@ class SeasrchNewsFragment : Fragment(R.layout.fragment_search_news) {
                 putSerializable("article", article)
             }
             findNavController().navigate(
+                //R.id.action_seasrchNewsFragment_to_detailsFragment,
                 R.id.action_seasrchNewsFragment_to_articleFragment,
                 bundle
             )

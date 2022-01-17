@@ -53,6 +53,7 @@
         <entry key="app/src/main/res/layout/fragment_article.xml" value="0.12129629629629629" />
         <entry key="app/src/main/res/layout/fragment_breaking_news.xml" value="0.15353260869565216" />
         <entry key="app/src/main/res/layout/fragment_business.xml" value="0.2578125" />
+        <entry key="app/src/main/res/layout/fragment_details.xml" value="0.2578125" />
         <entry key="app/src/main/res/layout/fragment_entertainment.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_health.xml" value="0.18385416666666668" />
         <entry key="app/src/main/res/layout/fragment_main.xml" value="0.19895833333333332" />

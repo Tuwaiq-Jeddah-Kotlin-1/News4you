@@ -41,6 +41,7 @@ class BusinessFragment : Fragment(R.layout.fragment_top_headlines_news) {
                 putSerializable("article" , article)
             }
             findNavController().navigate(
+                //R.id.action_mainFragment_to_detailsFragment,
                 R.id.action_mainFragment_to_articleFragment,
                 bundle
             )

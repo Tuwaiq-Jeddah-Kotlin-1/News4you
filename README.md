@@ -5,8 +5,8 @@ https://launch.sa/assets/images/logos/tuwaiq1000-dark.svg
 https://media2.giphy.com/media/KLp9F4gdqq2la5H1oa/giphy.gif?cid=790b76119c5222555287c2a693ac1ee2ee27ff85e2e59624&rid=giphy.gif&ct=g
 
 App Idea :
-  News4you is an application to display the news for the user from different sources 
-  and allows the user to choose his favorite category to follow his favorite news   
+  News4you is an application to display the news for the user from different sources
+  and allows the user to choose his favorite category to follow his favorite news
   with the ability to save it to return to it even when the Internet is not available.
 
 Technologies used in the app :
@@ -16,9 +16,9 @@ Technologies used in the app :
   4. Workmanager.
   5. Coil.
   6. MVVM Architecture.
-  
+
 Images from the app :
-https://i.ibb.co/0rd189z/Screenshot-News4you.jpg https://i.ibb.co/SvJKSRT/Screenshot-News4you.jpg https://i.ibb.co/gWCnZWK/Screenshot-News4you.jpg https://i.ibb.co/C9J19Z6/Screenshot-News4you.jpg 
+https://i.ibb.co/0rd189z/Screenshot-News4you.jpg https://i.ibb.co/SvJKSRT/Screenshot-News4you.jpg https://i.ibb.co/gWCnZWK/Screenshot-News4you.jpg https://i.ibb.co/C9J19Z6/Screenshot-News4you.jpg
 
 Peek at light mode :
 https://i.ibb.co/cgCh73C/Screenshot-News4you.jpg https://i.ibb.co/B2j3Hj3/Screenshot-News4you.jpg

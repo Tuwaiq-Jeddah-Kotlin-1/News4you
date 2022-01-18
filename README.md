@@ -26,8 +26,7 @@ Images from the app :
 
 Peek at light mode :
 
-<img width="100" alt="portfolio_view" src="https://i.ibb.co/cgCh73C/Screenshot-News4you.jpg">
-<img width="100" alt="portfolio_view" src="https://i.ibb.co/B2j3Hj3/Screenshot-News4you.jpg">
+<img width="100" alt="portfolio_view" src="https://i.ibb.co/cgCh73C/Screenshot-News4you.jpg"><img width="100" alt="portfolio_view" src="https://i.ibb.co/B2j3Hj3/Screenshot-News4you.jpg">
 
 
 Paging :

@@ -39,7 +39,7 @@ Paging :
 Swipe between Categories :
 
 
-<img width="200" alt="portfolio_view" src="https://media1.giphy.com/media/RfkHxQoXCa2mRQUwxf/giphy.gif?cid=790b7611b3d28edea12c4868aa65441a77dc24385336a9c1&rid=giphy.gif&ct=g">
+<img width="200" alt="portfolio_view" src="https://media3.giphy.com/media/AwRrcmgv1uapDZ4lTi/giphy.gif?cid=790b7611bc5d73cf25dec61ae14c338c3ad364c3f3eab7d4&rid=giphy.gif&ct=g">
 
 
 The categories are :
@@ -49,5 +49,6 @@ The categories are :
 Account to try the app :
 
   Email : hani-dabash@hotmail.com
+  
   Pass : Hani321
 

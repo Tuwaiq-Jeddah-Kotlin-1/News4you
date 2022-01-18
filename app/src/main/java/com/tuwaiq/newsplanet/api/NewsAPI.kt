@@ -8,7 +8,7 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-var currentKey : String = API_KEY3
+var currentKey : String = API_KEY
 
 interface NewsAPI {
 

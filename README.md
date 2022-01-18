@@ -19,7 +19,8 @@ Technologies used in the app :
   6. MVVM Architecture.
   
 Images from the app :
-![alt text](https://i.ibb.co/0rd189z/Screenshot-News4you.jpg width="200" height="400") ![alt text](https://i.ibb.co/SvJKSRT/Screenshot-News4you.jpg)
+<img width="100" alt="portfolio_view" src="https://i.ibb.co/0rd189z/Screenshot-News4you.jpg">
+![alt text]( width="200" height="400") ![alt text](https://i.ibb.co/SvJKSRT/Screenshot-News4you.jpg)
 ![alt text](https://i.ibb.co/gWCnZWK/Screenshot-News4you.jpg) ![alt text](https://i.ibb.co/C9J19Z6/Screenshot-News4you.jpg)
 
 

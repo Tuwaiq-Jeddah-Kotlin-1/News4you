@@ -7,11 +7,13 @@
 
 
 App Idea :
+
   News4you is an application to display the news for the user from different sources 
   and allows the user to choose his favorite category to follow his favorite news   
   with the ability to save it to return to it even when the Internet is not available.
 
 Technologies used in the app :
+
   1. Firebase Authentication.
   2. Retrofit with REST api.
   3. Cloude Firestore.
@@ -21,23 +23,23 @@ Technologies used in the app :
   
 Images from the app :
 
-<img width="100" alt="portfolio_view" src="https://i.ibb.co/0rd189z/Screenshot-News4you.jpg"><img width="100" alt="portfolio_view" src="https://i.ibb.co/SvJKSRT/Screenshot-News4you.jpg"><img width="100" alt="portfolio_view" src="https://i.ibb.co/gWCnZWK/Screenshot-News4you.jpg"><img width="100" alt="portfolio_view" src="https://i.ibb.co/C9J19Z6/Screenshot-News4you.jpg">
+<img width="200" alt="portfolio_view" src="https://i.ibb.co/0rd189z/Screenshot-News4you.jpg"><img width="200" alt="portfolio_view" src="https://i.ibb.co/SvJKSRT/Screenshot-News4you.jpg"><img width="200" alt="portfolio_view" src="https://i.ibb.co/gWCnZWK/Screenshot-News4you.jpg"><img width="200" alt="portfolio_view" src="https://i.ibb.co/C9J19Z6/Screenshot-News4you.jpg">
 
 
 Peek at light mode :
 
-<img width="100" alt="portfolio_view" src="https://i.ibb.co/cgCh73C/Screenshot-News4you.jpg"><img width="100" alt="portfolio_view" src="https://i.ibb.co/B2j3Hj3/Screenshot-News4you.jpg">
+<img width="200" alt="portfolio_view" src="https://i.ibb.co/cgCh73C/Screenshot-News4you.jpg"><img width="200" alt="portfolio_view" src="https://i.ibb.co/B2j3Hj3/Screenshot-News4you.jpg">
 
 
 Paging :
 
-<img width="100" alt="portfolio_view" src="https://media3.giphy.com/media/hbMLDC6nRZwjgHcUCe/giphy.gif?cid=790b76111c50c8ee22e3c0321f1fe33851eb36ec1f6b79c5&rid=giphy.gif&ct=g">
+<img width="200" alt="portfolio_view" src="https://media3.giphy.com/media/hbMLDC6nRZwjgHcUCe/giphy.gif?cid=790b76111c50c8ee22e3c0321f1fe33851eb36ec1f6b79c5&rid=giphy.gif&ct=g">
 
 
 Swipe between Categories :
 
 
-<img width="100" alt="portfolio_view" src="https://media1.giphy.com/media/RfkHxQoXCa2mRQUwxf/giphy.gif?cid=790b7611b3d28edea12c4868aa65441a77dc24385336a9c1&rid=giphy.gif&ct=g">
+<img width="200" alt="portfolio_view" src="https://media1.giphy.com/media/RfkHxQoXCa2mRQUwxf/giphy.gif?cid=790b7611b3d28edea12c4868aa65441a77dc24385336a9c1&rid=giphy.gif&ct=g">
 
 
 The categories are :

@@ -1,6 +1,7 @@
 # News4you
 
-https://launch.sa/assets/images/logos/tuwaiq1000-dark.svg
+![alt text](https://launch.sa/assets/images/logos/tuwaiq1000-dark.svg)
+
 
 https://media2.giphy.com/media/KLp9F4gdqq2la5H1oa/giphy.gif?cid=790b76119c5222555287c2a693ac1ee2ee27ff85e2e59624&rid=giphy.gif&ct=g
 

@@ -21,10 +21,7 @@ Technologies used in the app :
   
 Images from the app :
 
-<img width="100" alt="portfolio_view" src="https://i.ibb.co/0rd189z/Screenshot-News4you.jpg">
-<img width="100" alt="portfolio_view" src="hhttps://i.ibb.co/SvJKSRT/Screenshot-News4you.jpg">
-<img width="100" alt="portfolio_view" src="https://i.ibb.co/gWCnZWK/Screenshot-News4you.jpg">
-<img width="100" alt="portfolio_view" src="https://i.ibb.co/C9J19Z6/Screenshot-News4you.jpg">
+<img width="100" alt="portfolio_view" src="https://i.ibb.co/0rd189z/Screenshot-News4you.jpg"><img width="100" alt="portfolio_view" src="hhttps://i.ibb.co/SvJKSRT/Screenshot-News4you.jpg"><img width="100" alt="portfolio_view" src="https://i.ibb.co/gWCnZWK/Screenshot-News4you.jpg"><img width="100" alt="portfolio_view" src="https://i.ibb.co/C9J19Z6/Screenshot-News4you.jpg">
 
 
 Peek at light mode :

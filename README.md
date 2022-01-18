@@ -25,11 +25,13 @@ Images from the app :
 
 
 Peek at light mode :
+
 <img width="100" alt="portfolio_view" src="https://i.ibb.co/cgCh73C/Screenshot-News4you.jpg">
 <img width="100" alt="portfolio_view" src="https://i.ibb.co/B2j3Hj3/Screenshot-News4you.jpg">
 
 
 Paging :
+
 <img width="100" alt="portfolio_view" src="https://media3.giphy.com/media/hbMLDC6nRZwjgHcUCe/giphy.gif?cid=790b76111c50c8ee22e3c0321f1fe33851eb36ec1f6b79c5&rid=giphy.gif&ct=g">
 
 

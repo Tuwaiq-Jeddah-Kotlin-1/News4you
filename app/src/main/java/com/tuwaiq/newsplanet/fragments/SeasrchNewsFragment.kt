@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.AbsListView
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
@@ -55,22 +56,35 @@ class SeasrchNewsFragment : Fragment(R.layout.fragment_search_news) {
             )
         }
 
-        // This coroutine job will help to delay the search act while typing the query 500 milli sec before attempt to search ..
-        var job: Job? = null
-        // Listener If the text changed or not .. If changed the job will canceled and not enter the scope ..
-        // After entering the scope I check the delay first ..
-        etSearch.addTextChangedListener { searchText ->
-            job?.cancel()
-            job = MainScope().launch {
-                delay(SEARCH_QUERY_TIME_DELAY)
-                // here I start the search request .. after checking not null and null empty ..
-                searchText?.let {
-                    if (searchText.toString().isNotEmpty()) {
-                        viewModel.searchNews(searchText.toString())
-                    }
-                }
+
+        etSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                viewModel.searchNews(query.toString())
+                return true
             }
-        }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                Log.d(tag, "Query text : $newText")
+                return false
+            }
+        })
+
+//        // This coroutine job will help to delay the search act while typing the query 500 milli sec before attempt to search ..
+//        var job: Job? = null
+//        // Listener If the text changed or not .. If changed the job will canceled and not enter the scope ..
+//        // After entering the scope I check the delay first ..
+//        etSearch.addTextChangedListener { searchText ->
+//            job?.cancel()
+//            job = MainScope().launch {
+//                delay(SEARCH_QUERY_TIME_DELAY)
+//                // here I start the search request .. after checking not null and null empty ..
+//                searchText?.let {
+//                    if (searchText.toString().isNotEmpty()) {
+//                        viewModel.searchNews(searchText.toString())
+//                    }
+//                }
+//            }
+//        }
 
         viewModel.searchNews.observe(viewLifecycleOwner, Observer { response ->
             when (response) {
@@ -142,7 +156,7 @@ class SeasrchNewsFragment : Fragment(R.layout.fragment_search_news) {
                 isNotLoadingAndNotLastPage && isAtLastItem && isNotAtTheBeginning && isTotalMoreThanVisible && isScrolling
 
             if (shouldPaging) {
-                viewModel.searchNews(etSearch.text.toString())
+                viewModel.searchNews(etSearch.query.toString())
                 isScrolling = false
             }
         }

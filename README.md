@@ -39,7 +39,7 @@ Paging :
 Swipe between Categories :
 
 
-<img width="200" alt="portfolio_view" src="https://media3.giphy.com/media/AwRrcmgv1uapDZ4lTi/giphy.gif?cid=790b7611bc5d73cf25dec61ae14c338c3ad364c3f3eab7d4&rid=giphy.gif&ct=g">
+<img width="200" alt="portfolio_view" src="https://media.giphy.com/media/AwRrcmgv1uapDZ4lTi/giphy.gif">
 
 
 The categories are :

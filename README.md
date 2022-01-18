@@ -1,6 +1,6 @@
 # News4you
 
-<img width="200" alt="portfolio_view" src="https://launch.sa/assets/images/logos/tuwaiq1000-dark.svg">
+<img width="300" alt="portfolio_view" src="https://launch.sa/assets/images/logos/tuwaiq1000-dark.svg">
 
 
 <img width="200" alt="portfolio_view" src="https://media2.giphy.com/media/KLp9F4gdqq2la5H1oa/giphy.gif?cid=790b76119c5222555287c2a693ac1ee2ee27ff85e2e59624&rid=giphy.gif&ct=g">
@@ -49,6 +49,5 @@ The categories are :
 Account to try the app :
 
   Email : hani-dabash@hotmail.com
-  
   Pass : Hani321
 

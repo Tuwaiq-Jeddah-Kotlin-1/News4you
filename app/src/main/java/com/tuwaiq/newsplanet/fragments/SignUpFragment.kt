@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
@@ -42,7 +43,7 @@ class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.sign_up_fragment, container, false)
-
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = getString(R.string.sign_up)
         usernameET = view.findViewById(R.id.usernameET)
         emailET = view.findViewById(R.id.emailET)
         passwordET = view.findViewById(R.id.passwordET)

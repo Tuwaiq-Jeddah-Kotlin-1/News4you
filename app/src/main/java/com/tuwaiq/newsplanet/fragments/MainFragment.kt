@@ -25,7 +25,7 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        (requireActivity() as AppCompatActivity).supportActionBar?.title = "Categories"
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = getString(R.string.categories)
         return inflater.inflate(R.layout.fragment_main, container, false)
     }
 

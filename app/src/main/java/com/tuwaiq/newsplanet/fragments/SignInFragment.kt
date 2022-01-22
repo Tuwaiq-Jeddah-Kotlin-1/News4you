@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -60,7 +61,7 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
 
         val view = inflater.inflate(R.layout.sign_in_fragment, container, false)
         //userSharedPreferance = this.requireActivity().getSharedPreferences("user" , Context.MODE_PRIVATE)
-
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = getString(R.string.sign_in)
 
         emailET = view.findViewById(R.id.emailET)
         passwordET = view.findViewById(R.id.passwordET)

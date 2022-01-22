@@ -39,7 +39,7 @@ class SeasrchNewsFragment : Fragment(R.layout.fragment_search_news) {
 
         // to access the activity's ViewModel
         viewModel = (activity as NewsActivity).viewModel
-        (requireActivity() as AppCompatActivity).supportActionBar?.title = "News Search"
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = getString(R.string.search_news)
 
         setupRecyclerView()
 

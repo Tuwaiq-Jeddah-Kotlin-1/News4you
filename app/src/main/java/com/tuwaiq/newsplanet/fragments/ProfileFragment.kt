@@ -67,7 +67,7 @@ class ProfileFragment() : Fragment(R.layout.profile_fragment) {
 
         // to access the activity's ViewModel ..
         viewModel = (activity as NewsActivity).viewModel
-        (requireActivity() as AppCompatActivity).supportActionBar?.title = "User Settings"
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = getString(R.string.settings)
         val isDarkMode = profileSharedPreferance.getBoolean("DARKMODE", false)
         val isArabic = profileSharedPreferance.getBoolean("ARABIC", false)
         val profileSharedEditor: SharedPreferences.Editor = profileSharedPreferance.edit()

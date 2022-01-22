@@ -32,4 +32,8 @@
     <string name="entertainment">Entertainment</string>
     <string name="general">General</string>
     <string name="data_update">Data Update</string>
+    <string name="archives">Archive</string>
+    <string name="categories">Categories</string>
+    <string name="news_search">Search News</string>
+    <string name="article">Article</string>
 </resources>

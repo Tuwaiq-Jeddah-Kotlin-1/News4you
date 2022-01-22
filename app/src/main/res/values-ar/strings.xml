@@ -32,4 +32,8 @@
     <string name="entertainment">الترفيه</string>
     <string name="general">عامة</string>
     <string name="data_update">تحديث بياناتك</string>
+    <string name="archives">الأرشيف</string>
+    <string name="categories">التصنيفات</string>
+    <string name="news_search">بحث الأخبار</string>
+    <string name="article">المقالة</string>
 </resources>

@@ -81,7 +81,6 @@ class ProfileFragment() : Fragment(R.layout.profile_fragment) {
         var language: String = "en"
 
 
-
         switch2.isChecked = profileSharedPreferance.getBoolean("DARKMODE", false)
 
         switch2.setOnClickListener {

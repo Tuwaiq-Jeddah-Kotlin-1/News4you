@@ -14,6 +14,7 @@ import com.tuwaiq.newsplanet.repo.NewsRepo
 import com.tuwaiq.newsplanet.util.LangSetting
 
 class SplashScreenActivity : AppCompatActivity() {
+
     lateinit var langSetting: LangSetting
     override fun onCreate(savedInstanceState: Bundle?) {
         val profileSharedPreferance = this.getSharedPreferences("userSettings", Context.MODE_PRIVATE)

@@ -24,13 +24,25 @@ import java.util.*
 lateinit var bottomNavView: BottomNavigationView
 
 class NewsActivity : AppCompatActivity() {
+    lateinit var langSetting: LangSetting
+    val profileSharedPreferance = this.getSharedPreferences("userSettings", Context.MODE_PRIVATE)
+    val language = profileSharedPreferance.getString("LANGUAGE", "")!!
+    val isDarkMode = profileSharedPreferance.getBoolean("DARKMODE" , false)
+
+
     lateinit var viewModel: NewsViewModel
     private lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
         setContentView(R.layout.activity_news)
-
+        if(isDarkMode){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        }else{
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
+        langSetting = LangSetting(this)
+        langSetting.setLocals(language)
         getSupportActionBar()?.show()
         getSupportActionBar()?.elevation = 0F
         supportActionBar?.setBackgroundDrawable(getDrawable(R.drawable.actionbar_bg))

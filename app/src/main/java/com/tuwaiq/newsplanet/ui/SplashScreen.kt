@@ -15,8 +15,18 @@ import com.tuwaiq.newsplanet.util.LangSetting
 
 class SplashScreenActivity : AppCompatActivity() {
 
+    lateinit var langSetting: LangSetting
     override fun onCreate(savedInstanceState: Bundle?) {
-
+        val profileSharedPreferance = this.getSharedPreferences("userSettings", Context.MODE_PRIVATE)
+        val language = profileSharedPreferance.getString("LANGUAGE", "")!!
+        val isDarkMode = profileSharedPreferance.getBoolean("DARKMODE" , false)
+        if(isDarkMode){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        }else{
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
+        langSetting = LangSetting(this)
+        langSetting.setLocals(language)
 
         getSupportActionBar()?.hide()
         super.onCreate(savedInstanceState)

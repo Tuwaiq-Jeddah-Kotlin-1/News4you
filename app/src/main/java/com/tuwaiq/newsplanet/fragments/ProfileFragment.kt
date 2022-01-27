@@ -1,6 +1,5 @@
 package com.tuwaiq.newsplanet.fragments
 
-
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
